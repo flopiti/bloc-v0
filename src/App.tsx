@@ -44,7 +44,7 @@ const App = () => {
       <AnimatePresence>
         {isCartOpen && (
           <motion.div
-            className={`full-screen h-[calc(-100vh-${BUTTON_HEIGHT})] bottom-0`}
+            className={`full-screen h-[calc(100vh-3rem)] bottom-0`}
             initial={{ y: "100%" }}
             animate={{ 
               y: isCartOpen ? 0 : "100%"
