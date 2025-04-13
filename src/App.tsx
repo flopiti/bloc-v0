@@ -3,7 +3,9 @@ import { useState } from 'react'
 import Home from './Home';
 import ShoppingCart from './ShoppingCart';
 import './App.css';
-const SHOPPING_CART_DELAY = 0.1;
+
+const SHOPPING_CART_DELAY = 0.25;
+const BUTTON_HEIGHT = "3rem";
 const SHOPPING_CART_TRANSITION = {
   type: "tween",
   stiffness: 200,
@@ -11,7 +13,7 @@ const SHOPPING_CART_TRANSITION = {
   duration: SHOPPING_CART_DELAY
 }
 
-function App() {
+const App = () => {
   const [isCartOpen, setIsCartOpen] = useState(false)
 
   return (
@@ -19,9 +21,8 @@ function App() {
       <AnimatePresence>
         {!isCartOpen && (
           <motion.div
-            initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-              transition={{ delay: SHOPPING_CART_DELAY}}
+            transition={{ delay: SHOPPING_CART_DELAY}}
           >
             <Home />
           </motion.div>
@@ -29,11 +30,11 @@ function App() {
       </AnimatePresence>
 
       <motion.button
-        className="full-screen bg-blue-500 text-white px-6 z-30 h-[3rem]" 
+        className={`full-screen bg-blue-500 h-[${BUTTON_HEIGHT}]`} 
         initial={{ bottom: 0}}
         onClick={() => setIsCartOpen(!isCartOpen)}
         animate={{ 
-          y: isCartOpen ? "calc(-100vh + 3rem)" : 0,
+          y: isCartOpen ? `calc(-100vh + ${BUTTON_HEIGHT})` : 0,
         }}
         transition={SHOPPING_CART_TRANSITION}
       >
@@ -43,7 +44,7 @@ function App() {
       <AnimatePresence>
         {isCartOpen && (
           <motion.div
-              className="full-screen z-20 h-[calc(100vh-3rem)] bottom-0"
+            className={`full-screen h-[calc(100vh-${BUTTON_HEIGHT})] bottom-0`}
             initial={{ y: "100%" }}
             animate={{ 
               y: isCartOpen ? 0 : "100%"
@@ -59,4 +60,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
