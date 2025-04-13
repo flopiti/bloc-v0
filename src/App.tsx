@@ -1,35 +1,36 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
+import Home from './Home';
+import ShoppingCart from './ShoppingCart';
+import './App.css';
+const SHOPPING_CART_DELAY = 0.1;
+const SHOPPING_CART_TRANSITION = {
+  type: "tween",
+  stiffness: 200,
+  damping: 30,
+  duration: SHOPPING_CART_DELAY
+}
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false)
 
-
-  const SHOPPING_CART_DELAY = 0.1;
-  const SHOPPING_CART_TRANSITION = {
-    type: "tween",
-    stiffness: 200,
-    damping: 30,
-    duration: SHOPPING_CART_DELAY
-  }
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div className="relative">
       <AnimatePresence>
         {!isCartOpen && (
           <motion.div
-            className="p-4"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
               transition={{ delay: SHOPPING_CART_DELAY}}
           >
-            <h1>Bloc Home Page</h1>
+            <Home />
           </motion.div>
         )}
       </AnimatePresence>
 
       <motion.button
-        className="fixed left-0 right-0 bg-blue-500 text-white px-6 z-30 h-[3rem]" 
-        initial={{ bottom: 0, y: 0 }}
+        className="full-screen bg-blue-500 text-white px-6 z-30 h-[3rem]" 
+        initial={{ bottom: 0}}
         onClick={() => setIsCartOpen(!isCartOpen)}
         animate={{ 
           y: isCartOpen ? "calc(-100vh + 3rem)" : 0,
@@ -42,7 +43,7 @@ function App() {
       <AnimatePresence>
         {isCartOpen && (
           <motion.div
-            className="fixed left-0 right-0 z-20 h-[calc(100vh-3rem)] bottom-0"
+              className="full-screen z-20 h-[calc(100vh-3rem)] bottom-0"
             initial={{ y: "100%" }}
             animate={{ 
               y: isCartOpen ? 0 : "100%"
@@ -50,12 +51,7 @@ function App() {
             exit={{ y: "100%" }}
             transition={SHOPPING_CART_TRANSITION}
           >
-            <div className="p-4 bg-red-300 h-full">
-              greger
-
-              
-              {/* Cart content goes here */}
-            </div>
+              <ShoppingCart />
           </motion.div>
         )}
       </AnimatePresence>
