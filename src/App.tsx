@@ -14,7 +14,7 @@ const SHOPPING_CART_TRANSITION = {
 }
 
 const App = () => {
-  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isCartOpen, setIsCartOpen] = useState(true)
 
   return (
     <div className="relative">
@@ -30,7 +30,7 @@ const App = () => {
       </AnimatePresence>
 
       <motion.button
-        className={`full-screen bg-blue-500 h-[${BUTTON_HEIGHT}]`} 
+        className={`full-screen bg-blue-500 h-[3rem]`} 
         initial={{ bottom: 0}}
         onClick={() => setIsCartOpen(!isCartOpen)}
         animate={{ 
@@ -44,7 +44,7 @@ const App = () => {
       <AnimatePresence>
         {isCartOpen && (
           <motion.div
-            className={`full-screen h-[calc(100vh-${BUTTON_HEIGHT})] bottom-0`}
+            className={`full-screen h-[calc(-100vh-${BUTTON_HEIGHT})] bottom-0`}
             initial={{ y: "100%" }}
             animate={{ 
               y: isCartOpen ? 0 : "100%"
