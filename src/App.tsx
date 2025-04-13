@@ -1,26 +1,40 @@
-import './App.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false)
 
+
+  const SHOPPING_CART_DELAY = 0.1;
+  const SHOPPING_CART_TRANSITION = {
+    type: "tween",
+    stiffness: 200,
+    damping: 30,
+    duration: SHOPPING_CART_DELAY
+  }
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      {/* Main content */}
-      <div className="p-4">
-        <h1>Bloc Home Page</h1>
-      </div>
+      <AnimatePresence>
+        {!isCartOpen && (
+          <motion.div
+            className="p-4"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+              transition={{ delay: SHOPPING_CART_DELAY}}
+          >
+            <h1>Bloc Home Page</h1>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.button
-        className="fixed bottom-0 left-0 right-0 bg-blue-500 text-white px-6 py-3 z-30"
+        className="fixed left-0 right-0 bg-blue-500 text-white px-6 z-30 h-[3rem]" 
+        initial={{ bottom: 0, y: 0 }}
         onClick={() => setIsCartOpen(!isCartOpen)}
         animate={{ 
           y: isCartOpen ? "calc(-100vh + 3rem)" : 0,
-          backgroundColor: isCartOpen ? "#ffffff" : "#3b82f6",
-          color: isCartOpen ? "#374151" : "#ffffff"
         }}
-        transition={{ type: "spring", damping: 25, stiffness: 120 }}
+        transition={SHOPPING_CART_TRANSITION}
       >
         {isCartOpen ? "Close" : "Shopping Cart"}
       </motion.button>
@@ -28,16 +42,18 @@ function App() {
       <AnimatePresence>
         {isCartOpen && (
           <motion.div
-            className="fixed inset-0 bg-white z-20"
+            className="fixed left-0 right-0 z-20 h-[calc(100vh-3rem)] bottom-0"
             initial={{ y: "100%" }}
-            animate={{ y: 0 }}
+            animate={{ 
+              y: isCartOpen ? 0 : "100%"
+            }}
             exit={{ y: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 120 }}
+            transition={SHOPPING_CART_TRANSITION}
           >
-            <div className="p-4">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Shopping Cart</h2>
-              </div>
+            <div className="p-4 bg-red-300 h-full">
+              greger
+
+              
               {/* Cart content goes here */}
             </div>
           </motion.div>
