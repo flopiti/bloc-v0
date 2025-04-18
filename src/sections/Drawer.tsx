@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const ShoppingCart = () => {
+const Drawer = () => {
   const [selectedProducts, setSelectedProducts] = useState<{ id: number; name: string; image: string }[]>([]);
   
   const allProducts = [
@@ -163,4 +163,4 @@ const ShoppingCart = () => {
   )
 }
 
-export default ShoppingCart;
+export default Drawer;

@@ -1,12 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-import Home from './Home';
-import ShoppingCart from './ShoppingCart';
+import Home from './sections/Home';
+import Drawer from './sections/Drawer';
 import './App.css';
 
 const SHOPPING_CART_DELAY = 0.25;
 const BUTTON_HEIGHT = "3rem";
-const SHOPPING_CART_TRANSITION = {
+const DRAWER_TRANSITION = {
   type: "tween",
   stiffness: 200,
   damping: 30,
@@ -14,12 +14,12 @@ const SHOPPING_CART_TRANSITION = {
 }
 
 const App = () => {
-  const [isCartOpen, setIsCartOpen] = useState(true)
+  const [isDrawerOpen, setIsCartOpen] = useState(true)
 
   return (
     <div className="relative">
       <AnimatePresence>
-        {!isCartOpen && (
+        {!isDrawerOpen && (
           <motion.div
             exit={{ opacity: 0 }}
             transition={{ delay: SHOPPING_CART_DELAY}}
@@ -32,27 +32,27 @@ const App = () => {
       <motion.button
         className={`full-screen bg-blue-500 h-[3rem]`} 
         initial={{ bottom: 0}}
-        onClick={() => setIsCartOpen(!isCartOpen)}
+        onClick={() => setIsCartOpen(!isDrawerOpen)}
         animate={{ 
-          y: isCartOpen ? `calc(-100vh + ${BUTTON_HEIGHT})` : 0,
+          y: isDrawerOpen ? `calc(-100vh + ${BUTTON_HEIGHT})` : 0,
         }}
-        transition={SHOPPING_CART_TRANSITION}
+        transition={DRAWER_TRANSITION}
       >
-        {isCartOpen ? "Close" : "Shopping Cart"}
+        {isDrawerOpen ? "Close" : "Shopping Cart"}
       </motion.button>
 
       <AnimatePresence>
-        {isCartOpen && (
+        {isDrawerOpen && (
           <motion.div
             className={`full-screen h-[calc(100vh-3rem)] bottom-0`}
             initial={{ y: "100%" }}
             animate={{ 
-              y: isCartOpen ? 0 : "100%"
+              y: isDrawerOpen ? 0 : "100%"
             }}
             exit={{ y: "100%" }}
-            transition={SHOPPING_CART_TRANSITION}
+            transition={DRAWER_TRANSITION}
           >
-              <ShoppingCart />
+              <Drawer />
           </motion.div>
         )}
       </AnimatePresence>
