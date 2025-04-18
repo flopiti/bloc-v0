@@ -3,7 +3,8 @@ const ShoppingCart = () => {
   
   return (
       <div className="p-4 bg-red-300 h-full">
-        <div id="cart-items">
+        <div id="cart-items" className="bg-gray-200 p-4 rounded-lg">
+          <img src="/shopping_cart.png" alt="Shopping Cart" className="w-32 h-32 opacity-50 mx-auto" />
         </div>
         <div id="suggested-products" className="mt-4">
           <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
