@@ -15,11 +15,19 @@ const ShoppingCart = () => {
 
   return (
       <div className="p-4 h-full">
-        <div id="cart-items" className="bg-gray-200 p-4 rounded-lg">
-          {selectedProducts.length === 0 ? (
-            <img src="/shopping_cart.png" alt="Shopping Cart" className="w-32 h-32 opacity-50 mx-auto" />
-          ) : (
-            <div className="grid grid-cols-3 gap-4">
+        <div 
+          id="cart-items" 
+          className="bg-gray-200 p-4 rounded-lg min-h-[200px] relative"
+        >
+          <div 
+            className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+            style={{ 
+              backgroundImage: 'url("/shopping_cart.png")',
+              opacity: 0.2
+            }}
+          />
+          {selectedProducts.length > 0 && (
+            <div className="grid grid-cols-3 gap-4 relative z-10">
               {selectedProducts.map((product) => (
                 <div key={product.id} className="aspect-square rounded-lg overflow-hidden">
                   <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
