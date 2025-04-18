@@ -62,28 +62,39 @@ const ShoppingCart = () => {
             )}
           </AnimatePresence>
         </div>
-        <div id="suggested-products" className="mt-4">
-          <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
-          <div className="grid grid-cols-3 gap-4">
-            <AnimatePresence>
-              {suggestedProducts.map((product) => (
-                <motion.div 
-                  key={product.id}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.2 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="aspect-square rounded-lg overflow-hidden cursor-pointer"
-                  onClick={() => handleProductClick(product)}
-                >
-                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </div>
+        <AnimatePresence>
+          {suggestedProducts.length > 0 && (
+            <motion.div 
+              id="suggested-products" 
+              className="mt-4"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
+              <div className="grid grid-cols-3 gap-4">
+                <AnimatePresence>
+                  {suggestedProducts.map((product) => (
+                    <motion.div 
+                      key={product.id}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                      transition={{ duration: 0.2 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="aspect-square rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() => handleProductClick(product)}
+                    >
+                      <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
   )
 }
