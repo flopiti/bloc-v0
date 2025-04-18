@@ -1,10 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import Home from './sections/Home';
-import Drawer, { DRAWER_TRANSITION, SHOPPING_CART_DELAY } from './sections/Drawer';
+import Drawer from './sections/Drawer';
 import './App.css';
 import useCart from './hooks/useCart';
 import useItems from './hooks/useItems';
+import { DRAWER_TRANSITION, DRAWER_DELAY } from './constants/animations';
 
 const BUTTON_HEIGHT = "3rem";
 
@@ -22,7 +23,7 @@ const App = () => {
         {!isDrawerOpen && (
           <motion.div
             exit={{ opacity: 0 }}
-            transition={{ delay: SHOPPING_CART_DELAY}}
+            transition={{ delay: DRAWER_DELAY}}
           >
             <Home />
           </motion.div>

@@ -4,14 +4,7 @@ import { Item } from '@/types/core';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useItemsStore } from '@/stores/itemsStore';
-export const SHOPPING_CART_DELAY = 0.25;
-
-export const DRAWER_TRANSITION = {
-  type: "tween",
-  stiffness: 200,
-  damping: 30,
-  duration: SHOPPING_CART_DELAY
-}
+import { DRAWER_TRANSITION } from '@/constants/animations';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -35,13 +28,11 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
 
   return (
     <motion.div
-    className={`full-screen h-[calc(100vh-3rem)] bottom-0 p-4`}
-    initial={{ y: "100%" }}
-    animate={{ 
-      y: isDrawerOpen ? 0 : "100%"
-    }}
-    exit={{ y: "100%" }}
-    transition={DRAWER_TRANSITION}
+      className={`full-screen h-[calc(100vh-3rem)] bottom-0 p-4`}
+      initial={{ y: "100%" }}
+      animate={{y: isDrawerOpen ? 0 : "100%"}}
+      exit={{ y: "100%" }}
+      transition={DRAWER_TRANSITION}
   >
         <div 
           id="cart-items" 
