@@ -23,11 +23,7 @@ const CartBox = ({ isLoading, cartItems }: CartBoxProps) => {
         damping: 25
       }}
     >
-      <div className="absolute inset-0 bg-contain bg-center bg-no-repeat" style={{ 
-          backgroundImage: 'url("/shopping_cart.png")',
-          opacity: 0.2
-        }}
-      />
+      <div className="cart-box-background" />
       <AnimatePresence mode="popLayout">
         {cartItems.length > 0 && (
           <motion.div className="flex flex-row gap-4 p-4" layout>
