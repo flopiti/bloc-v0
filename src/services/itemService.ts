@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { Item } from '../types/core';
-
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { API_BASE_URL } from '@/constants/core';
 
 export const itemService = {
   async getAllItems(): Promise<Item[]> {

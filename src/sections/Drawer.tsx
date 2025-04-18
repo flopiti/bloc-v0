@@ -1,31 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Item } from '@/types/core';
-import { itemService } from '@/services/itemService';
+import useItems from '@/hooks/items';
 
 const Drawer = () => {
   const [selectedProducts, setSelectedProducts] = useState<Item[]>([]);
-  const [allProducts, setAllProducts] = useState<Item[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
+
+  const { items, loading, error } = useItems();
   
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const items = await itemService.getAllItems();
-        setAllProducts(items);
-      } catch (err) {
-        setError('Failed to load items');
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
-    fetchProducts();
-  }, []);
 
-  const suggestedProducts = allProducts.filter(
+
+  const suggestedProducts = items.filter(
     product => !selectedProducts.some(selected => selected.id === product.id)
   );
 
