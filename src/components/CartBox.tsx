@@ -21,8 +21,19 @@ const CartBox = ({ isLoading, cartItems }: CartBoxProps) => {
       {isLoading ? <LoadingCartAnimation /> : <div className="cart-box-background" />}
       <AnimatePresence mode="popLayout">
         {isLoading ? (<LoadingCart/>) : cartItems.length > 0 && (
-          <motion.div className="flex flex-row gap-4 p-4" layout>
-            {cartItems.map((item: Item) => <ItemBox key={item.id} item={item} />)}
+          <motion.div 
+            className="flex flex-row flex-wrap gap-3 p-4" 
+            layout
+          >
+            {cartItems.map((item: Item) => (
+              <motion.div
+                key={item.id}
+                layout
+                className="flex-shrink-0"
+              >
+                <ItemBox item={item} />
+              </motion.div>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
