@@ -10,7 +10,7 @@ import { DrawerButton } from './components/DrawerButton';
 
 
 const App = () => {
-  const [isDrawerOpen, setIsCartOpen] = useState(false)
+  const [isDrawerOpen, setIsCartOpen] = useState(true)
 
   // Load initial data
   useCart();
