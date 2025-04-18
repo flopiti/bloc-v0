@@ -1,19 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import Home from './sections/Home';
-import Drawer from './sections/Drawer';
+import Drawer, { DRAWER_TRANSITION, SHOPPING_CART_DELAY } from './sections/Drawer';
 import './App.css';
 import useCart from './hooks/useCart';
 import useItems from './hooks/useItems';
 
-const SHOPPING_CART_DELAY = 0.25;
 const BUTTON_HEIGHT = "3rem";
-const DRAWER_TRANSITION = {
-  type: "tween",
-  stiffness: 200,
-  damping: 30,
-  duration: SHOPPING_CART_DELAY
-}
+
 
 const App = () => {
   const [isDrawerOpen, setIsCartOpen] = useState(false)
@@ -48,19 +42,7 @@ const App = () => {
       </motion.button>
 
       <AnimatePresence>
-        {isDrawerOpen && (
-          <motion.div
-            className={`full-screen h-[calc(100vh-3rem)] bottom-0`}
-            initial={{ y: "100%" }}
-            animate={{ 
-              y: isDrawerOpen ? 0 : "100%"
-            }}
-            exit={{ y: "100%" }}
-            transition={DRAWER_TRANSITION}
-          >
-              <Drawer />
-          </motion.div>
-        )}
+        {isDrawerOpen && <Drawer isDrawerOpen={isDrawerOpen} />}
       </AnimatePresence>
     </div>
   )
