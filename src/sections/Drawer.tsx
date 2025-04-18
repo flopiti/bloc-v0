@@ -1,20 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { productService, Product } from '../services/productService';
 
 const Drawer = () => {
-  const [selectedProducts, setSelectedProducts] = useState<{ id: number; name: string; image: string }[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
-  const allProducts = [
-    { id: 1, name: 'Milk', image: '/milk.png' },
-    { id: 2, name: 'Eggs', image: '/eggs.png' },
-    { id: 3, name: 'Cereal', image: '/cereal.png' }
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await productService.getAllProducts();
+        setAllProducts(products);
+      } catch (err) {
+        setError('Failed to load products');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const suggestedProducts = allProducts.filter(
     product => !selectedProducts.some(selected => selected.id === product.id)
   );
 
-  const handleProductClick = (product: { id: number; name: string; image: string }) => {
+  const handleProductClick = (product: Product) => {
     setSelectedProducts(prev => [...prev, product]);
   };
 
