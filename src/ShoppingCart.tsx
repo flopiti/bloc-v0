@@ -18,10 +18,6 @@ const ShoppingCart = () => {
     setSelectedProducts(prev => [...prev, product]);
   };
 
-  const handleRemoveProduct = (productId: number) => {
-    setSelectedProducts(prev => prev.filter(p => p.id !== productId));
-  };
-
   const handleConfirm = () => {
     // Handle confirmation logic here
     console.log('Order confirmed:', selectedProducts);
@@ -51,7 +47,6 @@ const ShoppingCart = () => {
                     exit={{ opacity: 0, scale: 0.5 }}
                     transition={{ duration: 0.2 }}
                     className="aspect-square rounded-lg overflow-hidden relative group cursor-pointer"
-                    onClick={() => handleRemoveProduct(product.id)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -59,10 +54,6 @@ const ShoppingCart = () => {
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleRemoveProduct(product.id);
-                      }}
                       className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       ×
