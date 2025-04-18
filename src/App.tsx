@@ -3,7 +3,8 @@ import { useState } from 'react'
 import Home from './sections/Home';
 import Drawer from './sections/Drawer';
 import './App.css';
-import useCart from './hooks/cart';
+import useCart from './hooks/useCart';
+import useItems from './hooks/useItems';
 
 const SHOPPING_CART_DELAY = 0.25;
 const BUTTON_HEIGHT = "3rem";
@@ -16,7 +17,10 @@ const DRAWER_TRANSITION = {
 
 const App = () => {
   const [isDrawerOpen, setIsCartOpen] = useState(false)
+
+  // Load initial data
   useCart();
+  useItems();
 
   return (
     <div className="relative">

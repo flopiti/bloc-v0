@@ -1,14 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import useItems from '@/hooks/items';
 import { useCartStore } from '@/stores/cartStore';
 import { Item } from '@/types/core';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useItemsStore } from '@/stores/itemsStore';
 
 const Drawer = () => {
-  const { items, loading: itemsLoading, error: itemsError } = useItems();
   const { cartItems, addItem, isLoading } = useCartStore();
-
+  const { items } = useItemsStore();
   const suggestedProducts = items.filter(
     product => !cartItems.some(selected => selected.id === product.id)
   );
