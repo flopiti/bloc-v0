@@ -1,20 +1,17 @@
-import { useState } from "react";
-import { Item } from "@/types/core";
 import { useEffect } from "react";
 import { itemService } from "@/services/itemService";
+import { useItemsStore } from "@/stores/itemsStore";
 
 const useItems = () => {
-  const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { setInitialItems, setLoading } = useItemsStore();
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await itemService.getAllItems();
-        setItems(response);
+        setInitialItems(response);
       } catch (error) {
-        setError(error as string);
+        console.error('Error fetching items:', error);
       } finally {
         setLoading(false);
       }
@@ -22,8 +19,6 @@ const useItems = () => {
 
     fetchItems();
   }, []);
-
-  return { items, loading, error };
 }
 
 export default useItems;
