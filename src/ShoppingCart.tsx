@@ -28,7 +28,7 @@ const ShoppingCart = () => {
   };
 
   return (
-      <div className="p-4 h-full">
+      <div className="p-4 h-full relative">
         <div 
           id="cart-items" 
           className="bg-gray-200 p-4 rounded-lg min-h-[9rem] relative"
@@ -113,11 +113,11 @@ const ShoppingCart = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="mt-6 flex justify-center"
+              className="fixed bottom-4 right-4"
             >
               <motion.button
                 onClick={handleConfirm}
-                className="px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden bg-black"
+                className="px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden bg-black shadow-lg"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
