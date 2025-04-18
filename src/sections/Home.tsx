@@ -1,8 +1,14 @@
+import { DRAWER_DELAY } from "@/constants/animations";
+import { motion } from "framer-motion";
+
 const Home = () => {
   return (
-    <div>
+    <motion.div
+      exit={{ opacity: 0 }}
+      transition={{ delay: DRAWER_DELAY}}
+    >
       <h1>Home</h1>
-    </div>
+    </motion.div>
   )
 }
 

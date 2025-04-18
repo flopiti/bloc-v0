@@ -20,14 +20,7 @@ const App = () => {
   return (
     <div className="relative">
       <AnimatePresence>
-        {!isDrawerOpen && (
-          <motion.div
-            exit={{ opacity: 0 }}
-            transition={{ delay: DRAWER_DELAY}}
-          >
-            <Home />
-          </motion.div>
-        )}
+        {!isDrawerOpen && <Home />}
       </AnimatePresence>
 
       <motion.button
