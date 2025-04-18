@@ -43,7 +43,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.5 }}
         >
           <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
           <div className="grid grid-cols-3 gap-4">
