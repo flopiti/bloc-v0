@@ -1,15 +1,10 @@
-import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Item } from '@/types/core';
 import useItems from '@/hooks/items';
-
+import { useCartStore } from '@/stores/cartStore';
+import { Item } from '@/types/core';
 const Drawer = () => {
-  const [selectedProducts, setSelectedProducts] = useState<Item[]>([]);
-
-
-  const { items, loading, error } = useItems();
-  
-
+  const { items, loading: itemsLoading, error: itemsError } = useItems();
+  const { items: selectedProducts, addItem } = useCartStore();
 
 
   const suggestedProducts = items.filter(
@@ -17,7 +12,7 @@ const Drawer = () => {
   );
 
   const handleProductClick = (product: Item) => {
-    setSelectedProducts(prev => [...prev, product]);
+    addItem(product);
   };
 
   const handleConfirm = () => {
