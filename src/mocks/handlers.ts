@@ -10,7 +10,7 @@ export const handlers = [
     await delay(3000);
     // Return just the first item (Milk) as the initial cart item
     return HttpResponse.json(
-      mockItems.slice(0, Math.floor(Math.random() * 2))
+      mockItems.slice(0, 1)
     );
   }),
 ]; 

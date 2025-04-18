@@ -4,7 +4,7 @@ import { Item } from '@/types/core';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useItemsStore } from '@/stores/itemsStore';
-import { DRAWER_TRANSITION } from '@/constants/animations';
+import { DEFAULT_TRANSITION } from '@/constants/animations';
 import CartBox from '@/components/CartBox';
 
 interface DrawerProps {
@@ -34,7 +34,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
       initial={{ y: "100%" }}
       animate={{y: isDrawerOpen ? 0 : "100%"}}
       exit={{ y: "100%" }}
-      transition={DRAWER_TRANSITION}
+      transition={DEFAULT_TRANSITION}
   >
     <CartBox isLoading={isLoading} cartItems={cartItems} />
     <AnimatePresence>

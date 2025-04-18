@@ -1,6 +1,7 @@
 import { Item } from "@/types/core";
 import { AnimatePresence, motion } from "framer-motion";
 import ItemBox from "./ItemBox";
+import { DEFAULT_TRANSITION } from "@/constants/animations";
 
 interface CartBoxProps {
   isLoading: boolean;
@@ -10,18 +11,10 @@ interface CartBoxProps {
 const CartBox = ({ isLoading, cartItems }: CartBoxProps) => {
   return (
     <motion.div 
-      className="border-2 border-secondary rounded-3xl relative overflow-hidden"
+      className="border-2 border-secondary rounded-3xl relative "
       layout
-      animate={{
-        height: cartItems.length > 0 ? "auto" : "9rem",
-        minHeight: "9rem"
-      }}
-      transition={{ 
-        duration: 0.3,
-        type: "spring",
-        stiffness: 300,
-        damping: 25
-      }}
+      animate={{minHeight: "9rem"}}
+      transition={DEFAULT_TRANSITION}
     >
       <div className="cart-box-background" />
       <AnimatePresence mode="popLayout">

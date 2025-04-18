@@ -1,4 +1,4 @@
-import { BUTTON_HEIGHT, DRAWER_TRANSITION } from "@/constants/animations";
+import { BUTTON_HEIGHT, DEFAULT_TRANSITION } from "@/constants/animations";
 import { motion } from "framer-motion"
 
 
@@ -15,7 +15,7 @@ export const DrawerButton = ({isDrawerOpen,setIsCartOpen,} : DrawerButtonProps) 
     animate={{ 
       y: isDrawerOpen ? `calc(-100vh + ${BUTTON_HEIGHT})` : 0,
     }}
-    transition={DRAWER_TRANSITION}
+    transition={DEFAULT_TRANSITION}
   >
     {isDrawerOpen ? "Close" : "Shopping Cart"}
   </motion.button>  )
