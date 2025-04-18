@@ -7,3 +7,5 @@ export const DRAWER_TRANSITION = {
   damping: 30,
   duration: DRAWER_DELAY
 }
+
+export const BUTTON_HEIGHT = "3rem";
