@@ -75,15 +75,24 @@ const ShoppingCart = () => {
               transition={{ duration: 0.2 }}
             >
               <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
-              <div className="grid grid-cols-3 gap-4">
-                <AnimatePresence>
+              <motion.div 
+                className="grid grid-cols-3 gap-4"
+                layout
+              >
+                <AnimatePresence mode="popLayout">
                   {suggestedProducts.map((product) => (
                     <motion.div 
                       key={product.id}
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.5 }}
-                      transition={{ duration: 0.2 }}
+                      layout
+                      initial={{ opacity: 0, scale: 0.5, x: -20 }}
+                      animate={{ opacity: 1, scale: 1, x: 0 }}
+                      exit={{ opacity: 0, scale: 0.5, x: 20 }}
+                      transition={{ 
+                        duration: 0.3,
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 30
+                      }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="aspect-square rounded-lg overflow-hidden cursor-pointer"
@@ -93,7 +102,7 @@ const ShoppingCart = () => {
                     </motion.div>
                   ))}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
