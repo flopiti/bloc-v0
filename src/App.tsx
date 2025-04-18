@@ -5,7 +5,7 @@ import Drawer from './sections/Drawer';
 import './App.css';
 import useCart from './hooks/useCart';
 import useItems from './hooks/useItems';
-import { DRAWER_TRANSITION, DRAWER_DELAY } from './constants/animations';
+import { DRAWER_TRANSITION } from './constants/animations';
 
 const BUTTON_HEIGHT = "3rem";
 
@@ -24,7 +24,7 @@ const App = () => {
       </AnimatePresence>
 
       <motion.button
-        className={`full-screen bg-blue-500 h-[3rem]`} 
+        className={`full-screen bg-blue-500 h-[3rem] w-1/2 mx-auto`} 
         initial={{ bottom: 0}}
         onClick={() => setIsCartOpen(!isDrawerOpen)}
         animate={{ 
