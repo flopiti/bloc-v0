@@ -2,13 +2,13 @@ import { motion } from "framer-motion";
 import { Item } from "@/types/core";
 
 interface ItemBoxProps {
-  product: Item;
+  item: Item;
 }
 
-const ItemBox = ({ product }: ItemBoxProps) => {
+const ItemBox = ({ item }: ItemBoxProps) => {
   return (
     <motion.div
-      key={product.id}
+      key={item.id}
       layout
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -23,7 +23,7 @@ const ItemBox = ({ product }: ItemBoxProps) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
     >
-        <img src={product.image} alt={product.name} className="object-cover" />
+        <img src={item.image} alt={item.name} className="object-cover" />
     </motion.div>  )
 }
 

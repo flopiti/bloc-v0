@@ -29,13 +29,11 @@ const CartBox = ({ isLoading, cartItems }: CartBoxProps) => {
         }}
       />
       <AnimatePresence mode="popLayout">
-        {
-        cartItems.length > 0 && (
+        {cartItems.length > 0 && (
           <motion.div className="flex flex-row gap-4 p-4" layout>
-            {cartItems.map((product: Item) => <ItemBox key={product.id} product={product} />)}
+            {cartItems.map((item: Item) => <ItemBox key={item.id} item={item} />)}
           </motion.div>
-        ) 
-        }
+        )}
       </AnimatePresence>
     </motion.div>
   )
