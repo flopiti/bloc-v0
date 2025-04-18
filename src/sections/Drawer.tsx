@@ -35,7 +35,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
 
   return (
     <motion.div
-    className={`full-screen h-[calc(100vh-3rem)] bottom-0`}
+    className={`full-screen h-[calc(100vh-3rem)] bottom-0 p-4`}
     initial={{ y: "100%" }}
     animate={{ 
       y: isDrawerOpen ? 0 : "100%"
@@ -43,7 +43,6 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     exit={{ y: "100%" }}
     transition={DRAWER_TRANSITION}
   >
-      <div className="p-4 ">
         <div 
           id="cart-items" 
           className="bg-gray-200 p-4 rounded-lg min-h-[9rem] relative"
@@ -190,7 +189,6 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
     </motion.div>
   )
 }
