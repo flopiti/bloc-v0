@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { productService, Product } from '../services/productService';
+import { productService } from '../services/productService';
+import { Item } from '../types/core';
 
 const Drawer = () => {
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<Item[]>([]);
+  const [allProducts, setAllProducts] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
@@ -28,7 +29,7 @@ const Drawer = () => {
     product => !selectedProducts.some(selected => selected.id === product.id)
   );
 
-  const handleProductClick = (product: Product) => {
+  const handleProductClick = (product: Item) => {
     setSelectedProducts(prev => [...prev, product]);
   };
 
