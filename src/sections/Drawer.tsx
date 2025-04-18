@@ -2,13 +2,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import useItems from '@/hooks/items';
 import { useCartStore } from '@/stores/cartStore';
 import { Item } from '@/types/core';
+
+
 const Drawer = () => {
   const { items, loading: itemsLoading, error: itemsError } = useItems();
-  const { items: selectedProducts, addItem } = useCartStore();
+  const { cartItems, addItem , isLoading } = useCartStore();
 
 
   const suggestedProducts = items.filter(
-    product => !selectedProducts.some(selected => selected.id === product.id)
+    product => !cartItems.some(selected => selected.id === product.id)
   );
 
   const handleProductClick = (product: Item) => {
@@ -17,7 +19,7 @@ const Drawer = () => {
 
   const handleConfirm = () => {
     // Handle confirmation logic here
-    console.log('Order confirmed:', selectedProducts);
+    console.log('Order confirmed:', cartItems);
   };
 
   return (
@@ -34,9 +36,9 @@ const Drawer = () => {
             }}
           />
           <AnimatePresence>
-            {selectedProducts.length > 0 && (
+            {cartItems.length > 0 && (
               <div className="grid grid-cols-3 gap-4 relative z-10">
-                {selectedProducts.map((product) => (
+                {cartItems.map((product) => (
                   <motion.div
                     key={product.id}
                     initial={{ opacity: 0, scale: 0.5 }}
@@ -104,7 +106,7 @@ const Drawer = () => {
           )}
         </AnimatePresence>
         <AnimatePresence>
-          {selectedProducts.length > 0 && (
+          {cartItems.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
