@@ -1,8 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import { Item } from '@/types/core';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 import { useItemsStore } from '@/stores/itemsStore';
 import { DEFAULT_TRANSITION } from '@/constants/animations';
 import CartBox from '@/components/CartBox';
@@ -65,10 +63,10 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
                   }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="aspect-square rounded-lg overflow-hidden cursor-pointer"
+                  className="rounded-lg overflow-hidden cursor-pointer "
                   onClick={() => handleProductClick(product)}
                 >
-                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                  <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
                 </motion.div>
               ))}
             </AnimatePresence>
