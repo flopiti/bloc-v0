@@ -1,6 +1,5 @@
 import { Item } from "@/types/core";
 import { AnimatePresence, motion } from "framer-motion";
-import Skeleton from "react-loading-skeleton";  
 
 interface CartBoxProps {
   isLoading: boolean;
@@ -53,7 +52,7 @@ const CartBox = ({ isLoading, cartItems }: CartBoxProps) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                <img src={product.image} alt={product.name} className="object-cover" />
               </motion.div>
             ))}
           </motion.div>
