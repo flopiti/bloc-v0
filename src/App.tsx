@@ -1,60 +1,35 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import {  AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-import Home from './Home';
-import ShoppingCart from './ShoppingCart';
+import Home from './sections/Home';
+import Drawer from './sections/Drawer';
 import './App.css';
+import useCart from './hooks/useCart';
+import useItems from './hooks/useItems';
+import { DrawerButton } from './components/DrawerButton';
 
-const SHOPPING_CART_DELAY = 0.25;
-const BUTTON_HEIGHT = "3rem";
-const SHOPPING_CART_TRANSITION = {
-  type: "tween",
-  stiffness: 200,
-  damping: 30,
-  duration: SHOPPING_CART_DELAY
-}
+
 
 const App = () => {
-  const [isCartOpen, setIsCartOpen] = useState(true)
+  const [isDrawerOpen, setIsCartOpen] = useState(true)
+
+  // Load initial data
+  useCart();
+  useItems();
 
   return (
     <div className="relative">
+
+      {/* Home */}
       <AnimatePresence>
-        {!isCartOpen && (
-          <motion.div
-            exit={{ opacity: 0 }}
-            transition={{ delay: SHOPPING_CART_DELAY}}
-          >
-            <Home />
-          </motion.div>
-        )}
+        {!isDrawerOpen && <Home />}
       </AnimatePresence>
 
-      <motion.button
-        className={`full-screen bg-blue-500 h-[3rem]`} 
-        initial={{ bottom: 0}}
-        onClick={() => setIsCartOpen(!isCartOpen)}
-        animate={{ 
-          y: isCartOpen ? `calc(-100vh + ${BUTTON_HEIGHT})` : 0,
-        }}
-        transition={SHOPPING_CART_TRANSITION}
-      >
-        {isCartOpen ? "Close" : "Shopping Cart"}
-      </motion.button>
+      {/* Drawer Button */}
+      <DrawerButton isDrawerOpen={isDrawerOpen} setIsCartOpen={setIsCartOpen} />
 
+      {/* Drawer */}
       <AnimatePresence>
-        {isCartOpen && (
-          <motion.div
-            className={`full-screen h-[calc(100vh-3rem)] bottom-0`}
-            initial={{ y: "100%" }}
-            animate={{ 
-              y: isCartOpen ? 0 : "100%"
-            }}
-            exit={{ y: "100%" }}
-            transition={SHOPPING_CART_TRANSITION}
-          >
-              <ShoppingCart />
-          </motion.div>
-        )}
+        {isDrawerOpen && <Drawer isDrawerOpen={isDrawerOpen} />}
       </AnimatePresence>
     </div>
   )
