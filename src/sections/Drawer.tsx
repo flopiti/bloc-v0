@@ -5,6 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useItemsStore } from '@/stores/itemsStore';
 import { DRAWER_TRANSITION } from '@/constants/animations';
+import CartBox from '@/components/CartBox';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -13,6 +14,7 @@ interface DrawerProps {
 const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   const { cartItems, addItem, isLoading } = useCartStore();
   const { items } = useItemsStore();
+
   const suggestedProducts = items.filter(
     product => !cartItems.some(selected => selected.id === product.id)
   );
@@ -34,152 +36,99 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
       exit={{ y: "100%" }}
       transition={DRAWER_TRANSITION}
   >
-        <div 
-          id="cart-items" 
-          className="bg-gray-200 p-4 rounded-lg min-h-[9rem] relative"
+    <CartBox isLoading={isLoading} cartItems={cartItems} />
+    <AnimatePresence>
+      {suggestedProducts.length > 0 && (
+        <motion.div 
+          id="suggested-products" 
+          className="mt-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
         >
-          <div 
-            className="absolute inset-0 bg-contain bg-center bg-no-repeat"
-            style={{ 
-              backgroundImage: 'url("/shopping_cart.png")',
-              opacity: 0.2
-            }}
-          />
-          <AnimatePresence>
-            {isLoading ? (
-              <div className="grid grid-cols-3 gap-4 relative z-10">
-                {[...Array(3)].map((_, index) => (
-                  <Skeleton
-                    key={index}
-                    className="aspect-square rounded-lg"
-                    highlightColor="#9ca3af"
-                    baseColor="#6b7280"
-                    duration={1.5}
-                  />
-                ))}
-              </div>
-            ) : cartItems.length > 0 ? (
-              <div className="grid grid-cols-3 gap-4 relative z-10">
-                {cartItems.map((product) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.2 }}
-                    className="aspect-square rounded-lg overflow-hidden relative group cursor-pointer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      ×
-                    </motion.button>
-                  </motion.div>
-                ))}
-              </div>
-            ) : null}
-          </AnimatePresence>
-        </div>
-        <AnimatePresence>
-          {suggestedProducts.length > 0 && (
-            <motion.div 
-              id="suggested-products" 
-              className="mt-4"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
-              <motion.div 
-                className="grid grid-cols-3 gap-4"
-                layout
-              >
-                <AnimatePresence mode="popLayout">
-                  {suggestedProducts.map((product) => (
-                    <motion.div 
-                      key={product.id}
-                      layout
-                      initial={{ opacity: 0, scale: 0.5, x: -20 }}
-                      animate={{ opacity: 1, scale: 1, x: 0 }}
-                      exit={{ opacity: 0, scale: 0.5, x: 20 }}
-                      transition={{ 
-                        duration: 0.3,
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 30
-                      }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="aspect-square rounded-lg overflow-hidden cursor-pointer"
-                      onClick={() => handleProductClick(product)}
-                    >
-                      <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {cartItems.length > 0 && (
+          <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
+          <div className="grid grid-cols-3 gap-4">
+            <AnimatePresence mode="popLayout">
+              {suggestedProducts.map((product) => (
+                <motion.div 
+                  key={product.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{ 
+                    duration: 0.2,
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="aspect-square rounded-lg overflow-hidden cursor-pointer"
+                  onClick={() => handleProductClick(product)}
+                >
+                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    <AnimatePresence>
+      {cartItems.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.3 }}
+          className="fixed bottom-4 right-4"
+        >
+          <motion.button
+            onClick={handleConfirm}
+            className="px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden bg-black shadow-lg"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
-              className="fixed bottom-4 right-4"
-            >
-              <motion.button
-                onClick={handleConfirm}
-                className="px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden bg-black shadow-lg"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500"
+              animate={{
+                opacity: [0.8, 1, 0.8],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <span className="relative z-10 flex items-center gap-2">
+              Confirm Order
+              <motion.svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                animate={{ x: [0, 4, 0] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500"
-                  animate={{
-                    opacity: [0.8, 1, 0.8],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <span className="relative z-10 flex items-center gap-2">
-                  Confirm Order
-                  <motion.svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </motion.svg>
-                </span>
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </motion.svg>
+            </span>
+          </motion.button>
+        </motion.div>
+      )}
+    </AnimatePresence>
     </motion.div>
   )
 }
