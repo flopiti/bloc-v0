@@ -15,7 +15,7 @@ const DRAWER_TRANSITION = {
 }
 
 const App = () => {
-  const [isDrawerOpen, setIsCartOpen] = useState(true)
+  const [isDrawerOpen, setIsCartOpen] = useState(false)
   useCart();
 
   return (
