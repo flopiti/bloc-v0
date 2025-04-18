@@ -2,12 +2,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import useItems from '@/hooks/items';
 import { useCartStore } from '@/stores/cartStore';
 import { Item } from '@/types/core';
-
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Drawer = () => {
   const { items, loading: itemsLoading, error: itemsError } = useItems();
-  const { cartItems, addItem , isLoading } = useCartStore();
-
+  const { cartItems, addItem, isLoading } = useCartStore();
 
   const suggestedProducts = items.filter(
     product => !cartItems.some(selected => selected.id === product.id)
@@ -36,7 +36,19 @@ const Drawer = () => {
             }}
           />
           <AnimatePresence>
-            {cartItems.length > 0 && (
+            {isLoading ? (
+              <div className="grid grid-cols-3 gap-4 relative z-10">
+                {[...Array(3)].map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    className="aspect-square rounded-lg"
+                    highlightColor="#9ca3af"
+                    baseColor="#6b7280"
+                    duration={1.5}
+                  />
+                ))}
+              </div>
+            ) : cartItems.length > 0 ? (
               <div className="grid grid-cols-3 gap-4 relative z-10">
                 {cartItems.map((product) => (
                   <motion.div
@@ -60,7 +72,7 @@ const Drawer = () => {
                   </motion.div>
                 ))}
               </div>
-            )}
+            ) : null}
           </AnimatePresence>
         </div>
         <AnimatePresence>
