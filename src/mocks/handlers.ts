@@ -1,9 +1,9 @@
 import { http, HttpResponse, delay } from 'msw';
-import { mockProducts } from './data/products';
+import { mockItems } from './data/items';
 
 export const handlers = [
-  http.get(`${import.meta.env.VITE_API_BASE_URL}/products`, async () => {
+  http.get(`${import.meta.env.VITE_API_BASE_URL}/items`, async () => {
     await delay(150);
-    return HttpResponse.json(mockProducts);
+    return HttpResponse.json(mockItems);
   }),
 ]; 

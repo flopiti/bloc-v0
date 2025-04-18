@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { productService } from '../services/productService';
-import { Item } from '../types/core';
+import { Item } from '@/types/core';
+import { itemService } from '@/services/itemService';
 
 const Drawer = () => {
   const [selectedProducts, setSelectedProducts] = useState<Item[]>([]);
@@ -12,10 +12,10 @@ const Drawer = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const products = await productService.getAllProducts();
-        setAllProducts(products);
+        const items = await itemService.getAllItems();
+        setAllProducts(items);
       } catch (err) {
-        setError('Failed to load products');
+        setError('Failed to load items');
         console.error(err);
       } finally {
         setIsLoading(false);
