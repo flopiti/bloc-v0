@@ -18,6 +18,6 @@ export const useCartStore = create<CartStore>((set) => ({
   },
   isLoading: false,
   setCart: (cart) => set((state) => ({ cart: { ...state.cart, ...cart } })),
-  addItem: (item) => set((state) => ({ cart: { ...state.cart, pendingItems: [...state.cart.pendingItems, item] } })),
+  addItem: (item) => set((state) => ({ cart: { ...state.cart, pendingItems: [...state.cart.pendingItems, item], confirmed: false } })),
   setLoading: (loading) => set({ isLoading: loading }),
 })); 

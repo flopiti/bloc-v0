@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
-import { Item } from '@/types/core';
 import { useItemsStore } from '@/stores/itemsStore';
 import { DEFAULT_TRANSITION } from '@/constants/animations';
 import CartBox from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
+import useCart from '@/hooks/useCart';
 interface DrawerProps {
   isDrawerOpen: boolean;
 }
@@ -13,6 +13,7 @@ interface DrawerProps {
 const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   const { cart, addItem, isLoading } = useCartStore();
   const { items } = useItemsStore();
+  const { fetchCart } = useCart();
 
 
   const cartItems = [...cart.confirmedItems, ...cart.pendingItems];
@@ -20,11 +21,12 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     product => !cartItems.some(selected => selected.id === product.id)
   );
 
-
-
   const handleConfirm = () => {
     // Handle confirmation logic here
+
     console.log('Order confirmed:', cartItems);
+    // When the order is confirmed, fetch the cart again to update the state
+    fetchCart();
   };
 
   return (
