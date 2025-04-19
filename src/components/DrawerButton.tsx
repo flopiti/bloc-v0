@@ -9,7 +9,7 @@ interface DrawerButtonProps {
 
 export const DrawerButton = ({isDrawerOpen,setIsCartOpen,} : DrawerButtonProps) => (
     <motion.button
-    className={`full-screen bg-secondary h-[3rem] w-1/2 mx-auto ${!isDrawerOpen ? 'rounded-t-3xl' : 'rounded-b-3xl'}`} 
+    className={`full-screen bg-secondary h-[3rem] w-1/2 mx-auto rounded-3xl`} 
     initial={{ bottom: 0}}
     onClick={() => setIsCartOpen(!isDrawerOpen)}
     animate={{ 
