@@ -5,7 +5,6 @@ import { DEFAULT_TRANSITION } from '@/constants/animations';
 import CartBox from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
-import useCart from '@/hooks/useCart';
 
 interface DrawerProps {
   isDrawerOpen: boolean;

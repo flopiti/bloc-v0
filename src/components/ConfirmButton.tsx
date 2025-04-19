@@ -1,7 +1,8 @@
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Cart } from "@/types/core";
 import useCart from "@/hooks/useCart";
-import { FiChevronRight } from "react-icons/fi";
+import { FiChevronRight, FiCheck } from "react-icons/fi";
+import { useState, useEffect } from "react";
 
 interface ConfirmButtonProps {
     cart: Cart;
@@ -10,6 +11,17 @@ interface ConfirmButtonProps {
 
 const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
     const { confirmCart } = useCart();
+    const [showCheckmark, setShowCheckmark] = useState(false);
+
+    useEffect(() => {
+        if (cart.confirmed) {
+            setShowCheckmark(true);
+            const timer = setTimeout(() => {
+                setShowCheckmark(false);
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [cart.confirmed]);
 
     if (isLoading) return null; 
     return (
@@ -42,20 +54,45 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                 }}
               />
             )}
-            <span className="relative z-10 flex items-center gap-2">
-              {cart.confirmed ? 'On Schedule' : 'Confirm Order'}
-              {!cart.confirmed && (
-                <motion.div
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <FiChevronRight size={16} />
-                </motion.div>
-              )}
+            <span className="relative z-10 flex items-center justify-center min-w-[140px] h-[24px]">
+              <AnimatePresence mode="wait">
+                {showCheckmark ? (
+                  <motion.div
+                    key="checkmark"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center h-full"
+                  >
+                    <FiCheck size={20} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="text"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 h-full"
+                  >
+                    {cart.confirmed ? "On Schedule" : (
+                      <>
+                        Confirm Order
+                        <motion.div
+                          animate={{ x: [0, 4, 0] }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        >
+                          <FiChevronRight size={16} />
+                        </motion.div>
+                      </>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </span>
           </motion.button>
         </motion.div>
