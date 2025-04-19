@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Cart } from "@/types/core";
 import useCart from "@/hooks/useCart";
 import { FiChevronRight, FiCheck } from "react-icons/fi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface ConfirmButtonProps {
     cart: Cart;
@@ -12,15 +12,18 @@ interface ConfirmButtonProps {
 const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
     const { confirmCart } = useCart();
     const [showCheckmark, setShowCheckmark] = useState(false);
+    const prevConfirmedRef = useRef(cart.confirmed);
 
     useEffect(() => {
-        if (cart.confirmed) {
+        // Only show checkmark when transitioning from unconfirmed to confirmed
+        if (cart.confirmed && !prevConfirmedRef.current) {
             setShowCheckmark(true);
             const timer = setTimeout(() => {
                 setShowCheckmark(false);
             }, 1000);
             return () => clearTimeout(timer);
         }
+        prevConfirmedRef.current = cart.confirmed;
     }, [cart.confirmed]);
 
     if (isLoading) return null; 
