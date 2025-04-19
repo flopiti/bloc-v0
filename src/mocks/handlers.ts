@@ -3,7 +3,7 @@ import { mockItems, mockCart as initialCart } from './data/items';
 import { Cart, Item } from '@/types/core';
 
 
-const DELAY = 100;
+const DELAY = 1000;
 // Create a mutable cart state
 let currentCart: Cart = { ...initialCart };
 
@@ -18,6 +18,7 @@ export const handlers = [
     return HttpResponse.json(currentCart);
   }),
 
+  // Add item to cart, which means the cart is unconfirmed
   http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/add`, async ({ request }) => {
     await delay(DELAY);
     const newItem = await request.json() as Item;
@@ -25,7 +26,8 @@ export const handlers = [
     // Create a new cart state that includes the new item in pendingItems
     currentCart = {
       ...currentCart,
-      pendingItems: [...currentCart.pendingItems, newItem]
+      pendingItems: [...currentCart.pendingItems, newItem],
+      confirmed: false  
     };
     
     return HttpResponse.json(currentCart);

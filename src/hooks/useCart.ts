@@ -1,39 +1,74 @@
 import { cartService } from "@/services/cartService";
 import { useCartStore } from "@/stores/cartStore";
-import { Item } from "@/types/core";
+import { Cart, Item } from "@/types/core";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 const useCart = () => {
     const { setCart, setLoading } = useCartStore();
+    const queryClient = useQueryClient();
 
-    const fetchCart = async () => {
-        try {
-            setLoading(true);
-            const cart = await cartService.getCart();
-            setCart(cart);
-        } catch (error) {
-            console.error('Error fetching cart:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { data: cart, isLoading } = useQuery<Cart>({
+        queryKey: ['cart'],
+        queryFn: cartService.getCart,
+    });
 
+    const addItemMutation = useMutation<void, Error, Item, { previousCart?: Cart }>({
+        mutationFn: cartService.addItem,
+        onMutate: async (newItem: Item) => {
+            // Cancel any outgoing refetches
+            await queryClient.cancelQueries({ queryKey: ['cart'] });
 
-    const addItem = async (item: Item) => {
-        try {
-            await cartService.addItem(item);
-            fetchCart();
-        } catch (error) {
-            console.error('Error adding item:', error);
-        }
-    };
+            // Snapshot the previous value
+            const previousCart = queryClient.getQueryData<Cart>(['cart']);
 
+            // Optimistically update to the new value
+            queryClient.setQueryData<Cart>(['cart'], (old) => {
+                if (!old) return { 
+                    confirmedItems: [],
+                    pendingItems: [newItem],
+                    confirmed: false
+                };
+                return {
+                    ...old,
+                    pendingItems: [...old.pendingItems, newItem],
+                    confirmed: false
+                };
+            });
+
+            return { previousCart };
+        },
+        onError: (err: Error, newItem: Item, context) => {
+            // Revert to the previous value on error
+            console.log('Error adding item:', newItem);
+            console.log('Error:', err);
+            if (context?.previousCart) {
+                queryClient.setQueryData(['cart'], context.previousCart);
+            }
+        },
+        onSettled: () => {
+            // Refetch cart after mutation
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
+        },
+    });
 
     useEffect(() => {
-        fetchCart();
-    }, [setCart, setLoading]);
+        if (cart) {
+            console.log('Cart:', cart);
+            setCart(cart);
+        }
+    }, [cart, setCart]);
 
-    return {  fetchCart, addItem };
+    // Update loading state based on query state
+    useEffect(() => {
+        setLoading(isLoading);
+    }, [isLoading, setLoading]);
+
+    return { 
+        cart,
+        isLoading,
+        addItem: addItemMutation.mutate
+    };
 };
 
 export default useCart;
