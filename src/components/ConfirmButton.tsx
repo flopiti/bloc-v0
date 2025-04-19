@@ -22,6 +22,9 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                 setShowCheckmark(false);
             }, 1000);
             return () => clearTimeout(timer);
+        } else if (!cart.confirmed) {
+            // Reset checkmark when cart becomes unconfirmed
+            setShowCheckmark(false);
         }
         prevConfirmedRef.current = cart.confirmed;
     }, [cart.confirmed]);
