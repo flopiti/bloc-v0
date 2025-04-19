@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { Cart } from "@/types/core";
 import useCart from "@/hooks/useCart";
+import { FiChevronRight } from "react-icons/fi";
 
 interface ConfirmButtonProps {
     cart: Cart;
@@ -44,16 +45,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
             <span className="relative z-10 flex items-center gap-2">
               {cart.confirmed ? 'On Schedule' : 'Confirm Order'}
               {!cart.confirmed && (
-                <motion.svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                <motion.div
                   animate={{ x: [0, 4, 0] }}
                   transition={{
                     duration: 1.5,
@@ -61,9 +53,8 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                     ease: "easeInOut",
                   }}
                 >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </motion.svg>
+                  <FiChevronRight size={16} />
+                </motion.div>
               )}
             </span>
           </motion.button>
