@@ -5,6 +5,7 @@ interface SuggestedItemsProps {
     suggestedItems: Item[];
     addItem: (item: Item) => void;
 }
+
 const SuggestedItems = ({ suggestedItems, addItem }: SuggestedItemsProps) => {
   
     if (suggestedItems.length === 0) {

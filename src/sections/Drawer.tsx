@@ -6,14 +6,15 @@ import CartBox from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
 import useCart from '@/hooks/useCart';
+
 interface DrawerProps {
   isDrawerOpen: boolean;
 }
 
 const Drawer = ({ isDrawerOpen }: DrawerProps) => {
-  const { cart, addItem, isLoading } = useCartStore();
+  const { cart, isLoading } = useCartStore();
   const { items } = useItemsStore();
-  const { fetchCart } = useCart();
+  const { fetchCart, addItem } = useCart();
 
 
   const cartItems = [...cart.confirmedItems, ...cart.pendingItems];

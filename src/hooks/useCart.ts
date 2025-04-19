@@ -1,5 +1,6 @@
 import { cartService } from "@/services/cartService";
 import { useCartStore } from "@/stores/cartStore";
+import { Item } from "@/types/core";
 import { useEffect } from "react";
 
 const useCart = () => {
@@ -17,11 +18,22 @@ const useCart = () => {
         }
     };
 
+
+    const addItem = async (item: Item) => {
+        try {
+            await cartService.addItem(item);
+            fetchCart();
+        } catch (error) {
+            console.error('Error adding item:', error);
+        }
+    };
+
+
     useEffect(() => {
         fetchCart();
     }, [setCart, setLoading]);
 
-    return {  fetchCart };
+    return {  fetchCart, addItem };
 };
 
 export default useCart;
