@@ -29,8 +29,6 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     // When the order is confirmed, fetch the cart again to update the state
   };
 
-
-  console.log('Cart:', cart);
   return (
     <motion.div
       className={`full-screen h-[calc(100vh-3rem)] bottom-0 p-4`}

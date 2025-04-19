@@ -40,8 +40,7 @@ const useCart = () => {
         },
         onError: (err: Error, newItem: Item, context) => {
             // Revert to the previous value on error
-            console.log('Error adding item:', newItem);
-            console.log('Error:', err);
+            console.log('Error adding item:', newItem, err);
             if (context?.previousCart) {
                 queryClient.setQueryData(['cart'], context.previousCart);
             }
@@ -52,9 +51,9 @@ const useCart = () => {
         },
     });
 
+    // Update cart state based on query state
     useEffect(() => {
         if (cart) {
-            console.log('Cart:', cart);
             setCart(cart);
         }
     }, [cart, setCart]);
@@ -65,8 +64,6 @@ const useCart = () => {
     }, [isLoading, setLoading]);
 
     return { 
-        cart,
-        isLoading,
         addItem: addItemMutation.mutate
     };
 };

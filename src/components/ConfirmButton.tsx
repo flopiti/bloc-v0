@@ -9,8 +9,6 @@ interface ConfirmButtonProps {
 
 const ConfirmButton = ({ handleConfirm, cart, isLoading }: ConfirmButtonProps) => {
 
-    console.log(cart)
-
     if (isLoading) return null; 
     return (
         <motion.div
