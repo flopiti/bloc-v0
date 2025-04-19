@@ -1,10 +1,17 @@
 import { motion } from "framer-motion"
+import { Cart } from "@/types/core";
 
 interface ConfirmButtonProps {
     handleConfirm: () => void;
+    cart: Cart;
 }
 
-const ConfirmButton = ({ handleConfirm }: ConfirmButtonProps) => {
+const ConfirmButton = ({ handleConfirm, cart }: ConfirmButtonProps) => {
+
+    
+
+
+
     return (
         <motion.div
           initial={{ opacity: 0, y: 20 }}

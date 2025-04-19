@@ -57,11 +57,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
         </motion.div>
       )}
     </AnimatePresence>
-    <AnimatePresence>
-      {cartItems.length > 0 && (
-        <ConfirmButton handleConfirm={handleConfirm} />
-      )}
-    </AnimatePresence>
+    <ConfirmButton handleConfirm={handleConfirm} cart={cart}/>
     </motion.div>
   )
 }
