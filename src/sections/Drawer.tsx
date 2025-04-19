@@ -37,28 +37,19 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
       exit={{ y: "100%" }}
       transition={DEFAULT_TRANSITION}
   >
+    
+    {/* Cart Display */}
     <CartBox isLoading={isLoading} cartItems={cartItems} />
+    
+        {/* Suggested Items */}
     <AnimatePresence>
-      {suggestedItems.length > 0 && (
-        <motion.div 
-          id="suggested-products" 
-          className="mt-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
-          <div className="grid grid-cols-3 gap-4">
-            <AnimatePresence mode="popLayout">
-                <SuggestedItems suggestedItems={suggestedItems} handleItemClick={handleProductClick} />
-            </AnimatePresence>
-          </div>
-        </motion.div>
-      )}
+        <SuggestedItems suggestedItems={suggestedItems} handleItemClick={handleProductClick} />
     </AnimatePresence>
+
+    {/* Confirm Button */}
     <ConfirmButton handleConfirm={handleConfirm} cart={cart}/>
-    </motion.div>
+    
+  </motion.div>
   )
 }
 
