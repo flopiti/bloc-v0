@@ -32,4 +32,18 @@ export const handlers = [
     
     return HttpResponse.json(currentCart);
   }),
+
+  // Confirm cart
+  http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/confirm`, async () => {
+    await delay(DELAY);
+    
+    // Move all pending items to confirmed items and mark cart as confirmed
+    currentCart = {
+      confirmedItems: [...currentCart.confirmedItems, ...currentCart.pendingItems],
+      pendingItems: [],
+      confirmed: true
+    };
+    
+    return HttpResponse.json(currentCart);
+  })
 ]; 
