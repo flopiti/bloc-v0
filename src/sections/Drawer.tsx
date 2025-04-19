@@ -14,7 +14,7 @@ interface DrawerProps {
 const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   const { cart, isLoading } = useCartStore();
   const { items } = useItemsStore();
-  const { fetchCart, addItem } = useCart();
+  const { addItem } = useCart();
 
 
   const cartItems = [...cart.confirmedItems, ...cart.pendingItems];
@@ -27,7 +27,6 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
 
     console.log('Order confirmed:', cartItems);
     // When the order is confirmed, fetch the cart again to update the state
-    fetchCart();
   };
 
   return (
