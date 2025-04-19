@@ -47,8 +47,8 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     </AnimatePresence>
 
     {/* Confirm Button */}
-    <ConfirmButton handleConfirm={handleConfirm} cart={cart}/>
-    
+    <ConfirmButton handleConfirm={handleConfirm} cart={cart} isLoading={isLoading}/>
+
   </motion.div>
   )
 }

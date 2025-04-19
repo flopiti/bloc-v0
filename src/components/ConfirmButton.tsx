@@ -4,11 +4,14 @@ import { Cart } from "@/types/core";
 interface ConfirmButtonProps {
     handleConfirm: () => void;
     cart: Cart;
+    isLoading: boolean;
 }
 
-const ConfirmButton = ({ handleConfirm, cart }: ConfirmButtonProps) => {
+const ConfirmButton = ({ handleConfirm, cart, isLoading }: ConfirmButtonProps) => {
 
     console.log(cart)
+
+    if (isLoading) return null; 
     return (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
