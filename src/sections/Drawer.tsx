@@ -21,7 +21,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
 
   return (
     <motion.div
-      className={`full-screen h-[calc(100vh-3rem)] bottom-0 p-4`}
+      className={`full-screen h-[calc(100vh-5rem)] bottom-0 p-4`}
       initial={{ y: "100%" }}
       animate={{y: isDrawerOpen ? 0 : "100%"}}
       exit={{ y: "100%" }}
