@@ -5,6 +5,7 @@ import { useItemsStore } from '@/stores/itemsStore';
 import { DEFAULT_TRANSITION } from '@/constants/animations';
 import CartBox from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
+import SuggestedItems from '@/components/SuggestedItems';
 interface DrawerProps {
   isDrawerOpen: boolean;
 }
@@ -15,7 +16,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
 
 
   const cartItems = [...cart.confirmedItems, ...cart.pendingItems];
-  const suggestedProducts = items.filter(
+  const suggestedItems = items.filter(
     product => !cartItems.some(selected => selected.id === product.id)
   );
 
@@ -38,7 +39,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   >
     <CartBox isLoading={isLoading} cartItems={cartItems} />
     <AnimatePresence>
-      {suggestedProducts.length > 0 && (
+      {suggestedItems.length > 0 && (
         <motion.div 
           id="suggested-products" 
           className="mt-4"
@@ -50,27 +51,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
           <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
           <div className="grid grid-cols-3 gap-4">
             <AnimatePresence mode="popLayout">
-              {suggestedProducts.map((product) => (
-                <motion.div 
-                  key={product.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5 }}
-                  transition={{ 
-                    duration: 0.2,
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 25
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="rounded-lg overflow-hidden cursor-pointer "
-                  onClick={() => handleProductClick(product)}
-                >
-                  <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
-                </motion.div>
-              ))}
+                <SuggestedItems suggestedItems={suggestedItems} handleItemClick={handleProductClick} />
             </AnimatePresence>
           </div>
         </motion.div>
