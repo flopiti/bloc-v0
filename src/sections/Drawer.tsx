@@ -20,9 +20,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     product => !cartItems.some(selected => selected.id === product.id)
   );
 
-  const handleProductClick = (product: Item) => {
-    addItem(product);
-  };
+
 
   const handleConfirm = () => {
     // Handle confirmation logic here
@@ -43,7 +41,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     
         {/* Suggested Items */}
     <AnimatePresence>
-        <SuggestedItems suggestedItems={suggestedItems} handleItemClick={handleProductClick} />
+        <SuggestedItems suggestedItems={suggestedItems} addItem={addItem} />
     </AnimatePresence>
 
     {/* Confirm Button */}

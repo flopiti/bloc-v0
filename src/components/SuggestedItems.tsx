@@ -3,14 +3,14 @@ import { AnimatePresence, motion } from "framer-motion"
 
 interface SuggestedItemsProps {
     suggestedItems: Item[];
-    handleItemClick: (item: Item) => void;
+    addItem: (item: Item) => void;
 }
-const SuggestedItems = ({ suggestedItems, handleItemClick }: SuggestedItemsProps) => {
+const SuggestedItems = ({ suggestedItems, addItem }: SuggestedItemsProps) => {
   
     if (suggestedItems.length === 0) {
       return null;
     }
-    
+
     return (
       <motion.div 
       id="suggested-products" 
@@ -39,7 +39,7 @@ const SuggestedItems = ({ suggestedItems, handleItemClick }: SuggestedItemsProps
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="rounded-lg overflow-hidden cursor-pointer"
-                            onClick={() => handleItemClick(item)}
+                            onClick={() => addItem(item)}
                         >
                             <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
                         </motion.div>
