@@ -7,7 +7,7 @@ interface CartStore {
   setCart: (cart: Cart) => void;
   addItem: (item: Item) => void;
   setLoading: (loading: boolean) => void;
-
+  confirmCart: () => void;
 }
 
 export const useCartStore = create<CartStore>((set) => ({
@@ -31,4 +31,5 @@ export const useCartStore = create<CartStore>((set) => ({
     });
   },
   setLoading: (loading) => set({ isLoading: loading }),
+  confirmCart: () => set((state) => ({ cart: { ...state.cart, confirmed: true } })),
 })); 

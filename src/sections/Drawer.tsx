@@ -14,20 +14,11 @@ interface DrawerProps {
 const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   const { cart, isLoading } = useCartStore();
   const { items } = useItemsStore();
-  const { addItem } = useCart();
-
 
   const cartItems = [...cart.confirmedItems, ...cart.pendingItems];
   const suggestedItems = items.filter(
     product => !cartItems.some(selected => selected.id === product.id)
   );
-
-  const handleConfirm = () => {
-    // Handle confirmation logic here
-
-    console.log('Order confirmed:', cartItems);
-    // When the order is confirmed, fetch the cart again to update the state
-  };
 
   return (
     <motion.div
@@ -43,11 +34,11 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     
         {/* Suggested Items */}
     <AnimatePresence>
-        <SuggestedItems suggestedItems={suggestedItems} addItem={addItem} />
+        <SuggestedItems suggestedItems={suggestedItems} />
     </AnimatePresence>
 
     {/* Confirm Button */}
-    <ConfirmButton handleConfirm={handleConfirm} cart={cart} isLoading={isLoading}/>
+    <ConfirmButton cart={cart} isLoading={isLoading}/>
 
   </motion.div>
   )

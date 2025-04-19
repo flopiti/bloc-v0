@@ -1,13 +1,14 @@
 import { motion } from "framer-motion"
 import { Cart } from "@/types/core";
+import useCart from "@/hooks/useCart";
 
 interface ConfirmButtonProps {
-    handleConfirm: () => void;
     cart: Cart;
     isLoading: boolean;
 }
 
-const ConfirmButton = ({ handleConfirm, cart, isLoading }: ConfirmButtonProps) => {
+const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
+    const { confirmCart } = useCart();
 
     if (isLoading) return null; 
     return (
@@ -19,7 +20,7 @@ const ConfirmButton = ({ handleConfirm, cart, isLoading }: ConfirmButtonProps) =
           className="fixed bottom-4 right-4"
         >
           <motion.button
-            onClick={handleConfirm}
+            onClick={() => confirmCart()}
             disabled={cart.confirmed}
             className={`px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden shadow-lg ${
               cart.confirmed ? 'bg-gray-400 cursor-not-allowed' : 'bg-black'

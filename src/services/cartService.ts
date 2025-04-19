@@ -20,5 +20,14 @@ export const cartService = {
       console.error('Error adding item:', error);
       throw error;
     }
+  },
+
+  async confirmCart(): Promise<void> {
+    try {
+      await axios.put(`${API_BASE_URL}/cart/confirm`);
+    } catch (error) {
+      console.error('Error confirming cart:', error);
+      throw error;
+    }
   }
 }; 

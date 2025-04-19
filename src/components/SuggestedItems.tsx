@@ -1,12 +1,14 @@
+import useCart from "@/hooks/useCart";
 import { Item } from "@/types/core";
 import { AnimatePresence, motion } from "framer-motion"
 
 interface SuggestedItemsProps {
     suggestedItems: Item[];
-    addItem: (item: Item) => void;
 }
 
-const SuggestedItems = ({ suggestedItems, addItem }: SuggestedItemsProps) => {
+const SuggestedItems = ({ suggestedItems }: SuggestedItemsProps) => {
+  
+  const { addItem } = useCart();
   
     if (suggestedItems.length === 0) {
       return null;
