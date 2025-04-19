@@ -86,7 +86,15 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                     transition={{ duration: 0.3 }}
                     className="flex items-center gap-2 h-full"
                   >
-                    {cart.confirmed ? "On Schedule" : (
+                    {cart.confirmed && !showCheckmark ? (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        On Schedule
+                      </motion.div>
+                    ) : (
                       <>
                         Confirm Order
                         <motion.div
