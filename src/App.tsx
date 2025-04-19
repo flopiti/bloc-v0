@@ -7,8 +7,6 @@ import useCart from './hooks/useCart';
 import useItems from './hooks/useItems';
 import { DrawerButton } from './components/DrawerButton';
 
-
-
 const App = () => {
   const [isDrawerOpen, setIsCartOpen] = useState(true)
 

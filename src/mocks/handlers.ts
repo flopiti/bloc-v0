@@ -1,16 +1,49 @@
 import { http, HttpResponse, delay } from 'msw';
-import { mockItems } from './data/items';
+import { mockItems, mockCart as initialCart } from './data/items';
+import { Cart, Item } from '@/types/core';
+
+
+const DELAY = 1000;
+// Create a mutable cart state
+let currentCart: Cart = { ...initialCart };
 
 export const handlers = [
   http.get(`${import.meta.env.VITE_API_BASE_URL}/items`, async () => {
-    await delay(3000);
+    await delay(DELAY);
     return HttpResponse.json(mockItems);
   }),
+
   http.get(`${import.meta.env.VITE_API_BASE_URL}/cart`, async () => {
-    await delay(3000);
-    // Return just the first item (Milk) as the initial cart item
-    return HttpResponse.json(
-      mockItems.slice(0, 1)
-    );
+    await delay(DELAY);
+    return HttpResponse.json(currentCart);
   }),
+
+  // Add item to cart, which means the cart is unconfirmed
+  http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/add`, async ({ request }) => {
+    await delay(DELAY);
+    const newItem = await request.json() as Item;
+    
+    // Create a new cart state that includes the new item in pendingItems
+    currentCart = {
+      ...currentCart,
+      pendingItems: [...currentCart.pendingItems, newItem],
+      confirmed: false  
+    };
+    
+    return HttpResponse.json(currentCart);
+  }),
+
+  // Confirm cart
+  http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/confirm`, async () => {
+    await delay(DELAY);
+    
+    // Move all pending items to confirmed items and mark cart as confirmed
+    currentCart = {
+      confirmedItems: [...currentCart.confirmedItems, ...currentCart.pendingItems],
+      pendingItems: [],
+      confirmed: true
+    };
+    
+    return HttpResponse.json(currentCart);
+  })
 ]; 
