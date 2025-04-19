@@ -1,18 +1,23 @@
 import { create } from 'zustand';
-import { Item } from '@/types/core';
+import { Item, Cart } from '@/types/core';
 
 interface CartStore {
-  cartItems: Item[];
+  cart: Cart;
   isLoading: boolean;
   setInitialItems: (items: Item[]) => void;
   addItem: (item: Item) => void;
   setLoading: (loading: boolean) => void;
+
 }
 
 export const useCartStore = create<CartStore>((set) => ({
-  cartItems: [],
+  cart: {
+    confirmedItems: [],
+    pendingItems: [],
+    confirmed: false,
+  },
   isLoading: false,
-  setInitialItems: (items) => set({ cartItems: items }),
-  addItem: (item) => set((state) => ({ cartItems: [...state.cartItems, item] })),
+  setInitialItems: (items) => set((state) => ({ cart: { ...state.cart, confirmedItems: items } })),
+  addItem: (item) => set((state) => ({ cart: { ...state.cart, pendingItems: [...state.cart.pendingItems, item] } })),
   setLoading: (loading) => set({ isLoading: loading }),
 })); 

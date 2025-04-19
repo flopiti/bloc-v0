@@ -10,9 +10,11 @@ interface DrawerProps {
 }
 
 const Drawer = ({ isDrawerOpen }: DrawerProps) => {
-  const { cartItems, addItem, isLoading } = useCartStore();
+  const { cart, addItem, isLoading } = useCartStore();
   const { items } = useItemsStore();
 
+
+  const cartItems = [...cart.confirmedItems, ...cart.pendingItems];
   const suggestedProducts = items.filter(
     product => !cartItems.some(selected => selected.id === product.id)
   );

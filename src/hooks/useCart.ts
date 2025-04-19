@@ -10,8 +10,8 @@ const useCart = () => {
       const fetchInitialCart = async () => {
           try {
             setLoading(true);
-            const items = await cartService.getCart();
-            setInitialItems(items);
+            const cart = await cartService.getCart();
+            setInitialItems([...cart.confirmedItems, ...cart.pendingItems]);
           } catch (error) {
             console.error('Error fetching initial cart:', error);
           } finally {
