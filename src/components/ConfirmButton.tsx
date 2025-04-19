@@ -43,6 +43,10 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
             }`}
             whileHover={!cart.confirmed ? { scale: 1.02 } : {}}
             whileTap={!cart.confirmed ? { scale: 0.98 } : {}}
+            animate={{
+              backgroundColor: cart.confirmed ? '#9CA3AF' : '#000000',
+              transition: { duration: 0.3 }
+            }}
           >
             {!cart.confirmed && (
               <motion.div
@@ -76,6 +80,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
                     className="flex items-center gap-2 h-full"
                   >
                     {cart.confirmed ? "On Schedule" : (
