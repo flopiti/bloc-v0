@@ -4,14 +4,15 @@ import { useEffect } from "react";
 
 
 const useCart = () => {
-    const { setInitialItems, setLoading } = useCartStore();
+    const { setCart, setLoading } = useCartStore();
 
     useEffect(() => {
       const fetchInitialCart = async () => {
           try {
             setLoading(true);
             const cart = await cartService.getCart();
-            setInitialItems([...cart.confirmedItems, ...cart.pendingItems]);
+            console.log(cart)
+            setCart(cart);
           } catch (error) {
             console.error('Error fetching initial cart:', error);
           } finally {
@@ -20,7 +21,7 @@ const useCart = () => {
       };
   
       fetchInitialCart();
-    }, [setInitialItems, setLoading]);
+    }, [setCart, setLoading]);
   
 };
 
