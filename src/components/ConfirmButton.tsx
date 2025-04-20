@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { Cart } from "@/types/core";
 import useCart from "@/hooks/useCart";
 import { FiChevronRight, FiCheck } from "react-icons/fi";
@@ -15,7 +15,6 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
     const prevConfirmedRef = useRef(cart.confirmed);
 
     useEffect(() => {
-        // Only show checkmark when transitioning from unconfirmed to confirmed
         if (cart.confirmed && !prevConfirmedRef.current) {
             setShowCheckmark(true);
             const timer = setTimeout(() => {
@@ -23,13 +22,22 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
             }, 1000);
             return () => clearTimeout(timer);
         } else if (!cart.confirmed) {
-            // Reset checkmark when cart becomes unconfirmed
             setShowCheckmark(false);
         }
         prevConfirmedRef.current = cart.confirmed;
     }, [cart.confirmed]);
 
     if (isLoading) return null; 
+
+    const getButtonState = () => {
+        if (showCheckmark) return "checkmark";
+        if (cart.confirmed) return "onSchedule";
+        return "confirm";
+    };
+
+    const currentState = getButtonState();
+    console.log("Current state:", currentState, "Cart confirmed:", cart.confirmed, "Show checkmark:", showCheckmark);
+
     return (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -39,80 +47,82 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
           className="fixed bottom-4 right-4"
         >
           <motion.button
-            onClick={() => confirmCart()}
-            disabled={cart.confirmed}
-            className={`px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden shadow-lg ${
-              cart.confirmed ? 'bg-gray-400 cursor-not-allowed' : 'bg-black'
-            }`}
+            onClick={() => !cart.confirmed && confirmCart()}
+            className="px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden shadow-lg"
             whileHover={!cart.confirmed ? { scale: 1.02 } : {}}
             whileTap={!cart.confirmed ? { scale: 0.98 } : {}}
-            animate={{
-              backgroundColor: cart.confirmed ? '#9CA3AF' : '#000000',
-              transition: { duration: 0.3 }
+            animate={currentState}
+            variants={{
+              confirm: {
+                backgroundColor: "#000000",
+                transition: { duration: 0.3 }
+              },
+              checkmark: {
+                backgroundColor: "#4F46E5",
+                transition: { duration: 0.3 }
+              },
+              onSchedule: {
+                backgroundColor: "#9CA3AF",
+                transition: { duration: 0.3 }
+              }
             }}
           >
-            {!cart.confirmed && (
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500"
-                animate={{
-                  opacity: [0.8, 1, 0.8],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            )}
-            <span className="relative z-10 flex items-center justify-center min-w-[140px] h-[24px]">
-              <AnimatePresence mode="wait">
-                {showCheckmark ? (
+            <motion.div
+              className="absolute inset-0"
+              animate={currentState}
+              variants={{
+                confirm: {
+                  background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
+                  opacity: 1,
+                  transition: { duration: 0.3 }
+                },
+                checkmark: {
+                  background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
+                  opacity: 1,
+                  transition: { duration: 0.3 }
+                },
+                onSchedule: {
+                  background: "linear-gradient(to right, #9CA3AF, #9CA3AF)",
+                  opacity: 0,
+                  transition: { duration: 0.3 }
+                }
+              }}
+            />
+            <div className="relative z-10 flex items-center justify-center min-w-[140px] h-[24px]">
+              {currentState === "checkmark" && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                >
+                  <FiCheck size={20} />
+                </motion.div>
+              )}
+              {currentState === "onSchedule" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  On Schedule
+                </motion.div>
+              )}
+              {currentState === "confirm" && (
+                <div className="flex items-center gap-2">
+                  Confirm Order
                   <motion.div
-                    key="checkmark"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center justify-center h-full"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   >
-                    <FiCheck size={20} />
+                    <FiChevronRight size={16} />
                   </motion.div>
-                ) : (
-                  <motion.div
-                    key="text"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex items-center gap-2 h-full"
-                  >
-                    {cart.confirmed && !showCheckmark ? (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                      >
-                        On Schedule
-                      </motion.div>
-                    ) : (
-                      <>
-                        Confirm Order
-                        <motion.div
-                          animate={{ x: [0, 4, 0] }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          <FiChevronRight size={16} />
-                        </motion.div>
-                      </>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </span>
+                </div>
+              )}
+            </div>
           </motion.button>
         </motion.div>
     )
