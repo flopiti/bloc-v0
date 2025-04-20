@@ -34,7 +34,7 @@ const SuggestedItems = ({ suggestedItems }: SuggestedItemsProps) => {
       <h2 className="text-xl font-bold mb-4">Suggested Products</h2>
       <div className="grid grid-cols-3 gap-4">
         <AnimatePresence mode="popLayout">
-          {suggestedItems.map((item) => (
+          {suggestedItems.slice(0, 3).map((item) => (
             <motion.div 
               key={item.id}
               layout
