@@ -10,21 +10,24 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
     const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
     return (
-        <div className="flex py-4 gap-4 justify-center">
-            {weekDays.map((day, index) => (
-                <div
-                    key={index}
-                    className={`
-                        w-8 h-8 flex items-center justify-center
-                        border border-gray-200 rounded
-                        shadow-sm
-                        text-white
-                        ${index === today ? 'border-b-2 border-b-blue-500' : ''}
-                    `}
-                >
-                    {day}
-                </div>
-            ))}
+        <div className="flex flex-col p-4">
+            <h1 className="text-white">Next Delivery</h1>
+            <div className="flex pt-4 pb-4 justify-between">
+                {weekDays.map((day, index) => (
+                    <div
+                        key={index}
+                        className={`
+                            w-8 h-8 flex items-center justify-center
+                            border border-gray-200 rounded
+                            shadow-sm
+                            text-white
+                            ${index === today ? 'border-b-2 border-b-blue-500' : ''}
+                        `}
+                    >
+                        {day}
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
