@@ -27,7 +27,8 @@ const useCart = () => {
                 if (!old) return { 
                     confirmedItems: [],
                     pendingItems: [newItem],
-                    confirmed: false
+                    confirmed: false,
+                    nextDelivery: new Date()
                 };
                 return {
                     ...old,
@@ -65,7 +66,8 @@ const useCart = () => {
           if (!old) return { 
             confirmedItems: [],
             pendingItems: [],
-            confirmed: true
+            confirmed: true,
+            nextDelivery: new Date()
           };
           return {
             ...old,
