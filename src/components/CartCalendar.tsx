@@ -28,7 +28,16 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
 
     return (
         <div className="flex flex-col p-4 border-2 border-secondary rounded-3xl my-2">
-            <h1 className="text-white">Next Delivery</h1>
+            <div className="flex justify-between items-center">
+                <h1 className="text-white">Next Delivery</h1>
+                <span className="text-white/80 text-sm">
+                    {new Date(cart.nextDelivery).toLocaleDateString('en-US', {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric'
+                    })}
+                </span>
+            </div>
             <div className="flex pt-4 pb-4 justify-between relative">
                 {weekDays.map((day, index) => (
                     <motion.div
