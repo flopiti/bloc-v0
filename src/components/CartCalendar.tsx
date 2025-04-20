@@ -29,7 +29,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
     return (
         <div className="flex flex-col p-4">
             <h1 className="text-white">Next Delivery</h1>
-            <div className="flex pt-4 pb-4 justify-between">
+            <div className="flex pt-4 pb-4 justify-between relative">
                 {weekDays.map((day, index) => (
                     <motion.div
                         key={index}
@@ -39,8 +39,11 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                             text-white relative
                             ${index === today ? 'border-3 border-white font-bold' : ''}
                         `}
+                        style={{
+                            transformOrigin: "center center"
+                        }}
                         animate={{
-                            scale: isThisWeek && index === nextDeliveryDay ? 2 : 1,
+                            scale: isThisWeek && index === nextDeliveryDay ? 1.5 : 1,
                         }}
                         transition={{ duration: 0.3 }}
                     >
