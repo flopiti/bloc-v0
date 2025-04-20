@@ -9,14 +9,6 @@ export const mockItems: Item[] = [
   { id: 6, name: 'Coffee', image: '/coffee.png' }
 ]; 
 
-// Empty cart scenario
-const emptyCart: Cart = {
-  confirmedItems: [],
-  pendingItems: [],
-  confirmed: true,
-  nextDelivery: null
-};
-
 // Confirmed cart with items
 const confirmedCart: Cart = {
   confirmedItems: [
@@ -48,15 +40,15 @@ const getRandomCart = (): Cart => {
     confirmedItems: selectedItems,
     pendingItems: [],
     confirmed: Math.random() > 0.5,
-    nextDelivery: Math.random() > 0.5 ? new Date(Date.now() + Math.random() * 7 * 24 * 60 * 60 * 1000) : null
-  };
+    nextDelivery: new Date(Date.now() + Math.random() * 7 * 24 * 60 * 60 * 1000) 
+  }
 };
 
-export const getMockCart = (scenario: string = 'confirmed'): Cart => {
+export const getMockCart = (scenario: string = 'confirmed'): Cart | null => {
   switch (scenario) {
     case 'new':
-      return emptyCart;
-    case 'random':
+        return null;
+      case 'random':
       return getRandomCart();
     case 'confirmed':
     default:
