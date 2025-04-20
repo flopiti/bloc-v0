@@ -19,9 +19,8 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                         className={`
                             w-8 h-8 flex items-center justify-center
                             border border-gray-200 rounded
-                            shadow-sm
                             text-white
-                            ${index === today ? 'border-b-2 border-b-blue-500' : ''}
+                            ${index === today ? 'border-3 border-white font-bold' : ''}
                         `}
                     >
                         {day}
