@@ -14,19 +14,12 @@ export const handlers = [
 
   http.get(`${import.meta.env.VITE_API_BASE_URL}/cart`, async () => {
     await delay(DELAY);
+    console.log('currentCart', currentCart);
     
-    // Get scenario from environment variable
-    const scenario = import.meta.env.VITE_CART_SCENARIO || 'confirmed';
-    
-    // Initialize cart if not already set
+    // If currentCart is not initialized, initialize it with mock data
     if (!currentCart) {
-      const mockCart = getMockCart(scenario);
-      currentCart = mockCart || {
-        confirmedItems: [],
-        pendingItems: [],
-        confirmed: false,
-        nextDelivery: new Date(Date.now() + 24 * 60 * 60 * 1000) // Default to tomorrow
-      };
+      const scenario = import.meta.env.VITE_CART_SCENARIO || 'confirmed';
+      currentCart = getMockCart(scenario) || { confirmedItems: [], pendingItems: [], confirmed: false };
     }
     
     return HttpResponse.json(currentCart);
@@ -37,10 +30,20 @@ export const handlers = [
     await delay(DELAY);
     const newItem = await request.json() as Item;
     
+    // Initialize currentCart if it's undefined
+    if (!currentCart) {
+      currentCart = {
+        confirmedItems: [],
+        pendingItems: [],
+        confirmed: false
+      };
+    }
+    
     // Create a new cart state that includes the new item in pendingItems
+    // while preserving existing confirmedItems
     currentCart = {
-      ...currentCart,
-      pendingItems: [...currentCart.pendingItems, newItem],
+      confirmedItems: currentCart.confirmedItems || [],
+      pendingItems: [...(currentCart.pendingItems || []), newItem],
       confirmed: false,
     };
     
@@ -51,10 +54,21 @@ export const handlers = [
   http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/confirm`, async () => {
     await delay(DELAY);
     
+    // Initialize currentCart if it's undefined
+    if (!currentCart) {
+      currentCart = {
+        confirmedItems: [],
+        pendingItems: [],
+        confirmed: false
+      };
+    }
+
     // Move all pending items to confirmed items and mark cart as confirmed
     currentCart = {
-      ...currentCart,
-      confirmedItems: [...currentCart.confirmedItems, ...currentCart.pendingItems],
+      confirmedItems: [
+        ...(currentCart.confirmedItems || []),
+        ...(currentCart.pendingItems || [])
+      ],
       pendingItems: [],
       confirmed: true,
     };

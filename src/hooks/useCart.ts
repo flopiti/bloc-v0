@@ -28,7 +28,6 @@ const useCart = () => {
                     confirmedItems: [],
                     pendingItems: [newItem],
                     confirmed: false,
-                    nextDelivery: new Date()
                 };
                 return {
                     ...old,
@@ -41,7 +40,7 @@ const useCart = () => {
         },
         onError: (err: Error, newItem: Item, context) => {
             // Revert to the previous value on error
-            console.log('Error adding item:', newItem, err);
+            console.error('Error adding item:', newItem, err);
             if (context?.previousCart) {
                 queryClient.setQueryData(['cart'], context.previousCart);
             }
@@ -55,12 +54,15 @@ const useCart = () => {
     const confirmCartMutation = useMutation({
       mutationFn: () => cartService.confirmCart(),
       onMutate: async () => {
+
+        console.log('cart', cart);
         // Cancel any outgoing refetches
         await queryClient.cancelQueries({ queryKey: ['cart'] });
 
         // Snapshot the previous value
         const previousCart = queryClient.getQueryData<Cart>(['cart']);
 
+        console.log('previousCart', previousCart);
         // Optimistically update to the new value
         queryClient.setQueryData<Cart>(['cart'], (old) => {
           if (!old) return { 

@@ -12,13 +12,13 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
     const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     
     const nextDeliveryDay = useMemo(() => {
-        if (!cart) return -1;
-        const deliveryDate = new Date(cart.nextDelivery);
-        return deliveryDate.getDay();
+        if (!cart) return null;
+        return cart.nextDelivery ? new Date(cart.nextDelivery).getDay() : null;
     }, [cart?.nextDelivery]);
 
+
     const isThisWeek = useMemo(() => {
-        if (!cart) return false;
+        if (!cart || !cart.nextDelivery) return false;
         const deliveryDate = new Date(cart.nextDelivery);
         const today = new Date();
         const diffTime = deliveryDate.getTime() - today.getTime();
@@ -46,7 +46,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                             w-8 h-8 flex items-center justify-center
                             border border-gray-200 rounded
                             text-white relative
-                            ${index === today ? 'border-[0.25rem] border-white font-bold' : ''}
+                            ${index === today  && nextDeliveryDay !== index ? 'border-[0.25rem] border-white font-bold' : ''}
                         `}
                         style={{
                             transformOrigin: "center center"

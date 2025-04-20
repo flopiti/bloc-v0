@@ -5,8 +5,8 @@ export type Item = {
 };
 
 export type Cart = {
-  confirmedItems: Item[];
-  pendingItems: Item[];
-  confirmed: boolean;
-  nextDelivery: Date ;
+  confirmedItems?: Item[];
+  pendingItems? : Item[];
+  confirmed?: boolean;
+  nextDelivery?: Date ;
 };
