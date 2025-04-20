@@ -5,6 +5,7 @@ import { DEFAULT_TRANSITION } from '@/constants/animations';
 import CartBox from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
+import CartCalendar from '@/components/CartCalendar';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -24,6 +25,11 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
       exit={{ y: "100%" }}
       transition={DEFAULT_TRANSITION}
   >
+
+    {/* Cart Calendar */}
+    <AnimatePresence>
+      {cart && <CartCalendar cart={cart} />}
+    </AnimatePresence>
     
     {/* Cart Display */}
     <CartBox isLoading={isLoading} cart={cart} />
