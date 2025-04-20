@@ -13,11 +13,8 @@ interface DrawerProps {
 const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   const { cart, isLoading } = useCartStore();
   const { items } = useItemsStore();
-
-  const cartItems = [...cart.confirmedItems, ...cart.pendingItems];
-  const suggestedItems = items.filter(
-    product => !cartItems.some(selected => selected.id === product.id)
-  );
+  const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
+  const suggestedItems = items.filter(({ id }) => !cartItems.some(({ id: cartId }) => cartId === id));
 
   return (
     <motion.div
@@ -29,7 +26,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   >
     
     {/* Cart Display */}
-    <CartBox isLoading={isLoading} cartItems={cartItems} />
+    <CartBox isLoading={isLoading} cart={cart} />
     
         {/* Suggested Items */}
     <AnimatePresence>
@@ -37,7 +34,9 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     </AnimatePresence>
 
     {/* Confirm Button */}
-    <ConfirmButton cart={cart} isLoading={isLoading}/>
+    <AnimatePresence>
+      {cart && <ConfirmButton cart={cart} isLoading={isLoading}/>}
+    </AnimatePresence>
 
   </motion.div>
   )

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { Item, Cart } from '@/types/core';
 
 interface CartStore {
-  cart: Cart;
+  cart: Cart | null;
   isLoading: boolean;
   setCart: (cart: Cart) => void;
   addItem: (item: Item) => void;
@@ -11,16 +11,15 @@ interface CartStore {
 }
 
 export const useCartStore = create<CartStore>((set) => ({
-  cart: {
-    confirmedItems: [],
-    pendingItems: [],
-    confirmed: false,
-  },
+  cart: null,
   isLoading: false,
   setCart: (cart) => set((state) => ({ cart: { ...state.cart, ...cart } })),
   addItem: (item) => {
     console.log('Adding item to cart:', item);
     return set((state) => {
+      if (!state.cart) {
+        throw new Error('Cart is not initialized');
+      }
       const newCart = { 
         ...state.cart, 
         pendingItems: [...state.cart.pendingItems, item], 
@@ -31,5 +30,10 @@ export const useCartStore = create<CartStore>((set) => ({
     });
   },
   setLoading: (loading) => set({ isLoading: loading }),
-  confirmCart: () => set((state) => ({ cart: { ...state.cart, confirmed: true } })),
+  confirmCart: () => set((state) => {
+    if (!state.cart) {
+      throw new Error('Cart is not initialized');
+    }
+    return { cart: { ...state.cart, confirmed: true } };
+  }),
 })); 
