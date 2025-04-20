@@ -10,4 +10,5 @@ export type Cart = {
   confirmedItems: Item[];
   pendingItems: Item[];
   confirmed: boolean;
+  nextDelivery: Date;
 };

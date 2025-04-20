@@ -8,6 +8,8 @@ interface CartCalendarProps {
 const CartCalendar = ({ cart }: CartCalendarProps) => {
     const today = useMemo(() => new Date().getDay(), []);
     const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    
+    console.log(cart.nextDelivery);
 
     return (
         <div className="flex flex-col p-4">

@@ -16,6 +16,17 @@ export const mockCart: Cart = {
     { id: 2, name: 'Eggs', image: '/eggs.png' }
   ],
   pendingItems: [],
-  confirmed: true
+  confirmed: true,
+  nextDelivery: (() => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const saturday = new Date(today);
+    saturday.setDate(saturday.getDate() + (6 - saturday.getDay()));
+    
+    const randomTime = Math.random() * (saturday.getTime() - tomorrow.getTime());
+    return new Date(tomorrow.getTime() + randomTime);
+  })()
 };
 

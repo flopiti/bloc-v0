@@ -2,7 +2,6 @@ import { http, HttpResponse, delay } from 'msw';
 import { mockItems, mockCart as initialCart } from './data/items';
 import { Cart, Item } from '@/types/core';
 
-
 const DELAY = 1000;
 // Create a mutable cart state
 let currentCart: Cart = { ...initialCart };
@@ -27,7 +26,7 @@ export const handlers = [
     currentCart = {
       ...currentCart,
       pendingItems: [...currentCart.pendingItems, newItem],
-      confirmed: false  
+      confirmed: false,
     };
     
     return HttpResponse.json(currentCart);
@@ -39,9 +38,10 @@ export const handlers = [
     
     // Move all pending items to confirmed items and mark cart as confirmed
     currentCart = {
+      ...currentCart,
       confirmedItems: [...currentCart.confirmedItems, ...currentCart.pendingItems],
       pendingItems: [],
-      confirmed: true
+      confirmed: true,
     };
     
     return HttpResponse.json(currentCart);
