@@ -48,13 +48,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                         transition={{ duration: 0.3 }}
                     >
                         {isThisWeek && index === nextDeliveryDay ? (
-                            <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                transition={{ delay: 0.2 }}
-                            >
-                                <TbTruckDelivery className="w-6 h-6" />
-                            </motion.div>
+                            <TbTruckDelivery className="w-6 h-6" />
                         ) : (
                             day
                         )}
