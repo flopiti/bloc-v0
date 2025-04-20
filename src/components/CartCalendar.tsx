@@ -10,11 +10,6 @@ interface CartCalendarProps {
 const CartCalendar = ({ cart }: CartCalendarProps) => {
     const today = useMemo(() => new Date().getDay(), []);
     const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-
-    
-
-
     
     const nextDeliveryDay = useMemo(() => {
         if (!cart) return -1;
@@ -51,7 +46,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                             w-8 h-8 flex items-center justify-center
                             border border-gray-200 rounded
                             text-white relative
-                            ${index === today ? 'border-3 border-white font-bold' : ''}
+                            ${index === today ? 'border-[0.25rem] border-white font-bold' : ''}
                         `}
                         style={{
                             transformOrigin: "center center"
@@ -62,7 +57,18 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                         transition={{ duration: 0.3 }}
                     >
                         {isThisWeek && index === nextDeliveryDay ? (
-                            <TbTruckDelivery className="w-6 h-6" />
+                            <motion.div
+                                animate={{
+                                    y: [0.5, -0.5, 0.5],
+                                }}
+                                transition={{
+                                    duration: 0.4,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }}
+                            >
+                                <TbTruckDelivery className="w-6 h-6" strokeWidth={0.75} />
+                            </motion.div>
                         ) : (
                             day
                         )}
