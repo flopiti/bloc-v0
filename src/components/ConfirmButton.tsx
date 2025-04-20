@@ -36,7 +36,6 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
     };
 
     const currentState = getButtonState();
-    console.log("Current state:", currentState, "Cart confirmed:", cart.confirmed, "Show checkmark:", showCheckmark);
 
     return (
         <motion.div
