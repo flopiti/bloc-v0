@@ -1,5 +1,3 @@
-
-
 export type Item = {
   id: number;
   name: string;
@@ -10,5 +8,5 @@ export type Cart = {
   confirmedItems: Item[];
   pendingItems: Item[];
   confirmed: boolean;
-  nextDelivery: Date;
+  nextDelivery: Date | null;
 };

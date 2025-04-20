@@ -1,10 +1,10 @@
 import { http, HttpResponse, delay } from 'msw';
-import { mockItems, mockCart as initialCart } from './data/items';
+import { mockItems, getMockCart } from './data/items';
 import { Cart, Item } from '@/types/core';
 
 const DELAY = 1000;
 // Create a mutable cart state
-let currentCart: Cart = { ...initialCart };
+let currentCart: Cart;
 
 export const handlers = [
   http.get(`${import.meta.env.VITE_API_BASE_URL}/items`, async () => {
@@ -14,6 +14,15 @@ export const handlers = [
 
   http.get(`${import.meta.env.VITE_API_BASE_URL}/cart`, async () => {
     await delay(DELAY);
+    
+    // Get scenario from environment variable
+    const scenario = import.meta.env.VITE_CART_SCENARIO || 'confirmed';
+    
+    // Initialize cart if not already set
+    if (!currentCart) {
+      currentCart = getMockCart(scenario);
+    }
+    
     return HttpResponse.json(currentCart);
   }),
 
