@@ -80,11 +80,6 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                   background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
                   opacity: 1,
                   transition: { duration: 0.3 }
-                },
-                onSchedule: {
-                  background: "linear-gradient(to right, #9CA3AF, #9CA3AF)",
-                  opacity: 0,
-                  transition: { duration: 0.3 }
                 }
               }}
             />
