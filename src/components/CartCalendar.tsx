@@ -27,7 +27,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
     }, [cart.nextDelivery]);
 
     return (
-        <div className="flex flex-col p-4">
+        <div className="flex flex-col p-4 border-2 border-secondary rounded-3xl my-2">
             <h1 className="text-white">Next Delivery</h1>
             <div className="flex pt-4 pb-4 justify-between relative">
                 {weekDays.map((day, index) => (
