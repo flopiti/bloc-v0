@@ -20,7 +20,13 @@ export const handlers = [
     
     // Initialize cart if not already set
     if (!currentCart) {
-      currentCart = getMockCart(scenario);
+      const mockCart = getMockCart(scenario);
+      currentCart = mockCart || {
+        confirmedItems: [],
+        pendingItems: [],
+        confirmed: false,
+        nextDelivery: new Date(Date.now() + 24 * 60 * 60 * 1000) // Default to tomorrow
+      };
     }
     
     return HttpResponse.json(currentCart);

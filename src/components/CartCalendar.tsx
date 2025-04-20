@@ -10,6 +10,11 @@ interface CartCalendarProps {
 const CartCalendar = ({ cart }: CartCalendarProps) => {
     const today = useMemo(() => new Date().getDay(), []);
     const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+
+    
+
+
     
     const nextDeliveryDay = useMemo(() => {
         if (!cart) return -1;
@@ -31,11 +36,11 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
             <div className="flex justify-between items-center">
                 <h1 className="text-white">Next Delivery</h1>
                 <span className="text-white/80 text-sm">
-                    {cart?.nextDelivery ? new Date(cart.nextDelivery).toLocaleDateString('en-US', {
+                    {cart?.nextDelivery &&  new Date(cart.nextDelivery).toLocaleDateString('en-US', {
                         weekday: 'short',
                         month: 'short',
                         day: 'numeric'
-                    }) : 'No delivery date'}
+                    }) }
                 </span>
             </div>
             <div className="flex pt-4 pb-4 justify-between relative">
