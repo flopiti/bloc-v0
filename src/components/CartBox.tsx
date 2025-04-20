@@ -20,7 +20,6 @@ const CartBox = ({ isLoading, cart }: CartBoxProps) => {
         <motion.div 
         className="border-2 border-secondary rounded-3xl relative overflow-hidden"
         layout
-        animate={{minHeight: "9rem"}}
         transition={DEFAULT_TRANSITION}
         >
         {isLoading ? <LoadingCartAnimation /> : <div className="cart-box-background" />}
