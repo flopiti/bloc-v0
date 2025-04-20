@@ -7,7 +7,7 @@ import LoadingCart from "./LoadingCart";
 
 interface CartBoxProps {
   isLoading: boolean;
-  cart: Cart | null;
+  cart: Cart;
 }
 
 const CartBox = ({ isLoading, cart }: CartBoxProps) => {
@@ -27,14 +27,14 @@ const CartBox = ({ isLoading, cart }: CartBoxProps) => {
         <AnimatePresence mode="popLayout">
             {isLoading ? (<LoadingCart/>) : cartItems.length > 0 && (
             <motion.div 
-                className="flex flex-row flex-wrap gap-3 p-4" 
+                className="flex flex-row flex-wrap gap-2 p-2 w-full" 
                 layout
             >
                 {cartItems.map((item: Item) => (
                 <motion.div
                     key={item.id}
                     layout
-                    className="flex-shrink-0"
+                    className="w-[calc(33.333%-0.5rem)]"
                 >
                     <ItemBox item={item} />
                 </motion.div>
