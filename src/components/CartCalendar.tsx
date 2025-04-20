@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { TbTruckDelivery } from "react-icons/tb";
 
 interface CartCalendarProps {               
-    cart: Cart;
+    cart: Cart | null
 }
 
 const CartCalendar = ({ cart }: CartCalendarProps) => {
@@ -12,26 +12,26 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
     const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     
     const nextDeliveryDay = useMemo(() => {
-        if (!cart.nextDelivery) return -1;
+        if (!cart) return -1;
         const deliveryDate = new Date(cart.nextDelivery);
         return deliveryDate.getDay();
-    }, [cart.nextDelivery]);
+    }, [cart?.nextDelivery]);
 
     const isThisWeek = useMemo(() => {
-        if (!cart.nextDelivery) return false;
+        if (!cart) return false;
         const deliveryDate = new Date(cart.nextDelivery);
         const today = new Date();
         const diffTime = deliveryDate.getTime() - today.getTime();
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         return diffDays <= 7;
-    }, [cart.nextDelivery]);
+    }, [cart?.nextDelivery]);
 
     return (
         <div className="flex flex-col p-4 border-2 border-secondary rounded-3xl my-2">
             <div className="flex justify-between items-center">
                 <h1 className="text-white">Next Delivery</h1>
                 <span className="text-white/80 text-sm">
-                    {cart.nextDelivery ? new Date(cart.nextDelivery).toLocaleDateString('en-US', {
+                    {cart?.nextDelivery ? new Date(cart.nextDelivery).toLocaleDateString('en-US', {
                         weekday: 'short',
                         month: 'short',
                         day: 'numeric'

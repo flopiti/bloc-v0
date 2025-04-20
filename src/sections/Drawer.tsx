@@ -27,9 +27,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   >
 
     {/* Cart Calendar */}
-    <AnimatePresence>
-      {cart && <CartCalendar cart={cart} />}
-    </AnimatePresence>
+    <CartCalendar cart={cart} />
     
     {/* Cart Display */}
     <CartBox isLoading={isLoading} cart={cart} />
