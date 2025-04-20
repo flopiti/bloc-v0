@@ -7,7 +7,7 @@ import LoadingCart from "./LoadingCart";
 
 interface CartBoxProps {
   isLoading: boolean;
-  cart: Cart;
+  cart: Cart | null;
 }
 
 const CartBox = ({ isLoading, cart }: CartBoxProps) => {
