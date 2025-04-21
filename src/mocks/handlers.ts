@@ -77,5 +77,17 @@ export const handlers = [
     };
     
     return HttpResponse.json(currentCart);
+  }),
+
+  http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/delivery-date`, async ({ request }) => {
+    await delay(DELAY);
+    const { deliveryDate } = await request.json() as { deliveryDate: Date };
+    
+    // Update the cart with the new delivery date
+    currentCart = {
+      ...currentCart,
+      nextDelivery: deliveryDate
+    };
+    
   })
 ]; 

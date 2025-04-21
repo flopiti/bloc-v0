@@ -3,12 +3,15 @@ import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { TbTruckDelivery } from "react-icons/tb";
 import dayjs from "dayjs";
-
+import { useCartStore } from "@/stores/cartStore";
 interface CartCalendarProps {               
     cart: Cart | null
 }
 
 const CartCalendar = ({ cart }: CartCalendarProps) => {
+
+    const { setDeliveryDate } = useCartStore();
+    
     const today = useMemo(() => new Date().getDay(), []);
     const weekDays = useMemo(() => {
         return Array.from({ length: 7 }, (_, i) => {

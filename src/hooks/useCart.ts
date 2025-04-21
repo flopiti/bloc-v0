@@ -93,6 +93,15 @@ const useCart = () => {
         queryClient.invalidateQueries({ queryKey: ['cart'] });
       },
     });
+
+    const setDeliveryDateMutation = useMutation({
+      mutationFn: (deliveryDate: Date) => cartService.setDeliveryDate(deliveryDate),
+      onMutate: async (deliveryDate: Date) => {
+        await queryClient.cancelQueries({ queryKey: ['cart'] });
+      },
+    });
+
+
     // Update cart state based on query state
     useEffect(() => {
         if (cart) {
@@ -107,7 +116,8 @@ const useCart = () => {
 
     return { 
         addItem: addItemMutation.mutate,
-        confirmCart: confirmCartMutation.mutate
+        confirmCart: confirmCartMutation.mutate,
+        setDeliveryDate: setDeliveryDateMutation.mutate
     };
 };
 

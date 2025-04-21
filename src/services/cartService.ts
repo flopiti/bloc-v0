@@ -29,5 +29,14 @@ export const cartService = {
       console.error('Error confirming cart:', error);
       throw error;
     }
+    },
+
+  async setDeliveryDate(deliveryDate: Date): Promise<void> {
+    try {
+      await axios.put(`${API_BASE_URL}/cart/delivery-date`, { deliveryDate });
+    } catch (error) {
+      console.error('Error setting delivery date:', error);
+      throw error;
+    }
   }
 }; 
