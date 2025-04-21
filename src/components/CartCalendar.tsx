@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { TbTruckDelivery } from "react-icons/tb";
 import dayjs from "dayjs";
 import { useCartStore } from "@/stores/cartStore";
+
 interface CartCalendarProps {               
     cart: Cart | null
 }
@@ -12,7 +13,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
     const { setDeliveryDate } = useCartStore();
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
     
-    const today = useMemo(() => new Date().getDay(), []);
+    const today = useMemo(() => dayjs().day(), []);
     const weekDays = useMemo(() => {
         return Array.from({ length: 7 }, (_, i) => {
             return dayjs().day(i).format('dd')[0];
@@ -21,16 +22,15 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
     const availableDays = ['Tuesday', 'Sunday'];
     
     const nextDeliveryDay = useMemo(() => {
-        if (!cart) return null;
-        return cart.nextDelivery ? new Date(cart.nextDelivery).getDay() : null;
+        if (!cart?.nextDelivery) return null;
+        return dayjs(cart.nextDelivery).day();
     }, [cart?.nextDelivery]);
 
     const isThisWeek = useMemo(() => {
-        if (!cart || !cart.nextDelivery) return false;
-        const deliveryDate = new Date(cart.nextDelivery);
-        const today = new Date();
-        const diffTime = deliveryDate.getTime() - today.getTime();
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if (!cart?.nextDelivery) return false;
+        const deliveryDate = dayjs(cart.nextDelivery);
+        const today = dayjs();
+        const diffDays = deliveryDate.diff(today, 'day');
         return diffDays <= 7;
     }, [cart?.nextDelivery]);
 
@@ -43,9 +43,9 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
         if (!isDayAvailable(dayIndex)) return;
         
         setSelectedDay(dayIndex);
-        const today = new Date();
-        const daysUntilTarget = (dayIndex - today.getDay() + 7) % 7;
-        const targetDate = dayjs(today).add(daysUntilTarget, 'day').toDate();
+        const today = dayjs();
+        const daysUntilTarget = (dayIndex - today.day() + 7) % 7;
+        const targetDate = today.add(daysUntilTarget, 'day').toDate();
         setDeliveryDate(targetDate);
     };
 
@@ -54,11 +54,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
             <div className="flex justify-between items-center">
                 <h1 className="text-white">Next Delivery</h1>
                 <span className="text-white/80 text-sm">
-                    {cart?.nextDelivery &&  new Date(cart.nextDelivery).toLocaleDateString('en-US', {
-                        weekday: 'short',
-                        month: 'short',
-                        day: 'numeric'
-                    }) }
+                    {cart?.nextDelivery && dayjs(cart.nextDelivery).format('ddd, MMM D')}
                 </span>
             </div>
             <div className="flex pt-6 px-2 pb-4 justify-between relative">

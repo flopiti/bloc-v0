@@ -1,4 +1,5 @@
 import { Cart, Item } from '@/types/core';
+import dayjs from 'dayjs';
 
 export const mockItems: Item[] = [
   { id: 1, name: 'Milk', image: '/milk.png' },
@@ -18,15 +19,11 @@ const confirmedCart: Cart = {
   pendingItems: [],
   confirmed: true,
   nextDelivery: (() => {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    
-    const saturday = new Date(today);
-    saturday.setDate(saturday.getDate() + (6 - saturday.getDay()));
-    
-    const randomTime = Math.random() * (saturday.getTime() - tomorrow.getTime());
-    return new Date(tomorrow.getTime() + randomTime);
+    const today = dayjs();
+    const tomorrow = today.add(1, 'day');
+    const saturday = today.day(6);
+    const randomTime = Math.random() * (saturday.diff(tomorrow, 'millisecond'));
+    return tomorrow.add(randomTime, 'millisecond').toDate();
   })()
 };
 
@@ -40,7 +37,7 @@ const getRandomCart = (): Cart => {
     confirmedItems: selectedItems,
     pendingItems: [],
     confirmed: Math.random() > 0.5,
-    nextDelivery: new Date(Date.now() + Math.random() * 7 * 24 * 60 * 60 * 1000) 
+    nextDelivery: dayjs().add(Math.random() * 7, 'day').toDate()
   }
 };
 

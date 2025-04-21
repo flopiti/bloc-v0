@@ -1,6 +1,7 @@
 import { http, HttpResponse, delay } from 'msw';
 import { mockItems, getMockCart } from './data/items';
 import { Cart, Item } from '@/types/core';
+import dayjs from 'dayjs';
 
 const DELAY = 1000;
 // Create a mutable cart state
@@ -86,8 +87,9 @@ export const handlers = [
     // Update the cart with the new delivery date
     currentCart = {
       ...currentCart,
-      nextDelivery: deliveryDate
+      nextDelivery: dayjs(deliveryDate).toDate()
     };
     
+    return HttpResponse.json(currentCart);
   })
 ]; 
