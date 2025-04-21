@@ -14,14 +14,26 @@ export const handlers = [
 
   http.get(`${import.meta.env.VITE_API_BASE_URL}/cart`, async () => {
     await delay(DELAY);
-    console.log('currentCart', currentCart);
     
     // If currentCart is not initialized, initialize it with mock data
     if (!currentCart) {
       const scenario = import.meta.env.VITE_CART_SCENARIO || 'confirmed';
-      currentCart = getMockCart(scenario) || { confirmedItems: [], pendingItems: [], confirmed: false };
+      currentCart =  getMockCart(scenario);
     }
     
+    return HttpResponse.json(currentCart);
+  }),
+
+  http.post(`${import.meta.env.VITE_API_BASE_URL}/cart/initialize`, async () => {
+    await delay(DELAY);
+    
+    const scenario = import.meta.env.VITE_CART_SCENARIO || 'confirmed';
+    const mockCart = getMockCart(scenario);
+    if (!mockCart) {
+      return new HttpResponse(null, { status: 500 });
+    }
+    
+    currentCart = mockCart;
     return HttpResponse.json(currentCart);
   }),
 
@@ -29,21 +41,12 @@ export const handlers = [
   http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/add`, async ({ request }) => {
     await delay(DELAY);
     const newItem = await request.json() as Item;
-    
-    // Initialize currentCart if it's undefined
-    if (!currentCart) {
-      currentCart = {
-        confirmedItems: [],
-        pendingItems: [],
-        confirmed: false
-      };
-    }
-    
+        
     // Create a new cart state that includes the new item in pendingItems
     // while preserving existing confirmedItems
     currentCart = {
-      confirmedItems: currentCart.confirmedItems || [],
-      pendingItems: [...(currentCart.pendingItems || []), newItem],
+      confirmedItems: currentCart?.confirmedItems || [],
+      pendingItems: currentCart ? [...currentCart.pendingItems, newItem] : [newItem],
       confirmed: false,
     };
     

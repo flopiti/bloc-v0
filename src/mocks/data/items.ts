@@ -44,10 +44,14 @@ const getRandomCart = (): Cart => {
   }
 };
 
-export const getMockCart = (scenario: string = 'confirmed'): Cart | null => {
+export const getMockCart = (scenario: string = 'confirmed'): Cart  => {
   switch (scenario) {
     case 'new':
-        return null;
+        return {
+            confirmedItems: [],
+            pendingItems: [],
+            confirmed: false,
+        };
       case 'random':
       return getRandomCart();
     case 'confirmed':
