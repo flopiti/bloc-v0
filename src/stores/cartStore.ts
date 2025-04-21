@@ -15,7 +15,6 @@ export const useCartStore = create<CartStore>((set) => ({
   isLoading: false,
   setCart: (cart) => set((state) => ({ cart: { ...state.cart, ...cart } })),
   addItem: (item) => {
-    console.log('Adding item to cart:', item);
     return set((state) => {
       if (!state.cart) {
         throw new Error('Cart is not initialized');
