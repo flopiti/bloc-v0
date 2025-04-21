@@ -59,7 +59,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                     }) }
                 </span>
             </div>
-            <div className="flex pt-4 pb-4 justify-between relative">
+            <div className="flex pt-6 px-2 pb-4 justify-between relative">
                 {weekDays.map((day, index) => (
                     <motion.div
                         key={index}
