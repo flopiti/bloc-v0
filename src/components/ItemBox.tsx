@@ -19,7 +19,7 @@ const ItemBox = ({ item }: ItemBoxProps) => {
             stiffness: 300,
             damping: 25
         }}
-        className="max-w-[9rem] rounded-lg overflow-hidden relative group cursor-pointer max-h-[9rem]"
+        className="rounded-lg overflow-hidden relative group cursor-pointer aspect-square w-full"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
     >

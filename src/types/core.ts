@@ -1,5 +1,3 @@
-
-
 export type Item = {
   id: number;
   name: string;
@@ -8,6 +6,7 @@ export type Item = {
 
 export type Cart = {
   confirmedItems: Item[];
-  pendingItems: Item[];
+  pendingItems : Item[];
   confirmed: boolean;
+  nextDelivery?: Date ;
 };

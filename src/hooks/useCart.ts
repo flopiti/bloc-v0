@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 const useCart = () => {
-    const { setCart, setLoading } = useCartStore();
+    const { setCart, setLoading, setDeliveryDate } = useCartStore();
     const queryClient = useQueryClient();
 
     const { data: cart, isLoading } = useQuery<Cart>({
@@ -27,7 +27,7 @@ const useCart = () => {
                 if (!old) return { 
                     confirmedItems: [],
                     pendingItems: [newItem],
-                    confirmed: false
+                    confirmed: false,
                 };
                 return {
                     ...old,
@@ -40,7 +40,7 @@ const useCart = () => {
         },
         onError: (err: Error, newItem: Item, context) => {
             // Revert to the previous value on error
-            console.log('Error adding item:', newItem, err);
+            console.error('Error adding item:', newItem, err);
             if (context?.previousCart) {
                 queryClient.setQueryData(['cart'], context.previousCart);
             }
@@ -54,18 +54,22 @@ const useCart = () => {
     const confirmCartMutation = useMutation({
       mutationFn: () => cartService.confirmCart(),
       onMutate: async () => {
+
+        console.log('cart', cart);
         // Cancel any outgoing refetches
         await queryClient.cancelQueries({ queryKey: ['cart'] });
 
         // Snapshot the previous value
         const previousCart = queryClient.getQueryData<Cart>(['cart']);
 
+        console.log('previousCart', previousCart);
         // Optimistically update to the new value
         queryClient.setQueryData<Cart>(['cart'], (old) => {
           if (!old) return { 
             confirmedItems: [],
             pendingItems: [],
-            confirmed: true
+            confirmed: true,
+            nextDelivery: new Date()
           };
           return {
             ...old,
@@ -89,6 +93,49 @@ const useCart = () => {
         queryClient.invalidateQueries({ queryKey: ['cart'] });
       },
     });
+
+    const setDeliveryDateMutation = useMutation({
+        mutationFn: (deliveryDate: Date) => cartService.setDeliveryDate(deliveryDate),
+        onMutate: async (deliveryDate: Date) => {
+            // Cancel any outgoing refetches
+            await queryClient.cancelQueries({ queryKey: ['cart'] });
+
+            // Snapshot the previous value
+            const previousCart = queryClient.getQueryData<Cart>(['cart']);
+
+            // Optimistically update to the new value
+            queryClient.setQueryData<Cart>(['cart'], (old) => {
+                if (!old) return { 
+                    confirmedItems: [],
+                    pendingItems: [],
+                    confirmed: false,
+                    nextDelivery: deliveryDate
+                };
+                return {
+                    ...old,
+                    nextDelivery: deliveryDate,
+                    confirmed: false // Set to unconfirmed when delivery date changes
+                };
+            });
+
+            // Update the store
+            setDeliveryDate(deliveryDate);
+
+            return { previousCart };
+        },
+        onError: (err: Error, _, context) => {
+            // Revert to the previous value on error
+            console.error('Error setting delivery date:', err);
+            if (context?.previousCart) {
+                queryClient.setQueryData(['cart'], context.previousCart);
+            }
+        },
+        onSettled: () => {
+            // Refetch cart after mutation
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
+        },
+    });
+
     // Update cart state based on query state
     useEffect(() => {
         if (cart) {
@@ -103,7 +150,8 @@ const useCart = () => {
 
     return { 
         addItem: addItemMutation.mutate,
-        confirmCart: confirmCartMutation.mutate
+        confirmCart: confirmCartMutation.mutate,
+        setDeliveryDate: setDeliveryDateMutation.mutate
     };
 };
 

@@ -5,6 +5,7 @@ import { DEFAULT_TRANSITION } from '@/constants/animations';
 import CartBox from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
+import CartCalendar from '@/components/CartCalendar';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -13,11 +14,8 @@ interface DrawerProps {
 const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   const { cart, isLoading } = useCartStore();
   const { items } = useItemsStore();
-
-  const cartItems = [...cart.confirmedItems, ...cart.pendingItems];
-  const suggestedItems = items.filter(
-    product => !cartItems.some(selected => selected.id === product.id)
-  );
+  const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
+  const suggestedItems = items.filter(({ id }) => !cartItems.some(({ id: cartId }) => cartId === id));
 
   return (
     <motion.div
@@ -27,9 +25,12 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
       exit={{ y: "100%" }}
       transition={DEFAULT_TRANSITION}
   >
+
+    {/* Cart Calendar */}
+    <CartCalendar cart={cart} />
     
     {/* Cart Display */}
-    <CartBox isLoading={isLoading} cartItems={cartItems} />
+    <CartBox isLoading={isLoading} cart={cart} />
     
         {/* Suggested Items */}
     <AnimatePresence>
@@ -37,7 +38,9 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
     </AnimatePresence>
 
     {/* Confirm Button */}
-    <ConfirmButton cart={cart} isLoading={isLoading}/>
+    <AnimatePresence>
+      {cart && <ConfirmButton cart={cart} isLoading={isLoading}/>}
+    </AnimatePresence>
 
   </motion.div>
   )
