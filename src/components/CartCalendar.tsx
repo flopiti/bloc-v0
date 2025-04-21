@@ -4,13 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { TbTruckDelivery } from "react-icons/tb";
 import dayjs from "dayjs";
 import { useCartStore } from "@/stores/cartStore";
+import useCart from "@/hooks/useCart";
 
 interface CartCalendarProps {               
     cart: Cart | null
 }
 
 const CartCalendar = ({ cart }: CartCalendarProps) => {
-    const { setDeliveryDate } = useCartStore();
+    const { setDeliveryDate: setStoreDeliveryDate } = useCartStore();
+    const { setDeliveryDate } = useCart();
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
     
     const today = useMemo(() => dayjs().day(), []);

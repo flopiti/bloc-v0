@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 const useCart = () => {
-    const { setCart, setLoading } = useCartStore();
+    const { setCart, setLoading, setDeliveryDate } = useCartStore();
     const queryClient = useQueryClient();
 
     const { data: cart, isLoading } = useQuery<Cart>({
@@ -95,12 +95,45 @@ const useCart = () => {
     });
 
     const setDeliveryDateMutation = useMutation({
-      mutationFn: (deliveryDate: Date) => cartService.setDeliveryDate(deliveryDate),
-      onMutate: async (deliveryDate: Date) => {
-        await queryClient.cancelQueries({ queryKey: ['cart'] });
-      },
-    });
+        mutationFn: (deliveryDate: Date) => cartService.setDeliveryDate(deliveryDate),
+        onMutate: async (deliveryDate: Date) => {
+            // Cancel any outgoing refetches
+            await queryClient.cancelQueries({ queryKey: ['cart'] });
 
+            // Snapshot the previous value
+            const previousCart = queryClient.getQueryData<Cart>(['cart']);
+
+            // Optimistically update to the new value
+            queryClient.setQueryData<Cart>(['cart'], (old) => {
+                if (!old) return { 
+                    confirmedItems: [],
+                    pendingItems: [],
+                    confirmed: false,
+                    nextDelivery: deliveryDate
+                };
+                return {
+                    ...old,
+                    nextDelivery: deliveryDate
+                };
+            });
+
+            // Update the store
+            setDeliveryDate(deliveryDate);
+
+            return { previousCart };
+        },
+        onError: (err: Error, _, context) => {
+            // Revert to the previous value on error
+            console.error('Error setting delivery date:', err);
+            if (context?.previousCart) {
+                queryClient.setQueryData(['cart'], context.previousCart);
+            }
+        },
+        onSettled: () => {
+            // Refetch cart after mutation
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
+        },
+    });
 
     // Update cart state based on query state
     useEffect(() => {
