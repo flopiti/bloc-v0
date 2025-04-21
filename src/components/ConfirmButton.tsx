@@ -55,6 +55,13 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
 
     const currentState = getButtonState();
 
+
+    const allItems = [...cart.confirmedItems, ...cart.pendingItems];
+    const isCartValid = allItems.length > 0 && cart.nextDelivery;
+
+
+    if (!isCartValid) return null;
+
     return (
         <motion.div
           initial={{  y: 20 }}
