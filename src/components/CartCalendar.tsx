@@ -2,6 +2,7 @@ import { Cart } from "@/types/core";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { TbTruckDelivery } from "react-icons/tb";
+import dayjs from "dayjs";
 
 interface CartCalendarProps {               
     cart: Cart | null
@@ -9,13 +10,17 @@ interface CartCalendarProps {
 
 const CartCalendar = ({ cart }: CartCalendarProps) => {
     const today = useMemo(() => new Date().getDay(), []);
-    const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    const weekDays = useMemo(() => {
+        return Array.from({ length: 7 }, (_, i) => {
+            return dayjs().day(i).format('dd')[0];
+        });
+    }, []);
+    const availableDays = ['Tuesday', 'Sunday'];
     
     const nextDeliveryDay = useMemo(() => {
         if (!cart) return null;
         return cart.nextDelivery ? new Date(cart.nextDelivery).getDay() : null;
     }, [cart?.nextDelivery]);
-
 
     const isThisWeek = useMemo(() => {
         if (!cart || !cart.nextDelivery) return false;
@@ -25,6 +30,11 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         return diffDays <= 7;
     }, [cart?.nextDelivery]);
+
+    const isDayAvailable = (dayIndex: number) => {
+        const dayName = dayjs().day(dayIndex).format('dddd');
+        return availableDays.includes(dayName);
+    };
 
     return (
         <div className="flex flex-col p-4 border-2 border-secondary rounded-3xl my-2">
@@ -47,14 +57,20 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                             border border-gray-200 rounded
                             text-white relative
                             ${index === today  && nextDeliveryDay !== index ? 'border-[0.25rem] border-white font-bold' : ''}
+                            ${isDayAvailable(index) ? 'bg-blue-500/30' : ''}
                         `}
                         style={{
                             transformOrigin: "center center"
                         }}
                         animate={{
                             scale: isThisWeek && index === nextDeliveryDay ? 1.5 : 1,
+                            backgroundColor: isDayAvailable(index) ? ['rgba(59, 130, 246, 0.3)', 'rgba(59, 130, 246, 0.5)', 'rgba(59, 130, 246, 0.3)'] : undefined
                         }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ 
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
                     >
                         {isThisWeek && index === nextDeliveryDay ? (
                             <motion.div
