@@ -81,7 +81,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
               },
               onSchedule: {
                 backgroundColor: "#9CA3AF",
-                transition: { duration: 0.3, ease: "easeInOut" }
+                transition: { duration: 1, ease: "easeInOut" }
               }
             }}
           >
@@ -112,13 +112,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                 <CheckMarkAnimation />
               )}
               {currentState === "onSchedule" && (
-                <motion.div
-                  // initial={{ opacity: 0 }}
-                  // animate={{ opacity: 1 }}
-                  // exit={{ opacity: 0 }}
-                >
-                  On Schedule
-                </motion.div>
+                  <span>On Schedule</span>  
               )}
               {currentState === "confirm" && (
                 <ConfirmedButtonWithArrow />
