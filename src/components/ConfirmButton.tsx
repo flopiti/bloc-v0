@@ -50,35 +50,44 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
             className="px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden shadow-lg"
             whileHover={!cart.confirmed ? { scale: 1.02 } : {}}
             whileTap={!cart.confirmed ? { scale: 0.98 } : {}}
+            initial={false}
             animate={currentState}
             variants={{
               confirm: {
-                backgroundColor: "#000000",
-                transition: { duration: 0.3 }
+                transition: { duration: 2, ease: "easeInOut" }
               },
               checkmark: {
-                backgroundColor: "#4F46E5",
-                transition: { duration: 0.3 }
+                // backgroundColor: "#4F46E5",
+                transition: { duration: 1, ease: "easeInOut" }
               },
               onSchedule: {
                 backgroundColor: "#9CA3AF",
-                transition: { duration: 0.3 }
+                transition: { duration: 2, ease: "easeInOut" }
               }
             }}
           >
             <motion.div
               className="absolute inset-0"
+              initial={{ opacity: 0 }}
               animate={currentState}
               variants={{
                 confirm: {
                   background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
-                  opacity: 1,
-                  transition: { duration: 0.3 }
+                  opacity: [0, 1],
+                  transition: { 
+                    duration: 2,
+                    ease: [0.4, 0, 0.2, 1],
+                    opacity: { duration: 2, ease: [0.4, 0, 0.2, 1] }
+                  }
                 },
                 checkmark: {
                   background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
-                  opacity: 1,
-                  transition: { duration: 0.3 }
+                  opacity: [1, 0],
+                  transition: { 
+                    duration: 2,
+                    ease: [0.4, 0, 0.2, 1],
+                    opacity: { duration: 2, ease: [0.4, 0, 0.2, 1] }
+                  }
                 }
               }}
             />
