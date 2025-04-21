@@ -1,6 +1,6 @@
 import { Cart } from "@/types/core";
-import { useMemo } from "react";
-import { motion } from "framer-motion";
+import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { TbTruckDelivery } from "react-icons/tb";
 import dayjs from "dayjs";
 import { useCartStore } from "@/stores/cartStore";
@@ -10,6 +10,7 @@ interface CartCalendarProps {
 
 const CartCalendar = ({ cart }: CartCalendarProps) => {
     const { setDeliveryDate } = useCartStore();
+    const [selectedDay, setSelectedDay] = useState<number | null>(null);
     
     const today = useMemo(() => new Date().getDay(), []);
     const weekDays = useMemo(() => {
@@ -41,6 +42,7 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
     const handleDayClick = (dayIndex: number) => {
         if (!isDayAvailable(dayIndex)) return;
         
+        setSelectedDay(dayIndex);
         const today = new Date();
         const daysUntilTarget = (dayIndex - today.getDay() + 7) % 7;
         const targetDate = dayjs(today).add(daysUntilTarget, 'day').toDate();
@@ -60,47 +62,52 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                 </span>
             </div>
             <div className="flex pt-6 px-2 pb-4 justify-between relative">
-                {weekDays.map((day, index) => (
-                    <motion.div
-                        key={index}
-                        className={`
-                            w-8 h-8 flex items-center justify-center
-                            border border-gray-200 rounded
-                            text-white relative
-                            ${index === today  && nextDeliveryDay !== index ? 'border-[0.25rem] border-white font-bold' : ''}
-                            ${isDayAvailable(index) ? 'bg-[#3399ff]/40 cursor-pointer hover:bg-[#3399ff]/60' : 'cursor-not-allowed'}
-                            ${nextDeliveryDay === index ? 'bg-[#3399ff]' : ''}
-                        `}
-                        style={{
-                            transformOrigin: "center center"
-                        }}
-                        animate={{
-                            scale: isThisWeek && index === nextDeliveryDay ? 1.5 : 1
-                        }}
-                        transition={{ 
-                            duration: 0.3,
-                            ease: "easeInOut"
-                        }}
-                        onClick={() => handleDayClick(index)}
-                    >
-                        {isThisWeek && index === nextDeliveryDay ? (
-                            <motion.div
-                                animate={{
-                                    y: [0.5, -0.5, 0.5],
-                                }}
-                                transition={{
-                                    duration: 0.4,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                            >
-                                <TbTruckDelivery className="w-6 h-6" strokeWidth={0.75} />
-                            </motion.div>
-                        ) : (
-                            day
-                        )}
-                    </motion.div>
-                ))}
+                <AnimatePresence>
+                    {weekDays.map((day, index) => (
+                        <motion.div
+                            key={index}
+                            layout
+                            className={`
+                                w-8 h-8 flex items-center justify-center
+                                border border-gray-200 rounded
+                                text-white relative
+                                ${index === today  && nextDeliveryDay !== index ? 'border-[0.25rem] border-white font-bold' : ''}
+                                ${isDayAvailable(index) ? 'bg-[#3399ff]/40 cursor-pointer hover:bg-[#3399ff]/60' : 'cursor-not-allowed'}
+                                ${nextDeliveryDay === index ? 'bg-[#3399ff]' : ''}
+                            `}
+                            style={{
+                                transformOrigin: "center center"
+                            }}
+                            animate={{
+                                scale: isThisWeek && index === nextDeliveryDay ? 1.5 : 1,
+                                margin: selectedDay === index ? "0 0.5rem" : "0 0.25rem"
+                            }}
+                            transition={{ 
+                                duration: 0.3,
+                                ease: "easeInOut",
+                                layout: { duration: 0.3 }
+                            }}
+                            onClick={() => handleDayClick(index)}
+                        >
+                            {isThisWeek && index === nextDeliveryDay ? (
+                                <motion.div
+                                    animate={{
+                                        y: [0.5, -0.5, 0.5],
+                                    }}
+                                    transition={{
+                                        duration: 0.4,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                >
+                                    <TbTruckDelivery className="w-6 h-6" strokeWidth={0.75} />
+                                </motion.div>
+                            ) : (
+                                day
+                            )}
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
             </div>
         </div>
     )
