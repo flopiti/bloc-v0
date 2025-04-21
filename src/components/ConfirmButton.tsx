@@ -9,6 +9,24 @@ interface ConfirmButtonProps {
     isLoading: boolean;
 }
 
+const ConfirmedButtonWithArrow = () => (
+  <div className="flex items-center gap-2">
+  Confirm Order
+  <motion.div
+    animate={{ x: [0, 4, 0] }}
+    transition={{
+      duration: 1.5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <FiChevronRight size={16} />
+  </motion.div>
+  </div>
+)
+
+const CHECKMARK_DELAY = 1;
+
 const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
     const { confirmCart } = useCart();
     const [showCheckmark, setShowCheckmark] = useState(false);
@@ -19,7 +37,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
             setShowCheckmark(true);
             const timer = setTimeout(() => {
                 setShowCheckmark(false);
-            }, 1000);
+            }, CHECKMARK_DELAY * 1000);
             return () => clearTimeout(timer);
         } else if (!cart.confirmed) {
             setShowCheckmark(false);
@@ -37,11 +55,18 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
 
     const currentState = getButtonState();
 
+
+    const allItems = [...cart.confirmedItems, ...cart.pendingItems];
+    const isCartValid = allItems.length > 0 && cart.nextDelivery;
+
+
+    if (!isCartValid) return null;
+
     return (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
+          initial={{  y: 20 }}
+          animate={{  y: 0 }}
+          exit={{  y: 20 }}
           transition={{ duration: 0.3 }}
           className="fixed bottom-4 right-4"
         >
@@ -54,76 +79,50 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
             animate={currentState}
             variants={{
               confirm: {
-                transition: { duration: 2, ease: "easeInOut" }
+                backgroundColor: "#3B82F6",
+                transition: { duration: 0.3, ease: "easeInOut" }
               },
               checkmark: {
-                // backgroundColor: "#4F46E5",
-                transition: { duration: 1, ease: "easeInOut" }
+                backgroundColor: "#3B82F6",
+                transition: { duration: CHECKMARK_DELAY, ease: "easeInOut" }
               },
               onSchedule: {
                 backgroundColor: "#9CA3AF",
-                transition: { duration: 2, ease: "easeInOut" }
+                transition: { duration: 1, ease: "easeInOut" }
               }
             }}
           >
             <motion.div
               className="absolute inset-0"
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={currentState}
               variants={{
                 confirm: {
                   background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
-                  opacity: [0, 1],
-                  transition: { 
-                    duration: 2,
-                    ease: [0.4, 0, 0.2, 1],
-                    opacity: { duration: 2, ease: [0.4, 0, 0.2, 1] }
-                  }
+                  opacity: 1,
+                  transition: { duration: 0.3, ease: "easeInOut" }
                 },
                 checkmark: {
                   background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
-                  opacity: [1, 0],
-                  transition: { 
-                    duration: 2,
-                    ease: [0.4, 0, 0.2, 1],
-                    opacity: { duration: 2, ease: [0.4, 0, 0.2, 1] }
-                  }
+                  opacity: 1,
+                  transition: { duration: CHECKMARK_DELAY, ease: "easeInOut" }
+                },
+                onSchedule: {
+                  background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
+                  opacity: 0,
+                  transition: { duration: 0.3, ease: "easeInOut" }
                 }
               }}
             />
             <div className="relative z-10 flex items-center justify-center min-w-[140px] h-[24px]">
               {currentState === "checkmark" && (
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                >
-                  <FiCheck size={20} />
-                </motion.div>
+                <CheckMarkAnimation />
               )}
               {currentState === "onSchedule" && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  On Schedule
-                </motion.div>
+                  <span>On Schedule</span>  
               )}
               {currentState === "confirm" && (
-                <div className="flex items-center gap-2">
-                  Confirm Order
-                  <motion.div
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <FiChevronRight size={16} />
-                  </motion.div>
-                </div>
+                <ConfirmedButtonWithArrow />
               )}
             </div>
           </motion.button>
@@ -131,4 +130,13 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
     )
 }
 
-export default ConfirmButton;
+export default ConfirmButton;const CheckMarkAnimation = () => (
+  <motion.div
+    initial={{ scale: 0 }}
+    animate={{ scale: 1 }}
+    exit={{ scale: 0 }}
+  >
+    <FiCheck size={20} />
+  </motion.div>
+)
+
