@@ -57,19 +57,22 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                             border border-gray-200 rounded
                             text-white relative
                             ${index === today  && nextDeliveryDay !== index ? 'border-[0.25rem] border-white font-bold' : ''}
-                            ${isDayAvailable(index) ? 'bg-blue-500/30' : ''}
+                            ${isDayAvailable(index) ? 'bg-[#3399ff]/40' : ''}
                         `}
                         style={{
                             transformOrigin: "center center"
                         }}
                         animate={{
                             scale: isThisWeek && index === nextDeliveryDay ? 1.5 : 1,
-                            backgroundColor: isDayAvailable(index) ? ['rgba(59, 130, 246, 0.3)', 'rgba(59, 130, 246, 0.5)', 'rgba(59, 130, 246, 0.3)'] : undefined
+                            backgroundColor: isDayAvailable(index) 
+                                ? ['#3399ff80', '#3399ffb3', '#3399ff80'] 
+                                : undefined
                         }}
                         transition={{ 
                             duration: 2,
                             repeat: Infinity,
-                            ease: "easeInOut"
+                            ease: "easeInOut",
+                            times: [0, 0.5, 1]
                         }}
                     >
                         {isThisWeek && index === nextDeliveryDay ? (
