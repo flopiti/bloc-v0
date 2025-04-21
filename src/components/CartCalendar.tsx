@@ -9,7 +9,6 @@ interface CartCalendarProps {
 }
 
 const CartCalendar = ({ cart }: CartCalendarProps) => {
-
     const { setDeliveryDate } = useCartStore();
     
     const today = useMemo(() => new Date().getDay(), []);
@@ -39,6 +38,15 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
         return availableDays.includes(dayName);
     };
 
+    const handleDayClick = (dayIndex: number) => {
+        if (!isDayAvailable(dayIndex)) return;
+        
+        const today = new Date();
+        const daysUntilTarget = (dayIndex - today.getDay() + 7) % 7;
+        const targetDate = dayjs(today).add(daysUntilTarget, 'day').toDate();
+        setDeliveryDate(targetDate);
+    };
+
     return (
         <div className="flex flex-col p-4 border-2 border-secondary rounded-3xl my-2">
             <div className="flex justify-between items-center">
@@ -60,23 +68,20 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
                             border border-gray-200 rounded
                             text-white relative
                             ${index === today  && nextDeliveryDay !== index ? 'border-[0.25rem] border-white font-bold' : ''}
-                            ${isDayAvailable(index) ? 'bg-[#3399ff]/40' : ''}
+                            ${isDayAvailable(index) ? 'bg-[#3399ff]/40 cursor-pointer hover:bg-[#3399ff]/60' : 'cursor-not-allowed'}
+                            ${nextDeliveryDay === index ? 'bg-[#3399ff]' : ''}
                         `}
                         style={{
                             transformOrigin: "center center"
                         }}
                         animate={{
-                            scale: isThisWeek && index === nextDeliveryDay ? 1.5 : 1,
-                            backgroundColor: isDayAvailable(index) 
-                                ? ['#3399ff80', '#3399ffb3', '#3399ff80'] 
-                                : undefined
+                            scale: isThisWeek && index === nextDeliveryDay ? 1.5 : 1
                         }}
                         transition={{ 
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            times: [0, 0.5, 1]
+                            duration: 0.3,
+                            ease: "easeInOut"
                         }}
+                        onClick={() => handleDayClick(index)}
                     >
                         {isThisWeek && index === nextDeliveryDay ? (
                             <motion.div
