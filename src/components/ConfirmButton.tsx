@@ -73,7 +73,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
             variants={{
               confirm: {
                 backgroundColor: "#3B82F6",
-                transition: { duration: 2, ease: "easeInOut" }
+                transition: { duration: 0.3, ease: "easeInOut" }
               },
               checkmark: {
                 backgroundColor: "#3B82F6",
@@ -81,7 +81,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
               },
               onSchedule: {
                 backgroundColor: "#9CA3AF",
-                transition: { duration: 2, ease: "easeInOut" }
+                transition: { duration: 0.3, ease: "easeInOut" }
               }
             }}
           >
@@ -93,7 +93,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                 confirm: {
                   background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
                   opacity: 1,
-                  transition: { duration: 2, ease: "easeInOut" }
+                  transition: { duration: 0.3, ease: "easeInOut" }
                 },
                 checkmark: {
                   background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
@@ -103,7 +103,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
                 onSchedule: {
                   background: "linear-gradient(to right, #3B82F6, #8B5CF6)",
                   opacity: 0,
-                  transition: { duration: 2, ease: "easeInOut" }
+                  transition: { duration: 0.3, ease: "easeInOut" }
                 }
               }}
             />
