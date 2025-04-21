@@ -84,10 +84,11 @@ export const handlers = [
     await delay(DELAY);
     const { deliveryDate } = await request.json() as { deliveryDate: Date };
     
-    // Update the cart with the new delivery date
+    // Update the cart with the new delivery date and set to unconfirmed
     currentCart = {
       ...currentCart,
-      nextDelivery: dayjs(deliveryDate).toDate()
+      nextDelivery: dayjs(deliveryDate).toDate(),
+      confirmed: false // Set to unconfirmed when delivery date changes
     };
     
     return HttpResponse.json(currentCart);

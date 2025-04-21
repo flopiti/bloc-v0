@@ -113,7 +113,8 @@ const useCart = () => {
                 };
                 return {
                     ...old,
-                    nextDelivery: deliveryDate
+                    nextDelivery: deliveryDate,
+                    confirmed: false // Set to unconfirmed when delivery date changes
                 };
             });
 
