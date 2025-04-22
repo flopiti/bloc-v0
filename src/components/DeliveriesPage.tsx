@@ -6,7 +6,7 @@ import { TbTruckDelivery } from 'react-icons/tb';
 import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS } from '@/utils/dates';
 
 const DeliveriesPage = () => {
-    const { cart } = useCartStore();
+    const { cart, isCartValid } = useCartStore();
     const { setDeliveryDate, confirmCart } = useCart();
 
     const handleDateClick = (date: dayjs.Dayjs) => {
@@ -22,6 +22,15 @@ const DeliveriesPage = () => {
         if (!cart?.nextDelivery) return false;
         const twoWeeksFromNext = dayjs(cart.nextDelivery).add(2, 'week');
         return date.isSame(twoWeeksFromNext, 'day');
+    };
+
+    const handleConfirmDelivery = () => {
+        if (isCartValid()) {
+            confirmCart();
+        } 
+        else {
+
+        }
     };
 
     return (
@@ -55,7 +64,7 @@ const DeliveriesPage = () => {
                     </div>
                     {!cart.confirmed && (
                         <motion.button
-                            onClick={() => confirmCart()}
+                            onClick={handleConfirmDelivery}
                             className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}

@@ -9,9 +9,10 @@ interface CartStore {
   setLoading: (loading: boolean) => void;
   confirmCart: () => void;
   setDeliveryDate: (deliveryDate: Date) => void;
+  isCartValid: () => boolean;
 }
 
-export const useCartStore = create<CartStore>((set) => ({
+export const useCartStore = create<CartStore>((set, get) => ({
   cart: null,
   isLoading: false,
   setCart: (cart) => set((state) => ({ cart: { ...state.cart, ...cart } })),
@@ -42,4 +43,11 @@ export const useCartStore = create<CartStore>((set) => ({
     }
     return { cart: { ...state.cart, confirmed: true } };
   }),
+  isCartValid: () => {
+    const state = get();
+    if (!state.cart) return false;
+    const hasItems = state.cart.pendingItems.length > 0 || state.cart.confirmedItems.length > 0;
+    const hasDeliveryDate = !!state.cart.nextDelivery;
+    return hasItems && hasDeliveryDate;
+  },
 })); 
