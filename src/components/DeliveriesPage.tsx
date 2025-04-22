@@ -22,7 +22,7 @@ const DeliveriesPage = ({openDrawer, goHome}:DeliveriesPageProps) => {
     const handleConfirmDelivery = () => isCartValid() ? confirmCart() : openDrawer();
 
     return (
-        <div className="p-6 w-full">
+        <div className="p-6">
             <div className="flex justify-between items-center mb-8">
                 <div className="flex items-center gap-4">
                     <button 

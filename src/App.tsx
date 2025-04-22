@@ -36,22 +36,19 @@ const App = () => {
   }
 
   return (
-    <div className="relative overflow-hidden">
-      <AnimatePresence mode="wait">
-      {currentView === PAGE.HOME && <Home goToPage={goToPage} />}
+    <div className="relative">
 
+      <AnimatePresence>
         {!isDrawerOpen && (
           <motion.div
-            key={currentView}
-            initial={{ x: 390 }}
-            animate={{ x: 0 }}
-            exit={{ x: 390 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ 
-              duration: 0.1,
-              ease: "easeInOut"
+              duration: 0.3
             }}
-            className="w-full"
             >
+            {currentView === PAGE.HOME && <Home goToPage={goToPage} />}
             {currentView === PAGE.DELIVERIES && <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} goHome={goHome} />}
           </motion.div>
         )}
