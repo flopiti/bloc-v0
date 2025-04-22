@@ -16,7 +16,7 @@ const DrawerCart = ({ isLoading, cart }: DrawerCartProps) => {
 
     return (
         <motion.div 
-            className="bg-white/5 rounded-xl flex flex-col gap-3 my-4 relative overflow-hidden"
+            className="bg-white/5 rounded-2xl flex flex-col gap-3 my-4 relative overflow-hidden"
             layout
             transition={DEFAULT_TRANSITION}
         >
@@ -51,7 +51,7 @@ const DrawerCart = ({ isLoading, cart }: DrawerCartProps) => {
                         initial={false}
                     >
                         <motion.div
-                            className="absolute inset-0 border-2 border-secondary rounded-xl pointer-events-none"
+                            className="absolute inset-0 border-2 border-secondary rounded-2xl pointer-events-none"
                             animate={{
                                 borderColor: ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.1)'],
                                 borderWidth: ['2px', '3px', '4px', '3px', '2px']
