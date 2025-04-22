@@ -85,7 +85,7 @@ const DeliveriesPage = () => {
                     }}
                     className="mt-4 text-center"
                 >
-                    Please select the date of your first biweekly deliveries
+                    Please select the date of your first biweekly delivery
                 </motion.div>
             )}
         </div>
