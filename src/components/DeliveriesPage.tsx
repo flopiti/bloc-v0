@@ -1,10 +1,14 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
+import useCart from '@/hooks/useCart';
+import { TbTruckDelivery } from 'react-icons/tb';
 
 const DeliveriesPage = () => {
     const { cart } = useCartStore();
+    const { setDeliveryDate } = useCart();
+    const [error, setError] = useState<string | null>(null);
     const today = useMemo(() => dayjs(), []);
     const weekDays = useMemo(() => {
         return Array.from({ length: 7 }, (_, i) => {
@@ -28,6 +32,21 @@ const DeliveriesPage = () => {
         return date.isBefore(today, 'day') || date.isSame(today, 'day');
     };
 
+    const handleDateClick = (date: dayjs.Dayjs) => {
+        setDeliveryDate(date.toDate());
+    };
+
+    const isNextDelivery = (date: dayjs.Dayjs) => {
+        if (!cart?.nextDelivery) return false;
+        return date.isSame(dayjs(cart.nextDelivery), 'day');
+    };
+
+    const isTwoWeeksFromNextDelivery = (date: dayjs.Dayjs) => {
+        if (!cart?.nextDelivery) return false;
+        const twoWeeksFromNext = dayjs(cart.nextDelivery).add(2, 'week');
+        return date.isSame(twoWeeksFromNext, 'day');
+    };
+
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-8">
@@ -37,14 +56,10 @@ const DeliveriesPage = () => {
                 </span>
             </div>
 
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white/5 rounded-xl p-4 relative"
-            >
+            <div className="bg-white/5 rounded-xl p-4 relative">
                 {!cart?.nextDelivery && (
                     <motion.div
-                        className="absolute inset-0 border-2 border-secondary rounded-xl"
+                        className="absolute inset-0 border-2 border-secondary rounded-xl pointer-events-none"
                         animate={{
                             borderColor: ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.1)'],
                             borderWidth: ['2px', '3px', '4px', '3px', '2px']
@@ -69,16 +84,53 @@ const DeliveriesPage = () => {
                 <div className="grid grid-cols-7 gap-2">
                     {nextFourWeeks.flat().map((date, index) => (
                         <div key={index} className="text-center">
-                            <div className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${
-                                isPastOrToday(date) ? 'text-white/30' : 'text-white'
-                            }`}>
-                                {date.date()}
-                            </div>
+                            <button 
+                                type="button"
+                                disabled={isPastOrToday(date)}
+                                onClick={() => handleDateClick(date)}
+                                className={`w-8 h-8 flex items-center justify-center rounded-full text-sm cursor-pointer transition-all ${
+                                    isPastOrToday(date) 
+                                        ? 'text-white/30 cursor-not-allowed' 
+                                        : 'text-white hover:bg-white/10'
+                                } ${
+                                    isNextDelivery(date)
+                                        ? 'border-2 border-blue-500'
+                                        : isTwoWeeksFromNextDelivery(date)
+                                        ? 'bg-blue-500/20'
+                                        : ''
+                                }`}
+                            >
+                                {isNextDelivery(date) ? (
+                                    <motion.div
+                                        animate={{
+                                            y: [0.5, -0.5, 0.5],
+                                        }}
+                                        transition={{
+                                            duration: 0.4,
+                                            repeat: Infinity,
+                                            ease: "easeInOut"
+                                        }}
+                                    >
+                                        <TbTruckDelivery className="w-6 h-6" strokeWidth={0.75} />
+                                    </motion.div>
+                                ) : (
+                                    date.date()
+                                )}
+                            </button>
                         </div>
                     ))}
                 </div>
-            </motion.div>
-            {!cart?.nextDelivery && (
+            </div>
+            {error && (
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-4 text-center text-red-500"
+                >
+                    {error}
+                </motion.div>
+            )}
+            {!cart?.nextDelivery && !error && (
                 <motion.div
                     animate={{ 
                         color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
