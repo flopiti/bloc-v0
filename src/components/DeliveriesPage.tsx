@@ -7,8 +7,7 @@ import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS } from '@/utils/dates';
 
 const DeliveriesPage = () => {
     const { cart } = useCartStore();
-    const { setDeliveryDate } = useCart();
-
+    const { setDeliveryDate, confirmCart } = useCart();
 
     const handleDateClick = (date: dayjs.Dayjs) => {
         setDeliveryDate(date.toDate());
@@ -43,15 +42,27 @@ const DeliveriesPage = () => {
                         stiffness: 300,
                         damping: 25
                     }}
-                    className="mb-6 p-4 bg-white/5 rounded-xl flex items-center gap-3"
+                    className="mb-6 p-4 bg-white/5 rounded-xl flex flex-col gap-3"
                 >
-                    <TbTruckDelivery className="w-6 h-6 text-blue-500" />
-                    <div>
-                        <div className="text-white/60 text-sm">Next Delivery</div>
-                        <div className="text-white font-medium">
-                            {dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')}
+                    <div className="flex items-center gap-3">
+                        <TbTruckDelivery className="w-6 h-6 text-blue-500" />
+                        <div>
+                            <div className="text-white/60 text-sm">Next Delivery</div>
+                            <div className="text-white font-medium">
+                                {dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')}
+                            </div>
                         </div>
                     </div>
+                    {!cart.confirmed && (
+                        <motion.button
+                            onClick={() => confirmCart()}
+                            className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            Confirm Delivery
+                        </motion.button>
+                    )}
                 </motion.div>
             )}
 
