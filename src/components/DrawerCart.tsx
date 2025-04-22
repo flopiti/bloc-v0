@@ -8,9 +8,10 @@ import { TbShoppingCart } from "react-icons/tb";
 interface DrawerCartProps {
   isLoading: boolean;
   cart: Cart | null;
+  handleOpenCart: () => void;
 }
 
-const DrawerCart = ({ isLoading, cart }: DrawerCartProps) => {
+const DrawerCart = ({ isLoading, cart, handleOpenCart }: DrawerCartProps) => {
     const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
 
     return (
@@ -61,13 +62,13 @@ const DrawerCart = ({ isLoading, cart }: DrawerCartProps) => {
                                 times: [0, 0.25, 0.5, 0.75, 1]
                             }}
                         />
-                        <div className="flex items-center justify-center p-6 text-center relative z-10">
+                        <button onClick={handleOpenCart} className="flex items-center justify-center p-6 text-center relative z-10 w-full">
                             <div className="flex flex-col items-center">
                                 <TbShoppingCart className="w-12 h-12 text-secondary/60 mb-3" />
                                 <span className="text-white/80 text-lg font-medium">Your Cart is Empty</span>
                                 <span className="text-white/60 text-sm mt-1">Select items to start building your cart</span>
                             </div>
-                        </div>
+                        </button>
                     </motion.div>
                 )}
             </AnimatePresence>

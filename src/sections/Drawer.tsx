@@ -6,13 +6,14 @@ import DrawerCart from '@/components/DrawerCart';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
 import DrawerCalendar from '@/components/DrawerCalendar';
+import { PAGE } from '@/enums/core';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
-  handleOpenDeliveries: () => void;
+  goToPage: (page: PAGE) => void;
 } 
 
-const Drawer = ({ isDrawerOpen, handleOpenDeliveries }: DrawerProps) => {
+const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
   const { cart, isLoading } = useCartStore();
   const { items } = useItemsStore();
   const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
@@ -30,12 +31,12 @@ const Drawer = ({ isDrawerOpen, handleOpenDeliveries }: DrawerProps) => {
     {/* Cart Calendar */}
 
     <AnimatePresence>
-      {cart && <DrawerCalendar handleOpenDeliveries={handleOpenDeliveries} />}
+      {cart && <DrawerCalendar handleOpenDeliveries={() => goToPage(PAGE.DELIVERIES)} />}
     </AnimatePresence>
     
     {/* Cart Display */}
     
-    <DrawerCart isLoading={isLoading} cart={cart} />
+    <DrawerCart isLoading={isLoading} cart={cart} handleOpenCart={() => goToPage(PAGE.CART)}/>
     
         {/* Suggested Items */}
     <AnimatePresence>

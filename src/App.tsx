@@ -21,11 +21,6 @@ const App = () => {
   useCart();
   useItems();
 
-  const handleOpenDeliveries = () => {
-    setCurrentView(PAGE.DELIVERIES)
-    setIsDrawerOpen(false)
-  }
-
   const goHome = () => {
     setCurrentView(PAGE.HOME)
     setIsDrawerOpen(false)
@@ -64,7 +59,7 @@ const App = () => {
 
       {/* Drawer */}
       <AnimatePresence>
-        {isDrawerOpen && <Drawer isDrawerOpen={isDrawerOpen} handleOpenDeliveries={handleOpenDeliveries}  />}
+        {isDrawerOpen && <Drawer isDrawerOpen={isDrawerOpen} goToPage={goToPage}  />}
       </AnimatePresence>
     </div>
   )
