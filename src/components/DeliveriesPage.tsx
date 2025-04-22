@@ -35,7 +35,16 @@ const DeliveriesPage = () => {
             </div>
 
             {cart?.nextDelivery && (
-                <div className="mb-6 p-4 bg-white/5 rounded-xl flex items-center gap-3">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ 
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 25
+                    }}
+                    className="mb-6 p-4 bg-white/5 rounded-xl flex items-center gap-3"
+                >
                     <TbTruckDelivery className="w-6 h-6 text-blue-500" />
                     <div>
                         <div className="text-white/60 text-sm">Next Delivery</div>
@@ -43,10 +52,19 @@ const DeliveriesPage = () => {
                             {dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')}
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
 
-            <div className="bg-white/5 rounded-xl p-4 relative">
+            <motion.div 
+                layout
+                transition={{ 
+                    layout: { 
+                        duration: 0.3,
+                        ease: "easeOut"
+                    }
+                }}
+                className="bg-white/5 rounded-xl p-4 relative"
+            >
                 {!cart?.nextDelivery && (
                     <motion.div
                         className="absolute inset-0 border-2 border-secondary rounded-xl pointer-events-none"
@@ -112,7 +130,7 @@ const DeliveriesPage = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </motion.div>
 
             {!cart?.nextDelivery  && (
                 <motion.div
