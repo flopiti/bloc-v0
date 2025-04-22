@@ -25,6 +25,16 @@ const App = () => {
     setIsDrawerOpen(false)
   }
 
+  const goHome = () => {
+    setCurrentView(PAGE.HOME)
+    setIsDrawerOpen(false)
+  }
+
+  const goToPage = (page: PAGE) => {
+    setCurrentView(page)
+    setIsDrawerOpen(false)
+  }
+
   return (
     <div className="relative">
 
@@ -38,8 +48,8 @@ const App = () => {
               duration: 0.3
             }}
             >
-            {currentView === PAGE.HOME && <Home />}
-            {currentView === PAGE.DELIVERIES && <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} />}
+            {currentView === PAGE.HOME && <Home goToPage={goToPage} />}
+            {currentView === PAGE.DELIVERIES && <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} goHome={goHome} />}
           </motion.div>
         )}
       </AnimatePresence>
