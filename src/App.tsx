@@ -8,7 +8,6 @@ import useItems from './hooks/useItems';
 import { DrawerButton } from './components/DrawerButton';
 import DeliveriesPage from './components/DeliveriesPage';
 import { PAGE } from './enums/core';
-import { DEFAULT_DELAY } from './constants/animations';
 
 const START_WITH_DRAWER = true
 
@@ -40,7 +39,7 @@ const App = () => {
             }}
             >
             {currentView === PAGE.HOME && <Home />}
-            {currentView === PAGE.DELIVERIES && <DeliveriesPage />}
+            {currentView === PAGE.DELIVERIES && <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} />}
           </motion.div>
         )}
       </AnimatePresence>
