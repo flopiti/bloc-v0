@@ -19,11 +19,14 @@ const CartCalendar = ({ cart, handleOpenDeliveries }: CartCalendarProps) => {
             {cart?.nextDelivery ? (
                 <ActualCalendar cart={cart} />
             ) : (
-                <div className="flex flex-col items-center justify-center p-6 rounded-2xl">
+                <button 
+                    onClick={handleOpenDeliveries}
+                    className="flex flex-col items-center justify-center p-6 rounded-2xl w-full hover:bg-white/5 transition-colors"
+                >
                     <TbTruckDelivery className="w-12 h-12 text-secondary/60 mb-3" />
                     <span className="text-white/80 text-lg font-medium">No Delivery Schedule</span>
                     <span className="text-white/60 text-sm mt-1">Set up your delivery frequency to get started</span>
-                </div>
+                </button>
             )}
         </div>
     )
