@@ -29,9 +29,12 @@ const Drawer = ({ isDrawerOpen, handleOpenDeliveries }: DrawerProps) => {
 
     {/* Cart Calendar */}
 
-    <DrawerCalendar handleOpenDeliveries={handleOpenDeliveries} />
+    <AnimatePresence>
+      {cart && <DrawerCalendar handleOpenDeliveries={handleOpenDeliveries} />}
+    </AnimatePresence>
     
     {/* Cart Display */}
+    
     <DrawerCart isLoading={isLoading} cart={cart} />
     
         {/* Suggested Items */}
