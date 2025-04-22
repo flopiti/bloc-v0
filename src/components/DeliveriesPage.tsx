@@ -103,7 +103,7 @@ const DeliveriesPage = () => {
                                 {isNextDelivery(date) ? (
                                     <motion.div
                                         animate={{
-                                            y: [0.5, -0.5, 0.5],
+                                            y: [0.5, -0.2, 0.5],
                                         }}
                                         transition={{
                                             duration: 0.4,
