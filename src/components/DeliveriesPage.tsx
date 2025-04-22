@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
+import { useCartStore } from '@/stores/cartStore';
 
 const DeliveriesPage = () => {
+    const { cart } = useCartStore();
     const today = useMemo(() => dayjs(), []);
     const weekDays = useMemo(() => {
         return Array.from({ length: 7 }, (_, i) => {
@@ -34,8 +36,21 @@ const DeliveriesPage = () => {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/5 rounded-xl p-4"
+                className="bg-white/5 rounded-xl p-4 relative"
             >
+                {!cart?.nextDelivery && (
+                    <motion.div
+                        className="absolute inset-0 border-2 border-secondary rounded-xl"
+                        animate={{
+                            borderColor: ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.1)']
+                        }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                    />
+                )}
                 <div className="grid grid-cols-7 gap-2 mb-2">
                     {weekDays.map((day, dayIndex) => (
                         <div key={dayIndex} className="text-center">
@@ -55,6 +70,15 @@ const DeliveriesPage = () => {
                     ))}
                 </div>
             </motion.div>
+            {!cart?.nextDelivery && (
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-4 text-center text-white/60"
+                >
+                    Please select the date of your first biweekly deliveries
+                </motion.div>
+            )}
         </div>
     );
 };
