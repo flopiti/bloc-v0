@@ -1,4 +1,4 @@
-import {  AnimatePresence } from 'framer-motion'
+import {  AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import Home from './sections/Home';
 import Drawer from './sections/Drawer';
@@ -8,8 +8,9 @@ import useItems from './hooks/useItems';
 import { DrawerButton } from './components/DrawerButton';
 import DeliveriesPage from './components/DeliveriesPage';
 import { PAGE } from './enums/core';
+import { DEFAULT_DELAY } from './constants/animations';
 
-const START_WITH_DRAWER = true
+const START_WITH_DRAWER = false
 
 const App = () => {
 
@@ -28,14 +29,21 @@ const App = () => {
   return (
     <div className="relative">
 
-      {/* Home */}
       <AnimatePresence>
-        {currentView === PAGE.HOME && !isDrawerOpen && <Home />}
-      </AnimatePresence>
-
-      {/* Deliveries Page */}
-      <AnimatePresence>
-        {currentView === PAGE.DELIVERIES && !isDrawerOpen && <DeliveriesPage />}
+        {!isDrawerOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ 
+              delay: DEFAULT_DELAY/2,
+              duration: 0.3
+            }}
+            >
+            {currentView === PAGE.HOME && <Home />}
+            {currentView === PAGE.DELIVERIES && <DeliveriesPage />}
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {/* Drawer Button */}
