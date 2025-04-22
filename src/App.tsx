@@ -37,18 +37,21 @@ const App = () => {
 
   return (
     <div className="relative">
+      <AnimatePresence mode="wait">
+        {!isDrawerOpen && currentView === PAGE.HOME && <Home goToPage={goToPage} />}
 
-      <AnimatePresence>
         {!isDrawerOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            key={currentView}
+            initial={{ x: 390 }}
+            animate={{ x: 0 }}
+            exit={{ x: 390 }}
             transition={{ 
-              duration: 0.3
+              duration: 0.1,
+              ease: "easeInOut"
             }}
+            className="w-full"
             >
-            {currentView === PAGE.HOME && <Home goToPage={goToPage} />}
             {currentView === PAGE.DELIVERIES && <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} goHome={goHome} />}
           </motion.div>
         )}
