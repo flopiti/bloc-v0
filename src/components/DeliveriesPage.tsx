@@ -42,12 +42,14 @@ const DeliveriesPage = () => {
                     <motion.div
                         className="absolute inset-0 border-2 border-secondary rounded-xl"
                         animate={{
-                            borderColor: ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.1)']
+                            borderColor: ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.1)'],
+                            borderWidth: ['2px', '3px', '4px', '3px', '2px']
                         }}
                         transition={{
                             duration: 2,
                             repeat: Infinity,
-                            ease: "easeInOut"
+                            ease: "easeInOut",
+                            times: [0, 0.25, 0.5, 0.75, 1]
                         }}
                     />
                 )}
@@ -72,9 +74,16 @@ const DeliveriesPage = () => {
             </motion.div>
             {!cart?.nextDelivery && (
                 <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-4 text-center text-white/60"
+                    animate={{ 
+                        color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
+                    }}
+                    transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        times: [0, 0.25, 0.5, 0.75, 1]
+                    }}
+                    className="mt-4 text-center"
                 >
                     Please select the date of your first biweekly deliveries
                 </motion.div>
