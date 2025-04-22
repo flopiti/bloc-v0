@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import { useItemsStore } from '@/stores/itemsStore';
 import { DEFAULT_TRANSITION } from '@/constants/animations';
-import DrawerCart from '@/components/CartBox';
+import DrawerCart from '@/components/DrawerCart';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
 import DrawerCalendar from '@/components/DrawerCalendar';

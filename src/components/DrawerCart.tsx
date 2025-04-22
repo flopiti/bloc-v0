@@ -5,12 +5,12 @@ import { DEFAULT_TRANSITION } from "@/constants/animations";
 import LoadingCartAnimation from "./LoadingCartAnimation";
 import LoadingCart from "./LoadingCart";
 
-interface CartBoxProps {
+interface DrawerCartProps {
   isLoading: boolean;
   cart: Cart | null;
 }
 
-const DrawerCart = ({ isLoading, cart }: CartBoxProps) => {
+const DrawerCart = ({ isLoading, cart }: DrawerCartProps) => {
 
     const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
 
