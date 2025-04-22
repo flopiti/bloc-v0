@@ -1,6 +1,7 @@
 export enum PAGE {
     HOME = 'home',
     DELIVERIES = 'deliveries',
+    CART = 'cart',
 }
 
 export enum CALENDAR_MODE {

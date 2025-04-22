@@ -13,6 +13,7 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }  ) => {
     >
         <h1>Home</h1>
 
+        <button onClick={() => goToPage(PAGE.CART)}>Go to cart</button>
         <button onClick={() => goToPage(PAGE.DELIVERIES)}>Go to deliveries</button>
     </motion.div>
 

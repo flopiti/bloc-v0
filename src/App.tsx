@@ -8,6 +8,7 @@ import useItems from './hooks/useItems';
 import { DrawerButton } from './components/DrawerButton';
 import DeliveriesPage from './components/DeliveriesPage';
 import { PAGE } from './enums/core';
+import CartPage from './components/CartPage';
 
 const START_WITH_DRAWER = false
 
@@ -53,6 +54,7 @@ const App = () => {
             className="w-full"
             >
             {currentView === PAGE.DELIVERIES && <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} goHome={goHome} />}
+            {currentView === PAGE.CART && <CartPage />}
           </motion.div>
         )}
       </AnimatePresence>
