@@ -1,14 +1,15 @@
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { TbTruckDelivery } from 'react-icons/tb';
-import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS } from '@/utils/dates';
+import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, NEXT_WEEK } from '@/utils/dates';
 
 interface CalendarProps {
     nextDelivery?: Date;
-    onDateClick: (date: dayjs.Dayjs) => void;
+    onDateClick? : (date: dayjs.Dayjs) => void;
+    mode?: '1WEEK' | '4WEEKS';
 }
 
-const Calendar = ({ nextDelivery, onDateClick }: CalendarProps) => {
+const Calendar = ({ nextDelivery, onDateClick, mode = '4WEEKS' }: CalendarProps) => {
     const isNextDelivery = (date: dayjs.Dayjs) => {
         if (!nextDelivery) return false;
         return date.isSame(dayjs(nextDelivery), 'day');
@@ -19,6 +20,8 @@ const Calendar = ({ nextDelivery, onDateClick }: CalendarProps) => {
         const twoWeeksFromNext = dayjs(nextDelivery).add(2, 'week');
         return date.isSame(twoWeeksFromNext, 'day');
     };
+
+    const dates = mode === '1WEEK' ? NEXT_WEEK : NEXT_FOUR_WEEKS.flat();
 
     return (
         <motion.div 
@@ -56,12 +59,12 @@ const Calendar = ({ nextDelivery, onDateClick }: CalendarProps) => {
                 ))}
             </div>
             <div className="grid grid-cols-7 gap-2">
-                {NEXT_FOUR_WEEKS.flat().map((date, index) => (
+                {dates.map((date, index) => (
                     <div key={index} className="text-center">
                         <button 
                             type="button"
                             disabled={isPastOrToday(date)}
-                            onClick={() => onDateClick(date)}
+                            onClick={() => onDateClick?.(date)}
                             className={`flex items-center justify-center rounded-full text-sm cursor-pointer transition-all ${
                                 isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
                             } ${

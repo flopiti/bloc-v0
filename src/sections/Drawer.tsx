@@ -6,6 +6,7 @@ import CartBox from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
 import CartCalendar from '@/components/CartCalendar';
+import Calendar from '@/components/Calendar';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -28,8 +29,8 @@ const Drawer = ({ isDrawerOpen, handleOpenDeliveries }: DrawerProps) => {
   >
 
     {/* Cart Calendar */}
-    <CartCalendar cart={cart} handleOpenDeliveries={handleOpenDeliveries} />
     
+    <Calendar nextDelivery={cart?.nextDelivery} mode="1WEEK"/>
     {/* Cart Display */}
     <CartBox isLoading={isLoading} cart={cart} />
     
