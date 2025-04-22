@@ -88,7 +88,9 @@ const DeliveriesPage = () => {
                                 type="button"
                                 disabled={isPastOrToday(date)}
                                 onClick={() => handleDateClick(date)}
-                                className={`w-8 h-8 flex items-center justify-center rounded-full text-sm cursor-pointer transition-all ${
+                                className={`flex items-center justify-center rounded-full text-sm cursor-pointer transition-all ${
+                                    isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
+                                } ${
                                     isPastOrToday(date) 
                                         ? 'text-white/30 cursor-not-allowed' 
                                         : 'text-white hover:bg-white/10'
@@ -103,7 +105,7 @@ const DeliveriesPage = () => {
                                 {isNextDelivery(date) ? (
                                     <motion.div
                                         animate={{
-                                            y: [0.5, -0.2, 0.5],
+                                            y: [0.5, -0.2, 0.5]
                                         }}
                                         transition={{
                                             duration: 0.4,
@@ -111,7 +113,7 @@ const DeliveriesPage = () => {
                                             ease: "easeInOut"
                                         }}
                                     >
-                                        <TbTruckDelivery className="w-6 h-6" strokeWidth={0.75} />
+                                        <TbTruckDelivery className="w-8 h-8" strokeWidth={0.75} />
                                     </motion.div>
                                 ) : (
                                     date.date()
