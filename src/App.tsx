@@ -7,15 +7,21 @@ import useCart from './hooks/useCart';
 import useItems from './hooks/useItems';
 import { DrawerButton } from './components/DrawerButton';
 import DeliveriesPage from './components/DeliveriesPage';
+import { PAGE } from './enums/core';
+
+const START_WITH_DRAWER = true
+
 const App = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true)
-  const [isDeliveriesOpen, setIsDeliveriesOpen] = useState(false)
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(START_WITH_DRAWER)
+  const [currentView, setCurrentView] = useState<PAGE>(PAGE.HOME)
+
   // Load initial data
   useCart();
   useItems();
 
   const handleOpenDeliveries = () => {
-    setIsDeliveriesOpen(true)
+    setCurrentView(PAGE.DELIVERIES)
     setIsDrawerOpen(false)
   }
 
@@ -24,12 +30,12 @@ const App = () => {
 
       {/* Home */}
       <AnimatePresence>
-        {!isDrawerOpen && <Home />}
+        {currentView === PAGE.HOME && !isDrawerOpen && <Home />}
       </AnimatePresence>
 
       {/* Deliveries Page */}
       <AnimatePresence>
-        {isDeliveriesOpen && <DeliveriesPage />}
+        {currentView === PAGE.DELIVERIES && !isDrawerOpen && <DeliveriesPage />}
       </AnimatePresence>
 
       {/* Drawer Button */}
