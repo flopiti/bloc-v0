@@ -39,6 +39,7 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                             ? dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')
                             : "No delivery this week"}
                     </div>
+                    <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
                 </div>
             ) : (
                 <button 
@@ -50,7 +51,6 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                     <span className="text-white/60 text-sm mt-1">Set up your delivery frequency to get started</span>
                 </button>
             )}
-            <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
         </motion.div>
     )
 }
