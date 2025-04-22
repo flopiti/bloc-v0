@@ -7,9 +7,10 @@ import useCart from "@/hooks/useCart";
 
 interface CartCalendarProps {               
     cart: Cart | null
+    handleOpenDeliveries: () => void
 }
 
-const CartCalendar = ({ cart }: CartCalendarProps) => {
+const CartCalendar = ({ cart, handleOpenDeliveries }: CartCalendarProps) => {
 
 
     return (
@@ -30,8 +31,11 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
 
 export default CartCalendar;    
 
+interface ActualCalendarProps {
+    cart: Cart
+}
 
-const ActualCalendar = ({ cart }: CartCalendarProps) => {
+const ActualCalendar = ({ cart }: ActualCalendarProps) => {
     const [selectedDay, setSelectedDay] = useState<number | null>(null);
     const { setDeliveryDate } = useCart();
     

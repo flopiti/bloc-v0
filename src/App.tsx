@@ -32,12 +32,12 @@ const App = () => {
         {isDeliveriesOpen && <DeliveriesPage />}
       </AnimatePresence>
 
-        {/* Drawer Button */}
-        <DrawerButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
+      {/* Drawer Button */}
+      <DrawerButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}  />
 
       {/* Drawer */}
       <AnimatePresence>
-        {isDrawerOpen && <Drawer isDrawerOpen={isDrawerOpen} />}
+        {isDrawerOpen && <Drawer isDrawerOpen={isDrawerOpen} handleOpenDeliveries={handleOpenDeliveries}  />}
       </AnimatePresence>
     </div>
   )

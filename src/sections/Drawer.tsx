@@ -9,9 +9,10 @@ import CartCalendar from '@/components/CartCalendar';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
-}
+  handleOpenDeliveries: () => void;
+} 
 
-const Drawer = ({ isDrawerOpen }: DrawerProps) => {
+const Drawer = ({ isDrawerOpen, handleOpenDeliveries }: DrawerProps) => {
   const { cart, isLoading } = useCartStore();
   const { items } = useItemsStore();
   const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
@@ -27,7 +28,7 @@ const Drawer = ({ isDrawerOpen }: DrawerProps) => {
   >
 
     {/* Cart Calendar */}
-    <CartCalendar cart={cart} />
+    <CartCalendar cart={cart} handleOpenDeliveries={handleOpenDeliveries} />
     
     {/* Cart Display */}
     <CartBox isLoading={isLoading} cart={cart} />
