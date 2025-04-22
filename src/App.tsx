@@ -6,10 +6,10 @@ import './App.css';
 import useCart from './hooks/useCart';
 import useItems from './hooks/useItems';
 import { DrawerButton } from './components/DrawerButton';
-
+import DeliveriesPage from './components/DeliveriesPage';
 const App = () => {
   const [isDrawerOpen, setIsCartOpen] = useState(true)
-
+  const [isDeliveriesOpen, setIsDeliveriesOpen] = useState(false)
   // Load initial data
   useCart();
   useItems();
@@ -20,6 +20,11 @@ const App = () => {
       {/* Home */}
       <AnimatePresence>
         {!isDrawerOpen && <Home />}
+      </AnimatePresence>
+
+      {/* Deliveries Page */}
+      <AnimatePresence>
+        {isDeliveriesOpen && <DeliveriesPage />}
       </AnimatePresence>
 
       {/* Drawer Button */}
