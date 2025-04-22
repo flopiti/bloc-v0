@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TbTruckDelivery } from 'react-icons/tb';
 
 interface CalendarDeliveryProps {
@@ -29,16 +29,22 @@ const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm }: CalendarDeli
                     </div>
                 </div>
             </div>
-            {!isConfirmed && (
-                <motion.button
-                    onClick={onConfirm}
-                    className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                >
-                    Confirm Delivery
-                </motion.button>
-            )}
+            <AnimatePresence>
+                {!isConfirmed && (
+                    <motion.button
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.1 }}
+                        onClick={onConfirm}
+                        className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                    >
+                        Confirm Delivery
+                    </motion.button>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 };
