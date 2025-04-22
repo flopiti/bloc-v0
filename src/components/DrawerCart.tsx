@@ -2,7 +2,6 @@ import { Item, Cart } from "@/types/core";
 import { AnimatePresence, motion } from "framer-motion";
 import ItemBox from "./ItemBox";
 import { DEFAULT_TRANSITION } from "@/constants/animations";
-import LoadingCartAnimation from "./LoadingCartAnimation";
 import LoadingCart from "./LoadingCart";
 import { TbShoppingCart } from "react-icons/tb";
 
@@ -20,7 +19,6 @@ const DrawerCart = ({ isLoading, cart }: DrawerCartProps) => {
             layout
             transition={DEFAULT_TRANSITION}
         >
-            {isLoading ? <LoadingCartAnimation /> : <div className="cart-box-background" />}
             <AnimatePresence mode="popLayout">
                 {isLoading ? (
                     <LoadingCart/>
