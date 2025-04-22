@@ -5,13 +5,3 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-
-.cart-box-background {
-  position: absolute;
-  inset: 0;
-  background-image: url("/shopping_cart.png");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.2;
-}
