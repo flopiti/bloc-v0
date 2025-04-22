@@ -29,12 +29,12 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                 stiffness: 300,
                 damping: 25
             }}
-            className="p-4 bg-white/5 rounded-xl flex flex-col gap-3"
+            className="p-4 bg-white/5 rounded-xl flex flex-col gap-3 my-4"
         >
             {cart?.nextDelivery ? (
                 <div>
                     <div className="text-white/60 text-sm">Next Delivery</div>
-                    <div className="text-white font-medium">
+                    <div className="text-white font-medium mb-4">
                         {isDeliveryThisWeek() 
                             ? dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')
                             : "No delivery this week"}
