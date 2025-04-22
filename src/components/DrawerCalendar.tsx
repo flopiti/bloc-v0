@@ -51,14 +51,18 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
         >
             {cart?.nextDelivery ? (
                 <div className="p-4">
-                    <div className="text-white/60 text-sm">Next Delivery</div>
-                    <div className="text-white font-medium mb-4">
-                        {isDeliveryThisWeek() 
-                            ? dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')
-                            : "No delivery this week"}
-                    </div>
-                    <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
-                    <div className="flex justify-end mt-4">
+                    <div className="flex items-center justify-between mb-4">
+                        <div>
+                            <div className="text-white/60 text-sm">Next Delivery</div>
+                            <motion.div 
+                                className="text-white font-medium"
+                                animate={{ opacity: isPanelOpen ? 0.3 : 1 }}
+                            >
+                                {isDeliveryThisWeek() 
+                                    ? dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')
+                                    : "No delivery this week"}
+                            </motion.div>
+                        </div>
                         <motion.button
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -83,6 +87,7 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                             </AnimatePresence>
                         </motion.button>
                     </div>
+                    <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
                 </div>
             ) : (
                 <motion.div className="relative">
