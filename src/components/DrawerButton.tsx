@@ -4,10 +4,10 @@ import { motion } from "framer-motion"
 
 interface DrawerButtonProps {
     isDrawerOpen: boolean;
-    setIsCartOpen: (isDrawerOpen: boolean) => void;
+    setIsDrawerOpen: (isDrawerOpen: boolean) => void;
 }
 
-export const DrawerButton = ({isDrawerOpen,setIsCartOpen,} : DrawerButtonProps) => (
+export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps) => (
     <motion.div
       className="full-screen w-2/5 mx-auto rounded-3xl p-[0.25rem]"
       initial={{ bottom: 0}}
@@ -29,7 +29,7 @@ export const DrawerButton = ({isDrawerOpen,setIsCartOpen,} : DrawerButtonProps) 
       />
       <motion.button
         className="w-full h-[2.5rem] bg-secondary opacity-65 rounded-3xl relative z-10"
-        onClick={() => setIsCartOpen(!isDrawerOpen)}
+        onClick={() => setIsDrawerOpen(!isDrawerOpen)}
       >
         {isDrawerOpen ? "Close" : "Shopping Cart"}
       </motion.button>

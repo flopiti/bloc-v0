@@ -8,11 +8,16 @@ import useItems from './hooks/useItems';
 import { DrawerButton } from './components/DrawerButton';
 import DeliveriesPage from './components/DeliveriesPage';
 const App = () => {
-  const [isDrawerOpen, setIsCartOpen] = useState(true)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true)
   const [isDeliveriesOpen, setIsDeliveriesOpen] = useState(false)
   // Load initial data
   useCart();
   useItems();
+
+  const handleOpenDeliveries = () => {
+    setIsDeliveriesOpen(true)
+    setIsDrawerOpen(false)
+  }
 
   return (
     <div className="relative">
@@ -27,8 +32,8 @@ const App = () => {
         {isDeliveriesOpen && <DeliveriesPage />}
       </AnimatePresence>
 
-      {/* Drawer Button */}
-      <DrawerButton isDrawerOpen={isDrawerOpen} setIsCartOpen={setIsCartOpen} />
+        {/* Drawer Button */}
+        <DrawerButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
 
       {/* Drawer */}
       <AnimatePresence>
