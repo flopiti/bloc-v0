@@ -13,6 +13,11 @@ export const NEXT_FOUR_WEEKS = Array.from({ length: 4 }, (_, i) => {
     });
 });
 
+export const NEXT_WEEK = Array.from({ length: 7 }, (_, i) => {
+    const weekStart = TODAY.startOf('week');
+    return weekStart.add(i, 'day');
+});
+
 export const isPastOrToday = (date: dayjs.Dayjs) => {
     return date.isBefore(TODAY, 'day') || date.isSame(TODAY, 'day');
 };
