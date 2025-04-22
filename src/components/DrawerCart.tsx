@@ -4,6 +4,7 @@ import ItemBox from "./ItemBox";
 import { DEFAULT_TRANSITION } from "@/constants/animations";
 import LoadingCartAnimation from "./LoadingCartAnimation";
 import LoadingCart from "./LoadingCart";
+import { TbShoppingCart } from "react-icons/tb";
 
 interface DrawerCartProps {
   isLoading: boolean;
@@ -25,18 +26,24 @@ const DrawerCart = ({ isLoading, cart }: DrawerCartProps) => {
                     <LoadingCart/>
                 ) : cartItems.length > 0 ? (
                     <motion.div 
-                        className="flex flex-row flex-wrap gap-2 p-4 w-full" 
+                        className="flex flex-col gap-4 p-4 w-full" 
                         layout
                     >
-                        {cartItems.map((item: Item) => (
-                            <motion.div
-                                key={item.id}
-                                layout
-                                className="w-[calc(33.333%-0.5rem)]"
-                            >
-                                <ItemBox item={item} />
-                            </motion.div>
-                        ))}
+                        <div>
+                            <div className="text-white/60 text-sm">Your Cart</div>
+                            <div className="text-white font-medium">{cartItems.length} items</div>
+                        </div>
+                        <div className="flex flex-row flex-wrap gap-2">
+                            {cartItems.map((item: Item) => (
+                                <motion.div
+                                    key={item.id}
+                                    layout
+                                    className="w-[calc(33.333%-0.5rem)]"
+                                >
+                                    <ItemBox item={item} />
+                                </motion.div>
+                            ))}
+                        </div>
                     </motion.div>
                 ) : (
                     <motion.div 
@@ -57,7 +64,11 @@ const DrawerCart = ({ isLoading, cart }: DrawerCartProps) => {
                             }}
                         />
                         <div className="flex items-center justify-center p-6 text-center relative z-10">
-                            <span className="text-white/80 text-lg font-medium">Please select your first items to schedule a delivery</span>
+                            <div className="flex flex-col items-center">
+                                <TbShoppingCart className="w-12 h-12 text-secondary/60 mb-3" />
+                                <span className="text-white/80 text-lg font-medium">Your Cart is Empty</span>
+                                <span className="text-white/60 text-sm mt-1">Select items to start building your cart</span>
+                            </div>
                         </div>
                     </motion.div>
                 )}

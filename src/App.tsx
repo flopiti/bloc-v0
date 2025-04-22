@@ -9,7 +9,7 @@ import { DrawerButton } from './components/DrawerButton';
 import DeliveriesPage from './components/DeliveriesPage';
 import { PAGE } from './enums/core';
 
-const START_WITH_DRAWER = true
+const START_WITH_DRAWER = false
 
 const App = () => {
 
