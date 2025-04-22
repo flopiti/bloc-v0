@@ -55,6 +55,18 @@ const DeliveriesPage = () => {
                 </span>
             </div>
 
+            {cart?.nextDelivery && (
+                <div className="mb-6 p-4 bg-white/5 rounded-xl flex items-center gap-3">
+                    <TbTruckDelivery className="w-6 h-6 text-blue-500" />
+                    <div>
+                        <div className="text-white/60 text-sm">Next Delivery</div>
+                        <div className="text-white font-medium">
+                            {dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')}
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="bg-white/5 rounded-xl p-4 relative">
                 {!cart?.nextDelivery && (
                     <motion.div
