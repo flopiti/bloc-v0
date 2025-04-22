@@ -24,6 +24,10 @@ const DeliveriesPage = () => {
         return weeks;
     }, [today]);
 
+    const isPastOrToday = (date: dayjs.Dayjs) => {
+        return date.isBefore(today, 'day') || date.isSame(today, 'day');
+    };
+
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-8">
@@ -65,7 +69,9 @@ const DeliveriesPage = () => {
                 <div className="grid grid-cols-7 gap-2">
                     {nextFourWeeks.flat().map((date, index) => (
                         <div key={index} className="text-center">
-                            <div className="w-8 h-8 flex items-center justify-center rounded-full text-white text-sm">
+                            <div className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${
+                                isPastOrToday(date) ? 'text-white/30' : 'text-white'
+                            }`}>
                                 {date.date()}
                             </div>
                         </div>
