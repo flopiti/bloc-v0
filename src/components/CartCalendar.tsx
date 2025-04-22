@@ -18,8 +18,10 @@ const CartCalendar = ({ cart }: CartCalendarProps) => {
             {cart?.nextDelivery ? (
                 <ActualCalendar cart={cart} />
             ) : (
-                <div>
-                    <span>No next delivery date</span>
+                <div className="flex flex-col items-center justify-center p-6 rounded-2xl">
+                    <TbTruckDelivery className="w-12 h-12 text-secondary/60 mb-3" />
+                    <span className="text-white/80 text-lg font-medium">No Delivery Schedule</span>
+                    <span className="text-white/60 text-sm mt-1">Set up your delivery frequency to get started</span>
                 </div>
             )}
         </div>
