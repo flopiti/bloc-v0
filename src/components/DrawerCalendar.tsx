@@ -83,19 +83,20 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                             </AnimatePresence>
                         </motion.button>
                     </div>
-                    <motion.div
-                        className="mt-4"
-                        animate={{
-                            opacity: isPanelOpen ? 1 : 0.8,
-                            scale: isPanelOpen ? 1 : 0.98
-                        }}
-                        transition={{
-                            duration: 0.3,
-                            ease: "easeOut"
-                        }}
-                    >
-                        <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
-                    </motion.div>
+                    <div className="mt-4">
+                        <motion.div
+                            animate={{
+                                opacity: isPanelOpen ? 1 : 0.8
+                            }}
+                            transition={{
+                                duration: 0.2,
+                                ease: "easeOut"
+                            }}
+                            layout
+                        >
+                            <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
+                        </motion.div>
+                    </div>
                 </div>
             ) : (
                 <motion.div className="relative">
