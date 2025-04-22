@@ -18,9 +18,13 @@ const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm }: CalendarDeli
                 stiffness: 300,
                 damping: 25
             }}
+            layout
             className="mb-6 p-4 bg-white/5 rounded-xl flex flex-col gap-3"
         >
-            <div className="flex items-center gap-3">
+            <motion.div 
+                layout 
+                className="flex items-center gap-3"
+            >
                 <TbTruckDelivery className="w-6 h-6 text-blue-500" />
                 <div>
                     <div className="text-white/60 text-sm">Next Delivery</div>
@@ -28,21 +32,28 @@ const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm }: CalendarDeli
                         {dayjs(nextDelivery).format('dddd, MMMM D, YYYY')}
                     </div>
                 </div>
-            </div>
-            <AnimatePresence>
+            </motion.div>
+            <AnimatePresence mode="wait">
                 {!isConfirmed && (
-                    <motion.button
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.1 }}
-                        onClick={onConfirm}
-                        className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                    <motion.div
+                        layout
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ 
+                            duration: 0.1,
+                            ease: "easeInOut"
+                        }}
                     >
-                        Confirm Delivery
-                    </motion.button>
+                        <motion.button
+                            onClick={onConfirm}
+                            className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            Confirm Delivery
+                        </motion.button>
+                    </motion.div>
                 )}
             </AnimatePresence>
         </motion.div>
