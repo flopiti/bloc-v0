@@ -2,14 +2,15 @@ import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, NEXT_WEEK } from '@/utils/dates';
+import { CALENDAR_MODE } from '@/enums/core';
 
 interface CalendarProps {
     nextDelivery?: Date;
     onDateClick? : (date: dayjs.Dayjs) => void;
-    mode?: '1WEEK' | '4WEEKS';
+    mode?: CALENDAR_MODE;
 }
 
-const Calendar = ({ nextDelivery, onDateClick, mode = '4WEEKS' }: CalendarProps) => {
+const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }: CalendarProps) => {
     const isNextDelivery = (date: dayjs.Dayjs) => {
         if (!nextDelivery) return false;
         return date.isSame(dayjs(nextDelivery), 'day');
@@ -21,7 +22,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = '4WEEKS' }: CalendarProps)
         return date.isSame(twoWeeksFromNext, 'day');
     };
 
-    const dates = mode === '1WEEK' ? NEXT_WEEK : NEXT_FOUR_WEEKS.flat();
+    const dates = mode === CALENDAR_MODE.ONE_WEEK ? NEXT_WEEK : NEXT_FOUR_WEEKS.flat();
 
     return (
         <motion.div 

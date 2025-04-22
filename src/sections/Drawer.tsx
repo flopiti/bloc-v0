@@ -2,10 +2,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import { useItemsStore } from '@/stores/itemsStore';
 import { DEFAULT_TRANSITION } from '@/constants/animations';
+import { CALENDAR_MODE } from '@/enums/core';
 import CartBox from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
-import CartCalendar from '@/components/CartCalendar';
 import Calendar from '@/components/Calendar';
 
 interface DrawerProps {
@@ -30,7 +30,7 @@ const Drawer = ({ isDrawerOpen, handleOpenDeliveries }: DrawerProps) => {
 
     {/* Cart Calendar */}
     
-    <Calendar nextDelivery={cart?.nextDelivery} mode="1WEEK"/>
+    <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
     {/* Cart Display */}
     <CartBox isLoading={isLoading} cart={cart} />
     
