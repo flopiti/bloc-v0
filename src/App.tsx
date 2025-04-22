@@ -36,7 +36,6 @@ const App = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ 
-              delay: DEFAULT_DELAY/2,
               duration: 0.3
             }}
             >
