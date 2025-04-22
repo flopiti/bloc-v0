@@ -39,13 +39,7 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
     return (
         <motion.div
             ref={drawerRef}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-                type: "spring",
-                stiffness: 300,
-                damping: 25
-            }}
+            initial={false}
             className="bg-white/5 rounded-xl flex flex-col gap-3 my-4 cursor-pointer"
             onClick={() => !isPanelOpen && setIsPanelOpen(true)}
         >
@@ -57,6 +51,7 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                             <motion.div 
                                 className="text-white font-medium"
                                 animate={{ opacity: isPanelOpen ? 0.3 : 1 }}
+                                transition={{ duration: 2 }}
                             >
                                 {isDeliveryThisWeek() 
                                     ? dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')
@@ -79,6 +74,7 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                                         initial={{ opacity: 0, width: 0 }}
                                         animate={{ opacity: 1, width: "auto" }}
                                         exit={{ opacity: 0, width: 0 }}
+                                        transition={{ duration: 0.2 }}
                                         className="text-white font-medium whitespace-nowrap overflow-hidden"
                                     >
                                         Go to deliveries
@@ -87,7 +83,19 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                             </AnimatePresence>
                         </motion.button>
                     </div>
-                    <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
+                    <motion.div
+                        className="mt-4"
+                        animate={{
+                            opacity: isPanelOpen ? 1 : 0.8,
+                            scale: isPanelOpen ? 1 : 0.98
+                        }}
+                        transition={{
+                            duration: 0.3,
+                            ease: "easeOut"
+                        }}
+                    >
+                        <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
+                    </motion.div>
                 </div>
             ) : (
                 <motion.div className="relative">

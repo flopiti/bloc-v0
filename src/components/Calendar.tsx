@@ -26,14 +26,11 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
 
     return (
         <motion.div 
-            layout
-            transition={{ 
-                layout: { 
-                    duration: 0.3,
-                    ease: "easeOut"
-                }
-            }}
             className="bg-white/5 rounded-xl p-4 relative"
+            transition={{
+                duration: 0.3,
+                ease: "easeOut"
+            }}
         >
             {!nextDelivery && (
                 <motion.div
