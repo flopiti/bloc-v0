@@ -50,7 +50,6 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                             <div className="text-white/60 text-sm">Next Delivery</div>
                             <motion.div 
                                 className="text-white font-medium"
-                                animate={{ opacity: isPanelOpen ? 0.3 : 1 }}
                                 transition={{ duration: 2 }}
                             >
                                 {isDeliveryThisWeek() 
