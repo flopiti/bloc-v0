@@ -2,8 +2,9 @@ import { CALENDAR_MODE } from "@/enums/core"
 import Calendar from "./Calendar";
 import { useCartStore } from "@/stores/cartStore";
 import dayjs from "dayjs";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { TbTruckDelivery } from "react-icons/tb";
+import { useState, useRef, useEffect } from "react";
 
 interface DrawerCalendarProps {
     handleOpenDeliveries: () => void;
@@ -11,6 +12,21 @@ interface DrawerCalendarProps {
 
 const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
     const { cart } = useCartStore();
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const drawerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+                setIsPanelOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const isDeliveryThisWeek = () => {
         if (!cart?.nextDelivery) return false;
@@ -22,6 +38,7 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
 
     return (
         <motion.div
+            ref={drawerRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -29,18 +46,43 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                 stiffness: 300,
                 damping: 25
             }}
-            className="bg-white/5 rounded-xl flex flex-col gap-3 my-4"
+            className="bg-white/5 rounded-xl flex flex-col gap-3 my-4 cursor-pointer"
+            onClick={() => !isPanelOpen && setIsPanelOpen(true)}
         >
             {cart?.nextDelivery ? (
                 <div className="p-4">
-                        <div className="text-white/60 text-sm">Next Delivery</div>
-                        <div className="text-white font-medium mb-4">
+                    <div className="text-white/60 text-sm">Next Delivery</div>
+                    <div className="text-white font-medium mb-4">
                         {isDeliveryThisWeek() 
                             ? dayjs(cart.nextDelivery).format('dddd, MMMM D, YYYY')
                             : "No delivery this week"}
-
                     </div>
                     <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
+                    <div className="flex justify-end mt-4">
+                        <motion.button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                isPanelOpen ? handleOpenDeliveries() : setIsPanelOpen(true);
+                            }}
+                            className="flex items-center gap-2 bg-secondary/20 hover:bg-secondary/30 rounded-lg px-3 py-2 transition-colors"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            <TbTruckDelivery className="w-6 h-6 text-secondary" />
+                            <AnimatePresence>
+                                {isPanelOpen && (
+                                    <motion.span
+                                        initial={{ opacity: 0, width: 0 }}
+                                        animate={{ opacity: 1, width: "auto" }}
+                                        exit={{ opacity: 0, width: 0 }}
+                                        className="text-white font-medium whitespace-nowrap overflow-hidden"
+                                    >
+                                        Go to deliveries
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+                        </motion.button>
+                    </div>
                 </div>
             ) : (
                 <motion.div className="relative">
