@@ -10,7 +10,7 @@ import DeliveriesPage from './components/DeliveriesPage';
 import { PAGE } from './enums/core';
 import { DEFAULT_DELAY } from './constants/animations';
 
-const START_WITH_DRAWER = false
+const START_WITH_DRAWER = true
 
 const App = () => {
 
