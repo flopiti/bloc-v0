@@ -1,35 +1,14 @@
-import { useMemo} from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import useCart from '@/hooks/useCart';
 import { TbTruckDelivery } from 'react-icons/tb';
+import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS } from '@/utils/dates';
 
 const DeliveriesPage = () => {
     const { cart } = useCartStore();
     const { setDeliveryDate } = useCart();
-    const today = useMemo(() => dayjs(), []);
-    const weekDays = useMemo(() => {
-        return Array.from({ length: 7 }, (_, i) => {
-            return dayjs().day(i).format('ddd');
-        });
-    }, []);
 
-    const nextFourWeeks = useMemo(() => {
-        const weeks = [];
-        for (let i = 0; i < 4; i++) {
-            const weekStart = today.add(i, 'week').startOf('week');
-            const weekDays = Array.from({ length: 7 }, (_, j) => {
-                return weekStart.add(j, 'day');
-            });
-            weeks.push(weekDays);
-        }
-        return weeks;
-    }, [today]);
-
-    const isPastOrToday = (date: dayjs.Dayjs) => {
-        return date.isBefore(today, 'day') || date.isSame(today, 'day');
-    };
 
     const handleDateClick = (date: dayjs.Dayjs) => {
         setDeliveryDate(date.toDate());
@@ -84,7 +63,7 @@ const DeliveriesPage = () => {
                     />
                 )}
                 <div className="grid grid-cols-7 gap-2 mb-2">
-                    {weekDays.map((day, dayIndex) => (
+                    {WEEK_DAYS.map((day, dayIndex) => (
                         <div key={dayIndex} className="text-center">
                             <div className="text-white/60 text-xs">
                                 {day}
@@ -93,7 +72,7 @@ const DeliveriesPage = () => {
                     ))}
                 </div>
                 <div className="grid grid-cols-7 gap-2">
-                    {nextFourWeeks.flat().map((date, index) => (
+                    {NEXT_FOUR_WEEKS.flat().map((date, index) => (
                         <div key={index} className="text-center">
                             <button 
                                 type="button"
