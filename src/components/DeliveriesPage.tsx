@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo} from 'react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
@@ -8,7 +8,6 @@ import { TbTruckDelivery } from 'react-icons/tb';
 const DeliveriesPage = () => {
     const { cart } = useCartStore();
     const { setDeliveryDate } = useCart();
-    const [error, setError] = useState<string | null>(null);
     const today = useMemo(() => dayjs(), []);
     const weekDays = useMemo(() => {
         return Array.from({ length: 7 }, (_, i) => {
@@ -123,16 +122,8 @@ const DeliveriesPage = () => {
                     ))}
                 </div>
             </div>
-            {error && (
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-4 text-center text-red-500"
-                >
-                    {error}
-                </motion.div>
-            )}
-            {!cart?.nextDelivery && !error && (
+
+            {!cart?.nextDelivery  && (
                 <motion.div
                     animate={{ 
                         color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
