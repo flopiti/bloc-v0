@@ -10,7 +10,7 @@ interface CartBoxProps {
   cart: Cart | null;
 }
 
-const CartBox = ({ isLoading, cart }: CartBoxProps) => {
+const DrawerCart = ({ isLoading, cart }: CartBoxProps) => {
 
     const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
 
@@ -49,4 +49,4 @@ const CartBox = ({ isLoading, cart }: CartBoxProps) => {
     )
 }
 
-export default CartBox;
+export default DrawerCart;

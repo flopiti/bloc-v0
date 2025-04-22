@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import { useItemsStore } from '@/stores/itemsStore';
 import { DEFAULT_TRANSITION } from '@/constants/animations';
-import CartBox from '@/components/CartBox';
+import DrawerCart from '@/components/CartBox';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
 import DrawerCalendar from '@/components/DrawerCalendar';
@@ -32,7 +32,7 @@ const Drawer = ({ isDrawerOpen, handleOpenDeliveries }: DrawerProps) => {
     <DrawerCalendar handleOpenDeliveries={handleOpenDeliveries} />
     
     {/* Cart Display */}
-    <CartBox isLoading={isLoading} cart={cart} />
+    <DrawerCart isLoading={isLoading} cart={cart} />
     
         {/* Suggested Items */}
     <AnimatePresence>
