@@ -11,10 +11,12 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }  ) => {
         duration: 0.3
       }}
     >
-        <h1>Home</h1>
+        <div className="flex flex-col gap-4 items-center my-10">
+            <span className="text-2xl font-bold">Home</span>
 
-        <button onClick={() => goToPage(PAGE.CART)}>Go to cart</button>
-        <button onClick={() => goToPage(PAGE.DELIVERIES)}>Go to deliveries</button>
+            <button onClick={() => goToPage(PAGE.CART)}>Go to cart</button>
+            <button onClick={() => goToPage(PAGE.DELIVERIES)}>Go to deliveries</button>
+        </div>
     </motion.div>
 
   )
