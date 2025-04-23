@@ -11,16 +11,17 @@ interface ProductProps {
 }
 
 const Product = ({ isAddOpen, item }: ProductProps) => {
-    const { addItem } = useCart();
+    const { addItem, removeItem } = useCart();
     const { cart } = useCartStore();
     const [isClicking, setIsClicking] = useState(false);
 
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.id === item.id) : false;
 
-    const handleAddToCart = () => {
+    const handleCartAction = () => {
         if (isClicking) return;
         setIsClicking(true);
-        addItem(item);
+        const action = isInCart ? removeItem : addItem;
+        action(item);
     };
 
     return (
@@ -40,14 +41,18 @@ const Product = ({ isAddOpen, item }: ProductProps) => {
             </motion.div>
             {isAddOpen && (
                 <motion.button
-                    className="mt-2 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
-                    onClick={handleAddToCart}
+                    className={`mt-2 py-2 px-4 rounded-lg transition-colors ${
+                        isInCart 
+                            ? 'bg-red-500 hover:bg-red-600' 
+                            : 'bg-blue-500 hover:bg-blue-600'
+                    } text-white`}
+                    onClick={handleCartAction}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
                 >
-                    Add to Cart
+                    {isInCart ? 'Remove from Cart' : 'Add to Cart'}
                 </motion.button>
             )}
         </div>
