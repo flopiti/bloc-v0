@@ -8,6 +8,7 @@ import SuggestedItems from '@/components/SuggestedItems';
 import DrawerCalendar from '@/components/DrawerCalendar';
 import { PAGE } from '@/enums/core';
 import DrawerSection from '@/components/DrawerSection';
+import { TbShoppingCart, TbTruckDelivery } from 'react-icons/tb';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -32,13 +33,23 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
     {/* Cart Calendar */}
 
     <AnimatePresence>
-      {cart && <DrawerSection>
+      {cart && <DrawerSection
+        onClick={() => goToPage(PAGE.DELIVERIES)}
+        title="No Delivery Schedule"
+        subtitle="Set up your delivery frequency to get started"
+        icon={TbTruckDelivery}
+      >
         <DrawerCalendar handleOpenDeliveries={() => goToPage(PAGE.DELIVERIES)} />
       </DrawerSection>}
     </AnimatePresence>
     
     {/* Cart Display */}
-    <DrawerSection>
+    <DrawerSection                         
+      onClick={() => goToPage(PAGE.CART)}
+      title="Your Cart is Empty"
+      subtitle="Select items to start building your cart"
+      icon={TbShoppingCart}
+      >
       <DrawerCart isLoading={isLoading} cart={cart} handleOpenCart={() => goToPage(PAGE.CART)}/>
     </DrawerSection>
     

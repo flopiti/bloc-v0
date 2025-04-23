@@ -5,6 +5,9 @@ import { DEFAULT_TRANSITION } from "@/constants/animations";
 import LoadingCart from "./LoadingCart";
 import EmptyStateButton from "./EmptyStateButton";
 import { TbShoppingCart } from "react-icons/tb";
+import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 interface DrawerCartProps {
   isLoading: boolean;
@@ -14,19 +17,27 @@ interface DrawerCartProps {
 
 const DrawerCart = ({ isLoading, cart, handleOpenCart }: DrawerCartProps) => {
     const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const drawerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+                setIsPanelOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     return (
-        <motion.div 
-            className="bg-white/5 rounded-2xl flex flex-col gap-3 my-4 relative overflow-hidden"
-            layout
-            transition={DEFAULT_TRANSITION}
-        >
-            <AnimatePresence mode="popLayout">
-                {isLoading ? (
-                    <LoadingCart/>
-                ) : cartItems.length > 0 ? (
-                    <motion.div 
-                        className="flex flex-col gap-4 p-4 w-full" 
+        <>
+            {cartItems.length > 0 ? (
+                <motion.div 
+                    className="flex flex-col gap-4 p-4 w-full" 
                         layout
                     >
                         <div>
@@ -53,8 +64,7 @@ const DrawerCart = ({ isLoading, cart, handleOpenCart }: DrawerCartProps) => {
                         icon={TbShoppingCart}
                     />
                 )}
-            </AnimatePresence>
-        </motion.div>
+        </>
     )
 }
 
