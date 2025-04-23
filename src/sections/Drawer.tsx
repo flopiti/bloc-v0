@@ -7,6 +7,7 @@ import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
 import DrawerCalendar from '@/components/DrawerCalendar';
 import { PAGE } from '@/enums/core';
+import DrawerSection from '@/components/DrawerSection';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -31,12 +32,15 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
     {/* Cart Calendar */}
 
     <AnimatePresence>
-      {cart && <DrawerCalendar handleOpenDeliveries={() => goToPage(PAGE.DELIVERIES)} />}
+      {cart && <DrawerSection>
+        <DrawerCalendar handleOpenDeliveries={() => goToPage(PAGE.DELIVERIES)} />
+      </DrawerSection>}
     </AnimatePresence>
     
     {/* Cart Display */}
-    
-    <DrawerCart isLoading={isLoading} cart={cart} handleOpenCart={() => goToPage(PAGE.CART)}/>
+    <DrawerSection>
+      <DrawerCart isLoading={isLoading} cart={cart} handleOpenCart={() => goToPage(PAGE.CART)}/>
+    </DrawerSection>
     
         {/* Suggested Items */}
     <AnimatePresence>
