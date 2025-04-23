@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { TbTruckDelivery } from 'react-icons/tb';
-import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, NEXT_WEEK } from '@/utils/dates';
+import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, TODAY } from '@/utils/dates';
 import { CALENDAR_MODE } from '@/enums/core';
 
 interface CalendarProps {
@@ -22,7 +22,14 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
         return date.isSame(twoWeeksFromNext, 'day');
     };
 
-    const dates = mode === CALENDAR_MODE.ONE_WEEK ? NEXT_WEEK : NEXT_FOUR_WEEKS.flat();
+    const getDates = () => {
+        if (mode === CALENDAR_MODE.ONE_WEEK) {
+            return Array.from({ length: 7 }, (_, i) => TODAY.add(i, 'day'));
+        }
+        return NEXT_FOUR_WEEKS.flat();
+    };
+
+    const dates = getDates();
 
     return (
         <motion.div 
@@ -63,7 +70,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                             type="button"
                             disabled={isPastOrToday(date)}
                             onClick={() => onDateClick?.(date)}
-                            className={`flex items-center justify-center rounded-full text-sm cursor-pointer transition-all ${
+                            className={`flex items-center justify-center rounded-full text-sm cursor-pointer transition-all relative ${
                                 isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
                             } ${
                                 isPastOrToday(date) 
@@ -74,6 +81,8 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                                     ? 'border-2 border-blue-500'
                                     : isTwoWeeksFromNextDelivery(date)
                                     ? 'bg-blue-500/20'
+                                    : date.isSame(TODAY, 'day')
+                                    ? 'after:content-[""] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-0.5 after:bg-white'
                                     : ''
                             }`}
                         >
