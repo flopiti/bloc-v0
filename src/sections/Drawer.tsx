@@ -5,11 +5,11 @@ import { DEFAULT_TRANSITION } from '@/constants/animations';
 import DrawerCart from '@/components/DrawerCart';
 import ConfirmButton from '@/components/ConfirmButton';
 import SuggestedItems from '@/components/SuggestedItems';
-import DrawerCalendar from '@/components/DrawerCalendar';
-import { PAGE } from '@/enums/core';
+import { CALENDAR_MODE, PAGE } from '@/enums/core';
 import DrawerSection from '@/components/DrawerSection';
 import { TbShoppingCart, TbTruckDelivery } from 'react-icons/tb';
 import dayjs from 'dayjs';
+import Calendar from '@/components/Calendar';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -59,7 +59,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
       icon={TbTruckDelivery}
       isEmpty={!cart?.nextDelivery}
       >
-        <DrawerCalendar handleOpenDeliveries={() => goToPage(PAGE.DELIVERIES)} />
+        <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
       </DrawerSection>}
     </AnimatePresence>
     
@@ -75,7 +75,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
       icon={TbShoppingCart}
       goToPage={() => goToPage(PAGE.CART)}
       >
-      <DrawerCart isLoading={isLoading} cart={cart} handleOpenCart={() => goToPage(PAGE.CART)}/>
+      <DrawerCart cart={cart}/>
     </DrawerSection>
     
         {/* Suggested Items */}
