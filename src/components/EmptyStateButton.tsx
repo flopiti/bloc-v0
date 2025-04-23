@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
-import { TbShoppingCart } from "react-icons/tb";
+import { IconType } from "react-icons";
 
 interface EmptyStateButtonProps {
     onClick: () => void;
+    title: string;
+    subtitle: string;
+    icon: IconType;
 }
 
-const EmptyStateButton = ({ onClick }: EmptyStateButtonProps) => {
+const EmptyStateButton = ({ onClick, title, subtitle, icon: Icon }: EmptyStateButtonProps) => {
     return (
         <motion.div 
             className="relative"
@@ -26,9 +29,9 @@ const EmptyStateButton = ({ onClick }: EmptyStateButtonProps) => {
             />
             <button onClick={onClick} className="flex items-center justify-center p-6 text-center relative z-10 w-full">
                 <div className="flex flex-col items-center">
-                    <TbShoppingCart className="w-12 h-12 text-secondary/60 mb-3" />
-                    <span className="text-white/80 text-lg font-medium">Your Cart is Empty</span>
-                    <span className="text-white/60 text-sm mt-1">Select items to start building your cart</span>
+                    <Icon className="w-12 h-12 text-secondary/60 mb-3" />
+                    <span className="text-white/80 text-lg font-medium">{title}</span>
+                    <span className="text-white/60 text-sm mt-1">{subtitle}</span>
                 </div>
             </button>
         </motion.div>

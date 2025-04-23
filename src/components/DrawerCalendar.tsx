@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { TbTruckDelivery } from "react-icons/tb";
 import { useState, useRef, useEffect } from "react";
-
+import EmptyStateButton from "./EmptyStateButton";
 interface DrawerCalendarProps {
     handleOpenDeliveries: () => void;
 }
@@ -98,29 +98,7 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                     </div>
                 </div>
             ) : (
-                <motion.div className="relative">
-                    <motion.div
-                        className="absolute inset-0 border-2 border-secondary rounded-2xl pointer-events-none"
-                        animate={{
-                            borderColor: ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.1)'],
-                            borderWidth: ['2px', '3px', '4px', '3px', '2px']
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            times: [0, 0.25, 0.5, 0.75, 1]
-                        }}
-                    />
-                    <button 
-                        onClick={handleOpenDeliveries}
-                        className="flex flex-col items-center justify-center p-6 rounded-2xl w-full hover:bg-white/5 transition-colors relative z-10"
-                    >
-                        <TbTruckDelivery className="w-12 h-12 text-secondary/60 mb-3" />
-                        <span className="text-white/80 text-lg font-medium">No Delivery Schedule</span>
-                        <span className="text-white/60 text-sm mt-1">Set up your delivery frequency to get started</span>
-                    </button>
-                </motion.div>
+                <EmptyStateButton onClick={handleOpenDeliveries} title="No Delivery Schedule" subtitle="Set up your delivery frequency to get started" icon={TbTruckDelivery} />
             )}
         </motion.div>
     )

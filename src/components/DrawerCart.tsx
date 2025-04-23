@@ -46,7 +46,12 @@ const DrawerCart = ({ isLoading, cart, handleOpenCart }: DrawerCartProps) => {
                         </div>
                     </motion.div>
                 ) : (
-                    <EmptyStateButton onClick={handleOpenCart} />
+                    <EmptyStateButton 
+                        onClick={handleOpenCart}
+                        title="Your Cart is Empty"
+                        subtitle="Select items to start building your cart"
+                        icon={TbShoppingCart}
+                    />
                 )}
             </AnimatePresence>
         </motion.div>
