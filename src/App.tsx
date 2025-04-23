@@ -9,6 +9,7 @@ import { DrawerButton } from './components/DrawerButton';
 import DeliveriesPage from './sections/DeliveriesPage';
 import { PAGE } from './enums/core';
 import CartPage from './sections/CartPage';
+import PageLayout from './components/PageLayout';
 
 const START_WITH_DRAWER = false
 
@@ -48,8 +49,27 @@ const App = () => {
             }}
             className="w-full"
             >
-            {currentView === PAGE.DELIVERIES && <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} goHome={goHome} />}
-            {currentView === PAGE.CART && <CartPage />}
+            {currentView === PAGE.DELIVERIES && (
+              <PageLayout 
+                title="Deliveries"
+                goHome={goHome}
+                rightElement={
+                  <span className="px-4 py-2 bg-secondary/20 rounded-full text-secondary text-sm">
+                    Biweekly
+                  </span>
+                }
+              >
+                <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} />
+              </PageLayout>
+            )}
+            {currentView === PAGE.CART && (
+              <PageLayout 
+                title="Cart"
+                goHome={goHome}
+              >
+                <CartPage />
+              </PageLayout>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
