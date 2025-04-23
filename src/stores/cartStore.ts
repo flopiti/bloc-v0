@@ -30,6 +30,21 @@ export const useCartStore = create<CartStore>((set, get) => ({
       return { cart: newCart };
     });
   },
+  removeItem: (item: Item) => {
+    return set((state) => {
+      if (!state.cart) {
+        throw new Error('Cart is not initialized');
+      } 
+      const newCart = { 
+        ...state.cart, 
+        pendingItems: state.cart.pendingItems.filter(i => i.id !== item.id), 
+        confirmedItems: state.cart.confirmedItems.filter(i => i.id !== item.id)
+      };
+      console.log('Updated cart state:', newCart);
+      return { cart: newCart }; 
+    });
+  },
+  
   setDeliveryDate: (deliveryDate: Date) => set((state) => {
     if (!state.cart) {
       throw new Error('Cart is not initialized');

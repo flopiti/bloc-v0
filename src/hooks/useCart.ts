@@ -136,6 +136,45 @@ const useCart = () => {
         },
     });
 
+    const removeItemMutation = useMutation({
+        mutationFn: (item: Item) => cartService.removeItem(item),
+        onMutate: async (item: Item) => {
+            // Cancel any outgoing refetches
+            await queryClient.cancelQueries({ queryKey: ['cart'] });
+
+            // Snapshot the previous value
+            const previousCart = queryClient.getQueryData<Cart>(['cart']);
+
+            // Optimistically update to the new value
+            queryClient.setQueryData<Cart>(['cart'], (old) => {
+                if (!old) return { 
+                    confirmedItems: [],
+                    pendingItems: [],
+                    confirmed: false,
+                };
+                return {
+                    ...old,
+                    pendingItems: old.pendingItems.filter(i => i.id !== item.id),
+                    confirmedItems: old.confirmedItems.filter(i => i.id !== item.id),
+                    confirmed: false
+                };
+            });
+
+            return { previousCart };
+        },
+        onError: (err: Error, item: Item, context) => {
+            // Revert to the previous value on error
+            console.error('Error removing item:', item, err);
+            if (context?.previousCart) {
+                queryClient.setQueryData(['cart'], context.previousCart);
+            }
+        },
+        onSettled: () => {
+            // Refetch cart after mutation
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
+        },
+    });
+
     // Update cart state based on query state
     useEffect(() => {
         if (cart) {
@@ -151,7 +190,8 @@ const useCart = () => {
     return { 
         addItem: addItemMutation.mutate,
         confirmCart: confirmCartMutation.mutate,
-        setDeliveryDate: setDeliveryDateMutation.mutate
+        setDeliveryDate: setDeliveryDateMutation.mutate,
+        removeItem: removeItemMutation.mutate
     };
 };
 

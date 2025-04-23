@@ -38,5 +38,16 @@ export const cartService = {
       console.error('Error setting delivery date:', error);
       throw error;
     }
+  },
+
+  async removeItem(item: Item): Promise<void> {
+    try {
+      await axios.put(`${API_BASE_URL}/cart/remove`, item);
+    } catch (error) {
+      console.error('Error removing item:', error);
+      throw error;
+    }
   }
+
+  
 }; 
