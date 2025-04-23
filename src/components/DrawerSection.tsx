@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import EmptyStateButton from "./EmptyStateButton";
 import { IconType } from "react-icons";
-import { TbTruckDelivery } from "react-icons/tb";
 import DrawerSectionTitle from "./DrawerSectionTitle";
 
 interface DrawerSectionProps {
@@ -16,6 +15,7 @@ interface DrawerSectionProps {
     subtitle: string;
     icon: IconType;
     goToPage: () => void;
+    buttonText: string;
 }
 
 const DrawerSection = ({
@@ -28,7 +28,8 @@ const DrawerSection = ({
      title,
      subtitle,
       icon, 
-      goToPage
+      goToPage,
+      buttonText
     }: DrawerSectionProps) => {
 
     const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -71,7 +72,7 @@ const DrawerSection = ({
                     handleOpenDeliveries={goToPage}
                     setIsPanelOpen={setIsPanelOpen}
                     icon={icon}
-                    buttonText="Go to deliveries"
+                    buttonText={buttonText}
                 />
                 {children}
                 </div>

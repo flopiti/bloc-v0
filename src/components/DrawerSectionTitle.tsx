@@ -26,10 +26,10 @@ const DrawerSectionTitle = ({
     console.log(isPanelOpen)
     return (
         <div className="flex items-center justify-between mb-4">
-        <div>
+        <div className="max-w-2/5">
             <div className="text-white/60 text-sm">{title}</div>
             <motion.div 
-                className="text-white font-medium"
+                className="text-white font-medium "
                 transition={{ duration: 2 }}
             >
                 {

@@ -58,6 +58,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
       }
       icon={TbTruckDelivery}
       isEmpty={!cart?.nextDelivery}
+      buttonText="View Deliveries"
       >
         <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
       </DrawerSection>}
@@ -74,6 +75,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
       subtitle={`${cartItems.length} ${cartItems.length === 1 ? 'item' : 'items'}`}
       icon={TbShoppingCart}
       goToPage={() => goToPage(PAGE.CART)}
+      buttonText="View Cart"
       >
       <DrawerCart cart={cart}/>
     </DrawerSection>
