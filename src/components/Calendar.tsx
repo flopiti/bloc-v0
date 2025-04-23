@@ -78,7 +78,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                                     : 'text-white hover:bg-white/10'
                             } ${
                                 isNextDelivery(date)
-                                    ? 'border-2 border-blue-500'
+                                    ? ''
                                     : isTwoWeeksFromNextDelivery(date)
                                     ? 'bg-blue-500/20'
                                     : date.isSame(TODAY, 'day')
