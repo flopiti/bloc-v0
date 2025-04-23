@@ -16,6 +16,7 @@ const DrawerSection = ({children, isEmpty=false, onClick, title, subtitle, icon}
 
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const drawerRef = useRef<HTMLDivElement>(null);
+   
 
     return (
         <motion.div

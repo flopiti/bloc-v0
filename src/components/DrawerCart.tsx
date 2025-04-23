@@ -34,37 +34,24 @@ const DrawerCart = ({ isLoading, cart, handleOpenCart }: DrawerCartProps) => {
     }, []);
 
     return (
-        <>
-            {cartItems.length > 0 ? (
-                <motion.div 
-                    className="flex flex-col gap-4 p-4 w-full" 
-                        layout
-                    >
-                        <div>
-                            <div className="text-white/60 text-sm">Your Cart</div>
-                            <div className="text-white font-medium">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</div>
-                        </div>
-                        <div className="flex flex-row flex-wrap gap-2">
-                            {cartItems.map((item: Item) => (
-                                <motion.div
-                                    key={item.id}
-                                    layout
-                                    className="w-[calc(33.333%-0.5rem)]"
-                                >
-                                    <ItemBox item={item} />
-                                </motion.div>
-                            ))}
-                        </div>
-                    </motion.div>
-                ) : (
-                    <EmptyStateButton 
-                        onClick={handleOpenCart}
-                        title="Your Cart is Empty"
-                        subtitle="Select items to start building your cart"
-                        icon={TbShoppingCart}
-                    />
-                )}
-        </>
+            <div className="p-4">
+                <div>
+                    <div className="text-white/60 text-sm">Your Cart</div>
+                    <div className="text-white font-medium">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</div>
+                </div>
+                <div className="flex flex-row flex-wrap gap-2">
+                    {cartItems.map((item: Item) => (
+                        <motion.div
+                            key={item.id}
+                            layout
+                            className="w-[calc(33.333%-0.5rem)]"
+                        >
+                            <ItemBox item={item} />
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+                
     )
 }
 

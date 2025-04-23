@@ -38,6 +38,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
         title="No Delivery Schedule"
         subtitle="Set up your delivery frequency to get started"
         icon={TbTruckDelivery}
+        isEmpty={!cart?.nextDelivery}
       >
         <DrawerCalendar handleOpenDeliveries={() => goToPage(PAGE.DELIVERIES)} />
       </DrawerSection>}
@@ -49,6 +50,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
       title="Your Cart is Empty"
       subtitle="Select items to start building your cart"
       icon={TbShoppingCart}
+      isEmpty={cartItems.length === 0}
       >
       <DrawerCart isLoading={isLoading} cart={cart} handleOpenCart={() => goToPage(PAGE.CART)}/>
     </DrawerSection>
