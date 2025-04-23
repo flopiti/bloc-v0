@@ -1,0 +1,57 @@
+import dayjs from 'dayjs';
+import { motion } from 'framer-motion';
+import { useCartStore } from '@/stores/cartStore';
+import useCart from '@/hooks/useCart';
+import Calendar from '../components/Calendar';
+import CalendarDelivery from '../components/CalendarDelivery';
+
+interface DeliveriesPageProps {
+    openDrawer: () => void;
+}
+
+const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
+    const { cart, isCartValid } = useCartStore();
+    const { setDeliveryDate, confirmCart } = useCart();
+
+    const handleDateClick = (date: dayjs.Dayjs) => {
+        setDeliveryDate(date.toDate());
+    };
+
+    const handleConfirmDelivery = () => isCartValid() ? confirmCart() : openDrawer();
+
+    return (
+        <>
+            {cart?.nextDelivery && (
+                <CalendarDelivery
+                    nextDelivery={cart.nextDelivery}
+                    isConfirmed={cart.confirmed}
+                    onConfirm={handleConfirmDelivery}
+                />
+            )}
+
+            <Calendar 
+                nextDelivery={cart?.nextDelivery}
+                onDateClick={handleDateClick}
+            />
+
+            {!cart?.nextDelivery  && (
+                <motion.div
+                    animate={{ 
+                        color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
+                    }}
+                    transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        times: [0, 0.25, 0.5, 0.75, 1]
+                    }}
+                    className="mt-4 text-center"
+                >
+                    Please select the date of your first biweekly delivery
+                </motion.div>
+            )}
+        </>
+    );
+};
+
+export default DeliveriesPage;
