@@ -9,6 +9,7 @@ import DrawerCalendar from '@/components/DrawerCalendar';
 import { PAGE } from '@/enums/core';
 import DrawerSection from '@/components/DrawerSection';
 import { TbShoppingCart, TbTruckDelivery } from 'react-icons/tb';
+import dayjs from 'dayjs';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
@@ -20,6 +21,17 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
   const { items } = useItemsStore();
   const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
   const suggestedItems = items.filter(({ id }) => !cartItems.some(({ id: cartId }) => cartId === id));
+
+
+
+  const isDeliveryThisWeek = () => {
+    if (!cart?.nextDelivery) return false;
+    const deliveryDate = dayjs(cart.nextDelivery);
+    const today = dayjs();
+    const diffDays = deliveryDate.diff(today, 'day');
+    return diffDays <= 7;
+};
+
 
   return (
     <motion.div
@@ -34,11 +46,18 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
 
     <AnimatePresence>
       {cart && <DrawerSection
-        onClick={() => goToPage(PAGE.DELIVERIES)}
-        title="No Delivery Schedule"
-        subtitle="Set up your delivery frequency to get started"
-        icon={TbTruckDelivery}
-        isEmpty={!cart?.nextDelivery}
+        goToPage={() => goToPage(PAGE.DELIVERIES)}
+        emptyTitle="No Delivery Schedule"
+        emptySubtitle="Set up your delivery frequency to get started"
+        emptyIcon={TbTruckDelivery}
+        title="Next Delivery"
+        emptyOnClick={() => goToPage(PAGE.DELIVERIES)}
+        subtitle={isDeliveryThisWeek() 
+          ? dayjs(cart?.nextDelivery).format('dddd, MMMM D, YYYY')
+          : "No delivery this week"
+      }
+      icon={TbTruckDelivery}
+      isEmpty={!cart?.nextDelivery}
       >
         <DrawerCalendar handleOpenDeliveries={() => goToPage(PAGE.DELIVERIES)} />
       </DrawerSection>}
@@ -46,11 +65,15 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
     
     {/* Cart Display */}
     <DrawerSection                         
-      onClick={() => goToPage(PAGE.CART)}
-      title="Your Cart is Empty"
-      subtitle="Select items to start building your cart"
-      icon={TbShoppingCart}
+      emptyOnClick={() => goToPage(PAGE.CART)}
+      emptyTitle="Your Cart is Empty"
+      emptySubtitle="Select items to start building your cart"
+      emptyIcon={TbShoppingCart}
       isEmpty={cartItems.length === 0}
+      title="Your Cart"
+      subtitle={`${cartItems.length} ${cartItems.length === 1 ? 'item' : 'items'}`}
+      icon={TbShoppingCart}
+      goToPage={() => goToPage(PAGE.CART)}
       >
       <DrawerCart isLoading={isLoading} cart={cart} handleOpenCart={() => goToPage(PAGE.CART)}/>
     </DrawerSection>

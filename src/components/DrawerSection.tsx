@@ -1,22 +1,52 @@
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EmptyStateButton from "./EmptyStateButton";
 import { IconType } from "react-icons";
+import { TbTruckDelivery } from "react-icons/tb";
+import DrawerSectionTitle from "./DrawerSectionTitle";
 
 interface DrawerSectionProps {
     children: React.ReactNode;
     isEmpty?: boolean;
-    onClick: () => void;
+    emptyOnClick: () => void;
+    emptyTitle: string;
+    emptySubtitle: string;
+    emptyIcon: IconType;
     title: string;
     subtitle: string;
     icon: IconType;
+    goToPage: () => void;
 }
 
-const DrawerSection = ({children, isEmpty=false, onClick, title, subtitle, icon}: DrawerSectionProps) => {
+const DrawerSection = ({
+    children, 
+    isEmpty=false,
+     emptyOnClick,
+     emptyTitle, 
+     emptySubtitle, 
+     emptyIcon,
+     title,
+     subtitle,
+      icon, 
+      goToPage
+    }: DrawerSectionProps) => {
 
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const drawerRef = useRef<HTMLDivElement>(null);
-   
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+                console.log("clicked outside")
+                setIsPanelOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
 
     return (
         <motion.div
@@ -27,13 +57,24 @@ const DrawerSection = ({children, isEmpty=false, onClick, title, subtitle, icon}
         >
             {isEmpty ? (
                 <EmptyStateButton
-                    onClick={onClick}
-                    title={title}
-                    subtitle={subtitle}
-                    icon={icon}
+                    onClick={emptyOnClick}
+                    title={emptyTitle}
+                    subtitle={emptySubtitle}
+                    icon={emptyIcon}
                 />
             ) : (
-                children
+                <div className="p-4">
+                <DrawerSectionTitle 
+                    title={title}
+                    subtitle={subtitle}
+                    isPanelOpen={isPanelOpen}
+                    handleOpenDeliveries={goToPage}
+                    setIsPanelOpen={setIsPanelOpen}
+                    icon={icon}
+                    buttonText="Go to deliveries"
+                />
+                {children}
+                </div>
             )}
         </motion.div>
     )

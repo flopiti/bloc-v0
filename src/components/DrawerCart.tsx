@@ -34,11 +34,7 @@ const DrawerCart = ({ isLoading, cart, handleOpenCart }: DrawerCartProps) => {
     }, []);
 
     return (
-            <div className="p-4">
-                <div>
-                    <div className="text-white/60 text-sm">Your Cart</div>
-                    <div className="text-white font-medium">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</div>
-                </div>
+
                 <div className="flex flex-row flex-wrap gap-2">
                     {cartItems.map((item: Item) => (
                         <motion.div
@@ -50,7 +46,6 @@ const DrawerCart = ({ isLoading, cart, handleOpenCart }: DrawerCartProps) => {
                         </motion.div>
                     ))}
                 </div>
-            </div>
                 
     )
 }
