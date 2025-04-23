@@ -1,3 +1,4 @@
+import Product from '@/components/Product';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
@@ -30,8 +31,7 @@ const ProductsPage = () => {
                             zIndex: expandedIndex === index ? 1 : 0
                         }}
                     >
-                        <h2 className="text-lg font-semibold">{box.title}</h2>
-                        <p className="mt-2">Click to expand</p>
+                    <Product />
                     </motion.div>
                 ))}
             </div>
