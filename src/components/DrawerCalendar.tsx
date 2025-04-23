@@ -84,13 +84,8 @@ const DrawerCalendar = ({ handleOpenDeliveries }: DrawerCalendarProps) => {
                     </div>
                     <div className="mt-4">
                         <motion.div
-                            animate={{
-                                opacity: isPanelOpen ? 1 : 0.8
-                            }}
-                            transition={{
-                                duration: 0.2,
-                                ease: "easeOut"
-                            }}
+                            animate={{opacity: isPanelOpen ? 1 : 0.8}}
+                            transition={{duration: 0.2,ease: "easeOut"}}
                             layout
                         >
                             <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
