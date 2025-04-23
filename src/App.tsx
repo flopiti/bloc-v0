@@ -6,9 +6,9 @@ import './App.css';
 import useCart from './hooks/useCart';
 import useItems from './hooks/useItems';
 import { DrawerButton } from './components/DrawerButton';
-import DeliveriesPage from './components/DeliveriesPage';
+import DeliveriesPage from './sections/DeliveriesPage';
 import { PAGE } from './enums/core';
-import CartPage from './components/CartPage';
+import CartPage from './sections/CartPage';
 
 const START_WITH_DRAWER = false
 

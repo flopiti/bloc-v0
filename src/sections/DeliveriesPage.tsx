@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { IoArrowBack } from 'react-icons/io5';
 import { useCartStore } from '@/stores/cartStore';
 import useCart from '@/hooks/useCart';
-import Calendar from './Calendar';
-import CalendarDelivery from './CalendarDelivery';
+import Calendar from '../components/Calendar';
+import CalendarDelivery from '../components/CalendarDelivery';
 
 interface DeliveriesPageProps {
     openDrawer: () => void;
