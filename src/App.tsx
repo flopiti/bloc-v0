@@ -68,7 +68,7 @@ const App = () => {
                 title="Cart"
                 goHome={goHome}
               >
-                <CartPage />  
+                <CartPage goToPage={goToPage}/>  
               </PageLayout>
             )}
             {currentView === PAGE.PRODUCTS && (
