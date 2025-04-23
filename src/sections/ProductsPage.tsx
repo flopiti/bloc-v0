@@ -10,9 +10,9 @@ const ProductsPage = () => {
         title: `Product ${i + 1}`,
     }));
 
+    const getRowNumber = (index: number) => Math.floor(index / 2);
+
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Products</h1>
             <div className="grid grid-cols-2 gap-4" style={{ gridAutoRows: '200px' }}>
                 {boxes.map((box, index) => (
                     <motion.div
@@ -21,7 +21,7 @@ const ProductsPage = () => {
                         initial={{ height: "200px" }}
                         animate={{
                             height: expandedIndex === index ? "240px" : "200px",
-                            y: expandedIndex !== null && index > expandedIndex ? 40 : 0
+                            y: expandedIndex !== null && getRowNumber(index) > getRowNumber(expandedIndex) ? 40 : 0
                         }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
@@ -35,7 +35,6 @@ const ProductsPage = () => {
                     </motion.div>
                 ))}
             </div>
-        </div>
     );
 };
 
