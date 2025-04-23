@@ -9,7 +9,7 @@ interface DrawerButtonProps {
 
 export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps) => (
     <motion.div
-      className="full-screen w-2/5 mx-auto rounded-3xl p-[0.25rem]"
+      className="full-screen w-2/5 mx-auto rounded-3xl p-[0.25rem] z-20"
       initial={{ bottom: 0}}
       animate={{ 
         y: isDrawerOpen ? `calc(-100vh + ${BUTTON_HEIGHT} + 2rem)` : 0,
