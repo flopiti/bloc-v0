@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import useCart from "@/hooks/useCart";
 import { Item } from "@/types/core";
 import { useState } from "react";
+import { useCartStore } from "@/stores/cartStore";
+import { FiCheck } from "react-icons/fi";
 
 interface ProductProps {
     isAddOpen: boolean;
@@ -10,7 +12,10 @@ interface ProductProps {
 
 const Product = ({ isAddOpen, item }: ProductProps) => {
     const { addItem } = useCart();
+    const { cart } = useCartStore();
     const [isClicking, setIsClicking] = useState(false);
+
+    const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.id === item.id) : false;
 
     const handleAddToCart = () => {
         if (isClicking) return;
@@ -27,6 +32,11 @@ const Product = ({ isAddOpen, item }: ProductProps) => {
                 onAnimationComplete={() => setIsClicking(false)}
             >
                 <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                {isInCart && (
+                    <div className="absolute top-0 right-0">
+                        <FiCheck className="text-white text-xl" />
+                    </div>
+                )}
             </motion.div>
             {isAddOpen && (
                 <motion.button
