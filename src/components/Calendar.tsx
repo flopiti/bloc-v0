@@ -4,6 +4,8 @@ import { TbTruckDelivery } from 'react-icons/tb';
 import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, TODAY } from '@/utils/dates';
 import { CALENDAR_MODE } from '@/enums/core';
 
+const DELIVERY_DAYS = ['Wednesday', 'Friday'];
+
 interface CalendarProps {
     nextDelivery?: Date;
     onDateClick? : (date: dayjs.Dayjs) => void;
@@ -20,6 +22,10 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
         if (!nextDelivery) return false;
         const twoWeeksFromNext = dayjs(nextDelivery).add(2, 'week');
         return date.isSame(twoWeeksFromNext, 'day');
+    };
+
+    const isDeliveryDay = (date: dayjs.Dayjs) => {
+        return DELIVERY_DAYS.includes(date.format('dddd'));
     };
 
     const getDates = () => {
@@ -73,7 +79,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                             className={`flex items-center justify-center rounded-full text-sm cursor-pointer transition-all relative ${
                                 isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
                             } ${
-                                isPastOrToday(date) 
+                                isPastOrToday(date) || !isDeliveryDay(date)
                                     ? 'text-white/30 cursor-not-allowed' 
                                     : 'text-white hover:bg-white/10'
                             } ${
