@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, TODAY } from '@/utils/dates';
 import { CALENDAR_MODE } from '@/enums/core';
-
-const DELIVERY_DAYS = ['Wednesday', 'Friday'];
+import { DELIVERY_DAYS } from '@/sections/DeliveriesPage';
 
 interface CalendarProps {
     nextDelivery?: Date;
@@ -24,10 +23,6 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
         return date.isSame(twoWeeksFromNext, 'day');
     };
 
-    const isDeliveryDay = (date: dayjs.Dayjs) => {
-        return DELIVERY_DAYS.includes(date.format('dddd'));
-    };
-
     const getDates = () => {
         if (mode === CALENDAR_MODE.ONE_WEEK) {
             return Array.from({ length: 7 }, (_, i) => TODAY.add(i, 'day'));
@@ -41,7 +36,9 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
         }
         return WEEK_DAYS;
     };
-
+    const isDeliveryDay = (date: dayjs.Dayjs) => {
+        return DELIVERY_DAYS.includes(date.format('dddd'));
+    };
     const dates = getDates();
     const weekDays = getWeekDays();
 

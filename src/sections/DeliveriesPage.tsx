@@ -9,13 +9,20 @@ interface DeliveriesPageProps {
     openDrawer: () => void;
 }
 
+export const DELIVERY_DAYS = ['Wednesday', 'Friday'];
+
+
 const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
     const { cart, isCartValid } = useCartStore();
     const { setDeliveryDate, confirmCart } = useCart();
 
     const handleDateClick = (date: dayjs.Dayjs) => {
-        if(date.isSame(dayjs(cart?.nextDelivery), 'day')) return;
-        setDeliveryDate(date.toDate());
+        const isToday = date.isSame(dayjs(cart?.nextDelivery), 'day');
+        const isDeliveryDay = DELIVERY_DAYS.includes(date.format('dddd'));
+        const doesCartHaveDelivery = cart?.nextDelivery;
+        if(!isToday && isDeliveryDay && !doesCartHaveDelivery) {
+            setDeliveryDate(date.toDate());
+        }
     };
 
     const handleConfirmDelivery = () => isCartValid() ? confirmCart() : openDrawer();
