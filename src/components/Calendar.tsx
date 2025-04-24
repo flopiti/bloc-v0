@@ -89,10 +89,8 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                                 isPastOrToday(date) || (mode === CALENDAR_MODE.FOUR_WEEKS && !isDeliveryDay(date))
                                     ? 'text-white/30 cursor-not-allowed' 
                                     : 'text-white hover:bg-white/10'
-                            } ${isTwoWeeksFromNextDelivery(date) ? 'bg-blue-900/50' : ''}`}
-                            initial={false}
-                            animate={{
-                                scale: selectedDate?.isSame(date, 'day') ? 1.1 : 1,
+                            }`}
+                            style={{
                                 backgroundColor: isTwoWeeksFromNextDelivery(date) 
                                     ? 'rgba(30, 58, 138, 0.5)' 
                                     : selectedDate?.isSame(date, 'day') 
@@ -100,16 +98,15 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                                         : 'transparent',
                                 border: selectedDate?.isSame(date, 'day') ? '2px solid white' : 'none'
                             }}
+                            initial={false}
+                            animate={{
+                                scale: selectedDate?.isSame(date, 'day') ? 1.1 : 1
+                            }}
                             whileHover={{
                                 scale: 1.05,
                                 backgroundColor: isTwoWeeksFromNextDelivery(date)
                                     ? 'rgba(30, 58, 138, 0.7)'
                                     : 'rgba(255, 255, 255, 0.1)'
-                            }}
-                            transition={{
-                                type: "spring",
-                                stiffness: 400,
-                                damping: 17
                             }}
                         >
                             {isNextDelivery(date) ? (
