@@ -38,9 +38,14 @@ const Product = ({ isAddOpen, item }: ProductProps) => {
                     >
                         <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
                         {isInCart && (
-                            <div className="absolute top-0 right-0">
+                            <motion.div 
+                                className="absolute top-0 right-0"
+                                initial={{ scale: 0, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                            >
                                 <FiCheck className="text-white text-xl" />
-                            </div>
+                            </motion.div>
                         )}
                     </motion.div>
                 </div>
