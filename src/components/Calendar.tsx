@@ -81,7 +81,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                     <div key={index} className="text-center">
                         <motion.button 
                             type="button"
-                            disabled={isPastOrToday(date)}
+                            // disabled={isPastOrToday(date)}
                             onClick={() => onDateClick?.(date)}
                             className={`flex items-center justify-center rounded-full text-sm cursor-pointer relative ${
                                 isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
