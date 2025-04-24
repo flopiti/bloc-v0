@@ -79,7 +79,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                             className={`flex items-center justify-center rounded-full text-sm cursor-pointer transition-all relative ${
                                 isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
                             } ${
-                                isPastOrToday(date) || !isDeliveryDay(date)
+                                isPastOrToday(date) || (mode === CALENDAR_MODE.FOUR_WEEKS && !isDeliveryDay(date))
                                     ? 'text-white/30 cursor-not-allowed' 
                                     : 'text-white hover:bg-white/10'
                             } ${
