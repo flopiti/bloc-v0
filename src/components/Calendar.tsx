@@ -35,7 +35,15 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
         return NEXT_FOUR_WEEKS.flat();
     };
 
+    const getWeekDays = () => {
+        if (mode === CALENDAR_MODE.ONE_WEEK) {
+            return Array.from({ length: 7 }, (_, i) => TODAY.add(i, 'day').format('ddd'));
+        }
+        return WEEK_DAYS;
+    };
+
     const dates = getDates();
+    const weekDays = getWeekDays();
 
     return (
         <motion.div 
@@ -61,7 +69,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                 />
             )}
             <div className="grid grid-cols-7 gap-2 mb-2">
-                {WEEK_DAYS.map((day, dayIndex) => (
+                {weekDays.map((day, dayIndex) => (
                     <div key={dayIndex} className="text-center">
                         <div className="text-white/60 text-xs">
                             {day}
