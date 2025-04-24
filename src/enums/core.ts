@@ -2,6 +2,7 @@ export enum PAGE {
     HOME = 'home',
     DELIVERIES = 'deliveries',
     CART = 'cart',
+    PRODUCTS = 'products',
 }
 
 export enum CALENDAR_MODE {

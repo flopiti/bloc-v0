@@ -79,11 +79,6 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
       >
       <DrawerCart cart={cart}/>
     </DrawerSection>
-    
-        {/* Suggested Items */}
-    <AnimatePresence>
-        <SuggestedItems suggestedItems={suggestedItems} />
-    </AnimatePresence>
 
     {/* Confirm Button */}
     <AnimatePresence>

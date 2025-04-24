@@ -92,5 +92,19 @@ export const handlers = [
     };
     
     return HttpResponse.json(currentCart);
+  }),
+
+  http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/remove`, async ({ request }) => {
+    await delay(DELAY);
+    const item = await request.json() as Item;
+    
+    // Remove the item from the cart
+    currentCart = {
+      ...currentCart,
+      pendingItems: currentCart.pendingItems.filter(i => i.id !== item.id),
+      confirmedItems: currentCart.confirmedItems.filter(i => i.id !== item.id)
+    };
+    
+    return HttpResponse.json(currentCart);
   })
 ]; 

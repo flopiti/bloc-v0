@@ -4,6 +4,8 @@ import { TbTruckDelivery } from 'react-icons/tb';
 import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, TODAY } from '@/utils/dates';
 import { CALENDAR_MODE } from '@/enums/core';
 
+const DELIVERY_DAYS = ['Wednesday', 'Friday'];
+
 interface CalendarProps {
     nextDelivery?: Date;
     onDateClick? : (date: dayjs.Dayjs) => void;
@@ -22,6 +24,10 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
         return date.isSame(twoWeeksFromNext, 'day');
     };
 
+    const isDeliveryDay = (date: dayjs.Dayjs) => {
+        return DELIVERY_DAYS.includes(date.format('dddd'));
+    };
+
     const getDates = () => {
         if (mode === CALENDAR_MODE.ONE_WEEK) {
             return Array.from({ length: 7 }, (_, i) => TODAY.add(i, 'day'));
@@ -29,7 +35,15 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
         return NEXT_FOUR_WEEKS.flat();
     };
 
+    const getWeekDays = () => {
+        if (mode === CALENDAR_MODE.ONE_WEEK) {
+            return Array.from({ length: 7 }, (_, i) => TODAY.add(i, 'day').format('ddd'));
+        }
+        return WEEK_DAYS;
+    };
+
     const dates = getDates();
+    const weekDays = getWeekDays();
 
     return (
         <motion.div 
@@ -55,7 +69,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                 />
             )}
             <div className="grid grid-cols-7 gap-2 mb-2">
-                {WEEK_DAYS.map((day, dayIndex) => (
+                {weekDays.map((day, dayIndex) => (
                     <div key={dayIndex} className="text-center">
                         <div className="text-white/60 text-xs">
                             {day}
@@ -73,7 +87,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                             className={`flex items-center justify-center rounded-full text-sm cursor-pointer transition-all relative ${
                                 isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
                             } ${
-                                isPastOrToday(date) 
+                                isPastOrToday(date) || (mode === CALENDAR_MODE.FOUR_WEEKS && !isDeliveryDay(date))
                                     ? 'text-white/30 cursor-not-allowed' 
                                     : 'text-white hover:bg-white/10'
                             } ${

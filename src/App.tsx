@@ -10,6 +10,7 @@ import DeliveriesPage from './sections/DeliveriesPage';
 import { PAGE } from './enums/core';
 import CartPage from './sections/CartPage';
 import PageLayout from './components/PageLayout';
+import ProductsPage from './sections/ProductsPage';
 
 const START_WITH_DRAWER = false
 
@@ -67,7 +68,15 @@ const App = () => {
                 title="Cart"
                 goHome={goHome}
               >
-                <CartPage />
+                <CartPage goToPage={goToPage}/>  
+              </PageLayout>
+            )}
+            {currentView === PAGE.PRODUCTS && (
+              <PageLayout 
+                title="Products"
+                goHome={goHome}
+              >
+                <ProductsPage />
               </PageLayout>
             )}
           </motion.div>
