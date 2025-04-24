@@ -5,6 +5,7 @@ import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, TODAY } from '@/utils/dates'
 import { CALENDAR_MODE } from '@/enums/core';
 import { DELIVERY_DAYS } from '@/sections/DeliveriesPage';
 
+
 interface CalendarProps {
     nextDelivery?: Date;
     onDateClick? : (date: dayjs.Dayjs) => void;
@@ -78,31 +79,38 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
             <div className="grid grid-cols-7 gap-2">
                 {dates.map((date, index) => (
                     <div key={index} className="text-center">
-                        <button 
+                        <motion.button 
                             type="button"
                             disabled={isPastOrToday(date)}
                             onClick={() => onDateClick?.(date)}
-                            className={`flex items-center justify-center rounded-full text-sm cursor-pointer transition-all relative ${
+                            className={`flex items-center justify-center rounded-full text-sm cursor-pointer relative ${
                                 isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
                             } ${
                                 isPastOrToday(date) || (mode === CALENDAR_MODE.FOUR_WEEKS && !isDeliveryDay(date))
                                     ? 'text-white/30 cursor-not-allowed' 
                                     : 'text-white hover:bg-white/10'
-                            } ${
-                                isNextDelivery(date)
-                                    ? selectedDate?.isSame(date, 'day')
-                                        ? 'ring-2 ring-white'
-                                        : ''
-                                    : isTwoWeeksFromNextDelivery(date)
-                                    ? selectedDate?.isSame(date, 'day')
-                                        ? 'bg-blue-500/20 ring-2 ring-white'
-                                        : 'bg-blue-500/20'
-                                    : selectedDate?.isSame(date, 'day')
-                                    ? 'ring-2 ring-white'
-                                    : date.isSame(TODAY, 'day') && !selectedDate?.isSame(date, 'day')
-                                    ? 'after:content-[""] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-0.5 after:bg-white'
-                                    : ''
-                            }`}
+                            } ${isTwoWeeksFromNextDelivery(date) ? 'bg-blue-900/50' : ''}`}
+                            initial={false}
+                            animate={{
+                                scale: selectedDate?.isSame(date, 'day') ? 1.1 : 1,
+                                backgroundColor: isTwoWeeksFromNextDelivery(date) 
+                                    ? 'rgba(30, 58, 138, 0.5)' 
+                                    : selectedDate?.isSame(date, 'day') 
+                                        ? 'rgba(255, 255, 255, 0.1)' 
+                                        : 'transparent',
+                                border: selectedDate?.isSame(date, 'day') ? '2px solid white' : 'none'
+                            }}
+                            whileHover={{
+                                scale: 1.05,
+                                backgroundColor: isTwoWeeksFromNextDelivery(date)
+                                    ? 'rgba(30, 58, 138, 0.7)'
+                                    : 'rgba(255, 255, 255, 0.1)'
+                            }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 17
+                            }}
                         >
                             {isNextDelivery(date) ? (
                                 <motion.div
@@ -120,7 +128,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                             ) : (
                                 date.date()
                             )}
-                        </button>
+                        </motion.button>
                     </div>
                 ))}
             </div>
