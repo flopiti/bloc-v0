@@ -20,6 +20,8 @@ const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
         const isToday = date.isSame(dayjs(cart?.nextDelivery), 'day');
         const isDeliveryDay = DELIVERY_DAYS.includes(date.format('dddd'));
         const doesCartHaveDelivery = cart?.nextDelivery;
+
+        //For now we only set dates when you have no date
         if(!isToday && isDeliveryDay && !doesCartHaveDelivery) {
             setDeliveryDate(date.toDate());
         }
