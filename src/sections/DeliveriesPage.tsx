@@ -14,6 +14,7 @@ const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
     const { setDeliveryDate, confirmCart } = useCart();
 
     const handleDateClick = (date: dayjs.Dayjs) => {
+        if(date.isSame(dayjs(cart?.nextDelivery), 'day')) return;
         setDeliveryDate(date.toDate());
     };
 
