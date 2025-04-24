@@ -9,9 +9,10 @@ interface CalendarProps {
     nextDelivery?: Date;
     onDateClick? : (date: dayjs.Dayjs) => void;
     mode?: CALENDAR_MODE;
+    selectedDate?: dayjs.Dayjs;
 }
 
-const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }: CalendarProps) => {
+const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, selectedDate }: CalendarProps) => {
     const isNextDelivery = (date: dayjs.Dayjs) => {
         if (!nextDelivery) return false;
         return date.isSame(dayjs(nextDelivery), 'day');
@@ -92,7 +93,9 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS }
                                     ? ''
                                     : isTwoWeeksFromNextDelivery(date)
                                     ? 'bg-blue-500/20'
-                                    : date.isSame(TODAY, 'day')
+                                    : selectedDate?.isSame(date, 'day')
+                                    ? 'ring-2 ring-white'
+                                    : date.isSame(TODAY, 'day') && !selectedDate?.isSame(date, 'day')
                                     ? 'after:content-[""] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-0.5 after:bg-white'
                                     : ''
                             }`}
