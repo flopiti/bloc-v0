@@ -61,7 +61,7 @@ const Product = ({ isAddOpen, item }: ProductProps) => {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
-                            transition={{ duration: 0.2 }}
+                            transition={{ duration: 0.2, delay: 0.2 }}
                         >
                             {isInCart ? 'Remove' : 'Add to Cart'}
                         </motion.button>

@@ -20,7 +20,12 @@ const ProductsPage = () => {
                             height: expandedIndex === index ? "240px" : "200px",
                             y: expandedIndex !== null && getRowNumber(index) > getRowNumber(expandedIndex) ? 40 : 0
                         }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        exit={{ height: "200px" }}
+                        transition={{ 
+                            duration: 0.3, 
+                            ease: "easeInOut",
+                            delay: expandedIndex === null ? 0.3 : 0
+                        }}
                         onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
                         style={{
                             position: 'relative',
