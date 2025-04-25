@@ -21,7 +21,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
     const [canEditDate, setCanEditDate] = useState(false);
     
     const handleDateClick = (date: dayjs.Dayjs) => {
-        const isToday = date.isSame(dayjs(cart?.nextDelivery), 'day');
+        const isToday = date.isSame(dayjs(), 'day');
         const isDeliveryDay = DELIVERY_DAYS.includes(date.format('dddd'));
         const doesCartHaveDelivery = cart?.nextDelivery;
 
