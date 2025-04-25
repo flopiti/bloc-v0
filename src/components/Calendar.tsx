@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, TODAY } from '@/utils/dates';
 import { CALENDAR_MODE } from '@/enums/core';
-import { DELIVERY_DAYS } from '@/sections/DeliveriesPage';
+import { DELIVERY_DAYS } from '@/constants/core';
 
 
 interface CalendarProps {

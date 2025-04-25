@@ -5,13 +5,11 @@ import useCart from '@/hooks/useCart';
 import Calendar from '../components/Calendar';
 import CalendarDelivery from '../components/CalendarDelivery';
 import { useState } from 'react';
+import { DELIVERY_DAYS } from '@/constants/core';
 
 interface DeliveriesPageProps {
     openDrawer: () => void;
 }
-
-export const DELIVERY_DAYS = ['Wednesday', 'Friday'];
-
 
 const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
     const { cart, isCartValid } = useCartStore();
