@@ -40,6 +40,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                     nextDelivery={cart.nextDelivery}
                     isConfirmed={cart.confirmed}
                     onConfirm={handleConfirmDelivery}
+                    onClick={() => cart.nextDelivery && setSelectedDate(cart.nextDelivery)}
                 />
             )}
 

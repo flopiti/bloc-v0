@@ -6,9 +6,10 @@ interface CalendarDeliveryProps {
     nextDelivery: Date;
     isConfirmed: boolean;
     onConfirm: () => void;
+    onClick?: () => void;
 }
 
-const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm }: CalendarDeliveryProps) => {
+const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm, onClick }: CalendarDeliveryProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -19,7 +20,8 @@ const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm }: CalendarDeli
                 damping: 25
             }}
             layout
-            className="mb-6 p-4 bg-white/5 rounded-xl flex flex-col gap-3"
+            className={`mb-6 p-4 bg-white/5 rounded-xl flex flex-col gap-3 ${!isConfirmed ? 'cursor-pointer hover:bg-white/10' : ''}`}
+            onClick={onClick}
         >
             <motion.div 
                 layout 
