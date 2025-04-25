@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { motion } from 'framer-motion';
+import {  AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import useCart from '@/hooks/useCart';
 import Calendar from '../components/Calendar';
@@ -66,16 +66,18 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                 showMessage={!cart?.nextDelivery}
             />
 
-            {selectedDate && (
-                <DeliveryInfo
-                    setCanEditDate={handleEditDate}
-                    selectedDate={selectedDate}
-                    nextDelivery={cart?.nextDelivery}
-                    confirmedItems={cart?.confirmedItems || []}
-                    pendingItems={cart?.pendingItems || []}
-                    goToPage={goToPage}
-                />
-            )}
+            <AnimatePresence>
+                {selectedDate && !canEditDate && (
+                    <DeliveryInfo
+                        setCanEditDate={handleEditDate}
+                        selectedDate={selectedDate}
+                        nextDelivery={cart?.nextDelivery}
+                        confirmedItems={cart?.confirmedItems || []}
+                        pendingItems={cart?.pendingItems || []}
+                        goToPage={goToPage}
+                    />
+                )}
+            </AnimatePresence>
         </>
     );
 };

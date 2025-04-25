@@ -25,6 +25,7 @@ const DeliveryInfo = ({ selectedDate, nextDelivery, goToPage, setCanEditDate }: 
                 y: 0,
                 height: nextDelivery && dayjs(selectedDate).isSame(nextDelivery, 'day') ? 150 : 100
             }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ 
                 type: "spring",
                 stiffness: 300,
