@@ -26,7 +26,7 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                         icon={TbShoppingCart}
                     />  
                 ) : (
-                    <div className="flex flex-row flex-wrap gap-4">
+                    <div className="flex flex-row flex-wrap gap-4 p-4">
                         {cartItems.map((item: Item) => (
                             <motion.div
                                 key={item.id}
