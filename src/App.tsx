@@ -61,7 +61,7 @@ const App = () => {
                       </span>
                     }
                   >
-                    <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} />
+                    <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} goToPage={goToPage} />
                   </PageLayout>
                 )}
                 {currentView === PAGE.CART && (
