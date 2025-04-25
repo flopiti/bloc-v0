@@ -47,6 +47,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                 nextDelivery={cart?.nextDelivery}
                 selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
                 onDateClick={handleDateClick}
+                isEdit={cart?.nextDelivery ? false : true}
             />
             {
                 !cart?.nextDelivery  && (
