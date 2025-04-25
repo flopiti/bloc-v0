@@ -1,5 +1,6 @@
 import { Cart, Item } from '@/types/core';
 import dayjs from 'dayjs';
+import { DELIVERY_DAYS } from '@/constants/core';
 
 export const mockItems: Item[] = [
   { id: 1, name: 'Milk', image: '/milk.png' },
@@ -9,6 +10,12 @@ export const mockItems: Item[] = [
   { id: 5, name: 'Ground Meat', image: '/ground-meat.png' },
   { id: 6, name: 'Coffee', image: '/coffee.png' }
 ]; 
+
+// Helper function to convert day name to day number (0-6)
+const getDayNumber = (dayName: string): number => {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  return days.indexOf(dayName);
+};
 
 // Confirmed cart with items
 const confirmedCart: Cart = {
@@ -20,10 +27,11 @@ const confirmedCart: Cart = {
   confirmed: true,
   nextDelivery: (() => {
     const today = dayjs();
-    const tomorrow = today.add(1, 'day');
-    const saturday = today.day(6);
-    const randomTime = Math.random() * (saturday.diff(tomorrow, 'millisecond'));
-    return tomorrow.add(randomTime, 'millisecond').toDate();
+    const nextDeliveryDay = DELIVERY_DAYS.find(day => {
+      const nextDay = today.day(getDayNumber(day));
+      return nextDay.isAfter(today);
+    });
+    return nextDeliveryDay ? today.day(getDayNumber(nextDeliveryDay)).toDate() : today.add(1, 'week').day(getDayNumber(DELIVERY_DAYS[0])).toDate();
   })()
 };
 
@@ -33,11 +41,15 @@ const getRandomCart = (): Cart => {
   const shuffled = [...mockItems].sort(() => 0.5 - Math.random());
   const selectedItems = shuffled.slice(0, numItems);
   
+  const today = dayjs();
+  const randomDeliveryDay = DELIVERY_DAYS[Math.floor(Math.random() * DELIVERY_DAYS.length)];
+  const nextDelivery = today.add(Math.floor(Math.random() * 2), 'week').day(getDayNumber(randomDeliveryDay)).toDate();
+  
   return {
     confirmedItems: selectedItems,
     pendingItems: [],
     confirmed: Math.random() > 0.5,
-    nextDelivery: dayjs().add(Math.random() * 7, 'day').toDate()
+    nextDelivery
   }
 };
 

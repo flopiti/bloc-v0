@@ -66,7 +66,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
     
     {/* Cart Display */}
     <DrawerSection                         
-      emptyOnClick={() => goToPage(PAGE.CART)}
+      emptyOnClick={() => goToPage(PAGE.PRODUCTS)}
       emptyTitle="Your Cart is Empty"
       emptySubtitle="Select items to start building your cart"
       emptyIcon={TbShoppingCart}

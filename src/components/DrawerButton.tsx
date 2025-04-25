@@ -9,7 +9,7 @@ interface DrawerButtonProps {
 
 export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps) => (
     <motion.div
-      className="full-screen w-2/5 mx-auto rounded-3xl p-[0.25rem] z-20"
+      className="full-screen w-2/5 mx-auto rounded-3xl p-[0.35rem] z-20"
       initial={{ bottom: 0}}
       animate={{ 
         y: isDrawerOpen ? `calc(-100vh + ${BUTTON_HEIGHT} + 2rem)` : 0,
@@ -17,7 +17,7 @@ export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps
       transition={DEFAULT_TRANSITION}
     >
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl"
+        className="absolute inset-0 bg-gradient-to-br from-blue-500 to-white rounded-3xl"
         animate={{
           opacity: [0.8, 1, 0.8],
         }}
@@ -28,7 +28,7 @@ export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps
         }}
       />
       <motion.button
-        className="w-full h-[2.5rem] bg-secondary opacity-65 rounded-3xl relative z-10"
+        className="w-full h-[2.25rem] bg-secondary opacity-65 rounded-3xl relative z-10"
         onClick={() => setIsDrawerOpen(!isDrawerOpen)}
       >
         {isDrawerOpen ? "Close" : "Shopping Cart"}

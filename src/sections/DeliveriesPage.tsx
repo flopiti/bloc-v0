@@ -1,24 +1,51 @@
 import dayjs from 'dayjs';
-import { motion } from 'framer-motion';
+import {  AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import useCart from '@/hooks/useCart';
 import Calendar from '../components/Calendar';
 import CalendarDelivery from '../components/CalendarDelivery';
+import DeliveryInfo from '../components/DeliveryInfo';
+import { useState } from 'react';
+import { DELIVERY_DAYS } from '@/constants/core';
+import { PAGE } from '@/enums/core';
 
 interface DeliveriesPageProps {
     openDrawer: () => void;
+    goToPage: (page: PAGE) => void;
 }
 
-const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
+const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
     const { cart, isCartValid } = useCartStore();
     const { setDeliveryDate, confirmCart } = useCart();
-
+    const [selectedDate,setSelectedDate] = useState<Date | null>(null);
+    const [canEditDate, setCanEditDate] = useState(false);
+    
     const handleDateClick = (date: dayjs.Dayjs) => {
-        if(date.isSame(dayjs(cart?.nextDelivery), 'day')) return;
-        setDeliveryDate(date.toDate());
+        const isToday = date.isSame(dayjs(cart?.nextDelivery), 'day');
+        const isDeliveryDay = DELIVERY_DAYS.includes(date.format('dddd'));
+        const doesCartHaveDelivery = cart?.nextDelivery;
+
+        const isEditMode = canEditDate || !doesCartHaveDelivery;
+        //For now we only set dates when you have no date
+        if(!isToday && isDeliveryDay && isEditMode) {
+            setDeliveryDate(date.toDate());
+            setCanEditDate(false);
+        }
+        else if(!isEditMode) {
+            setSelectedDate(date.toDate());
+        }
     };
 
     const handleConfirmDelivery = () => isCartValid() ? confirmCart() : openDrawer();
+
+    const handleEditDate = () => {
+        setCanEditDate(true);
+        setSelectedDate(null);
+    };
+
+    console.log(cart?.nextDelivery);
+    console.log(canEditDate);
+
 
     return (
         <>
@@ -27,30 +54,30 @@ const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
                     nextDelivery={cart.nextDelivery}
                     isConfirmed={cart.confirmed}
                     onConfirm={handleConfirmDelivery}
+                    onClick={() => cart.nextDelivery && setSelectedDate(cart.nextDelivery)}
                 />
             )}
 
             <Calendar 
                 nextDelivery={cart?.nextDelivery}
+                selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
                 onDateClick={handleDateClick}
+                isEdit={canEditDate || !cart?.nextDelivery}
+                showMessage={!cart?.nextDelivery}
             />
 
-            {!cart?.nextDelivery  && (
-                <motion.div
-                    animate={{ 
-                        color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
-                    }}
-                    transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        times: [0, 0.25, 0.5, 0.75, 1]
-                    }}
-                    className="mt-4 text-center"
-                >
-                    Please select the date of your first biweekly delivery
-                </motion.div>
-            )}
+            <AnimatePresence>
+                {selectedDate && !canEditDate && (
+                    <DeliveryInfo
+                        setCanEditDate={handleEditDate}
+                        selectedDate={selectedDate}
+                        nextDelivery={cart?.nextDelivery}
+                        confirmedItems={cart?.confirmedItems || []}
+                        pendingItems={cart?.pendingItems || []}
+                        goToPage={goToPage}
+                    />
+                )}
+            </AnimatePresence>
         </>
     );
 };
