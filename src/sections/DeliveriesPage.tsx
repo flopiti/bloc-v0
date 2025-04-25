@@ -92,6 +92,21 @@ const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
                             ? 'DELIVERY DAY'
                             : 'DELIVERY UNAVAILABLE'}
                     </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="mt-2 text-center"
+                    >
+                        <div className="text-white/60 text-sm">
+                            {dayjs(selectedDate).format('dddd, MMMM D, YYYY')}
+                        </div>
+                        {cart?.nextDelivery && dayjs(selectedDate).isSame(cart.nextDelivery, 'day') && (
+                            <div className="text-secondary text-sm mt-1">
+                                Your next delivery
+                            </div>
+                        )}
+                    </motion.div>
                 </motion.div>
             )}
         </>
