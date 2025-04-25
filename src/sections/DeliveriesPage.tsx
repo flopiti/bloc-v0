@@ -63,6 +63,37 @@ const DeliveriesPage = ({openDrawer}:DeliveriesPageProps) => {
                     </motion.div>
                 )
             }
+            {selectedDate && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ 
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 25
+                    }}
+                    className="mt-4 p-4 bg-white/5 rounded-xl"
+                >
+                    <motion.div
+                        animate={{ 
+                            color: DELIVERY_DAYS.includes(dayjs(selectedDate).format('dddd')) 
+                                ? ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
+                                : ['rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 0.3)']
+                        }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            times: [0, 0.25, 0.5, 0.75, 1]
+                        }}
+                        className="text-center font-medium"
+                    >
+                        {DELIVERY_DAYS.includes(dayjs(selectedDate).format('dddd')) 
+                            ? 'DELIVERY DAY'
+                            : 'DELIVERY UNAVAILABLE'}
+                    </motion.div>
+                </motion.div>
+            )}
         </>
     );
 };
