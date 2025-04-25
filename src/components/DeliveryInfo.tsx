@@ -10,9 +10,10 @@ interface DeliveryInfoProps {
     confirmedItems: any[];
     pendingItems: any[];
     goToPage: (page: PAGE) => void;
+    setCanEditDate: (canEditDate: boolean) => void;
 }
 
-const DeliveryInfo = ({ selectedDate, nextDelivery, goToPage }: DeliveryInfoProps) => {
+const DeliveryInfo = ({ selectedDate, nextDelivery, goToPage, setCanEditDate }: DeliveryInfoProps) => {
 
     return (
         <motion.div
@@ -82,7 +83,7 @@ const DeliveryInfo = ({ selectedDate, nextDelivery, goToPage }: DeliveryInfoProp
                                     <span className="text-white font-medium">View Cart</span>
                                 </motion.button>
                                 <motion.button
-                                    onClick={() => goToPage(PAGE.DELIVERIES)}
+                                    onClick={() => {setCanEditDate(true)}}
                                     className="flex items-center justify-center gap-2 bg-secondary/20 hover:bg-secondary/30 rounded-lg px-3 py-2 transition-colors flex-1"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}

@@ -18,20 +18,34 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
     const { cart, isCartValid } = useCartStore();
     const { setDeliveryDate, confirmCart } = useCart();
     const [selectedDate,setSelectedDate] = useState<Date | null>(null);
-
+    const [canEditDate, setCanEditDate] = useState(false);
+    
     const handleDateClick = (date: dayjs.Dayjs) => {
         const isToday = date.isSame(dayjs(cart?.nextDelivery), 'day');
         const isDeliveryDay = DELIVERY_DAYS.includes(date.format('dddd'));
         const doesCartHaveDelivery = cart?.nextDelivery;
 
+        const isEditMode = canEditDate || !doesCartHaveDelivery;
         //For now we only set dates when you have no date
-        if(!isToday && isDeliveryDay && !doesCartHaveDelivery) {
+        if(!isToday && isDeliveryDay && isEditMode) {
             setDeliveryDate(date.toDate());
+            setCanEditDate(false);
         }
-        else setSelectedDate(date.toDate());
+        else if(!isEditMode) {
+            setSelectedDate(date.toDate());
+        }
     };
 
     const handleConfirmDelivery = () => isCartValid() ? confirmCart() : openDrawer();
+
+    const handleEditDate = () => {
+        setCanEditDate(true);
+        setSelectedDate(null);
+    };
+
+    console.log(cart?.nextDelivery);
+    console.log(canEditDate);
+
 
     return (
         <>
@@ -48,12 +62,13 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                 nextDelivery={cart?.nextDelivery}
                 selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
                 onDateClick={handleDateClick}
-                isEdit={cart?.nextDelivery ? false : true}
+                isEdit={canEditDate || !cart?.nextDelivery}
                 showMessage={!cart?.nextDelivery}
             />
 
             {selectedDate && (
                 <DeliveryInfo
+                    setCanEditDate={handleEditDate}
                     selectedDate={selectedDate}
                     nextDelivery={cart?.nextDelivery}
                     confirmedItems={cart?.confirmedItems || []}
