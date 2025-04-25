@@ -38,7 +38,21 @@ const App = () => {
       <AnimatePresence mode="wait">
         {!isDrawerOpen && (
           <>
-            {currentView === PAGE.HOME && <Home goToPage={goToPage} />}
+            {currentView === PAGE.HOME && (
+              <motion.div
+                key={currentView}
+                initial={{ x: -390 }}
+                animate={{ x: 0 }}
+                exit={{ x: -390 }}
+                transition={{ 
+                  duration: 0.3,
+                  ease: "easeInOut"
+                }}
+                className="w-full"
+              >
+                <Home goToPage={goToPage} />
+              </motion.div>
+            )}
             {currentView !== PAGE.HOME && (
               <motion.div
                 key={currentView}
