@@ -68,12 +68,17 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
             }
             {selectedDate && (
                 <motion.div
+                    id="delivery-info"
+                    layout
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ 
                         type: "spring",
                         stiffness: 300,
-                        damping: 25
+                        damping: 25,
+                        layout: {
+                            duration: 0.3
+                        }
                     }}
                     className="mt-6 p-4 bg-white/5 rounded-xl"
                 >
@@ -114,7 +119,6 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.3 }}
                                     className="mt-4"
                                 >
                                     <div className="text-white/60 text-sm mb-2">
