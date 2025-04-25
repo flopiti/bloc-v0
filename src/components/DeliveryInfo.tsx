@@ -21,7 +21,7 @@ const DeliveryInfo = ({ selectedDate, nextDelivery, confirmedItems, pendingItems
             animate={{ 
                 opacity: 1, 
                 y: 0,
-                height: nextDelivery && dayjs(selectedDate).isSame(nextDelivery, 'day') ? 200 : 100
+                height: nextDelivery && dayjs(selectedDate).isSame(nextDelivery, 'day') ? 175 : 100
             }}
             transition={{ 
                 type: "spring",
@@ -64,9 +64,6 @@ const DeliveryInfo = ({ selectedDate, nextDelivery, confirmedItems, pendingItems
                 </div>
                 {nextDelivery && dayjs(selectedDate).isSame(nextDelivery, 'day') && (
                     <>
-                        <div className="text-secondary text-sm mt-1">
-                            Your next delivery
-                        </div>
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
