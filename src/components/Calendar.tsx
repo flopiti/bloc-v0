@@ -46,7 +46,6 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
     const dates = getDates();
     const weekDays = getWeekDays();
 
-    console.log(isEdit);
     return (
         <motion.div 
             className="bg-white/5 rounded-xl p-4 relative"
