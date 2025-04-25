@@ -11,9 +11,10 @@ interface CalendarProps {
     mode?: CALENDAR_MODE;
     selectedDate?: dayjs.Dayjs;
     isEdit?: boolean;
+    showMessage?: boolean;
 }
 
-const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, selectedDate, isEdit = false }: CalendarProps) => {
+const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, selectedDate, isEdit = false, showMessage = false }: CalendarProps) => {
     const isNextDelivery = (date: dayjs.Dayjs) => {
         if (!nextDelivery) return false;
         return date.isSame(dayjs(nextDelivery), 'day');
@@ -130,6 +131,22 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                     </div>
                 ))}
             </div>
+            {showMessage && (
+                <motion.div
+                    animate={{ 
+                        color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
+                    }}
+                    transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        times: [0, 0.25, 0.5, 0.75, 1]
+                    }}
+                    className="mt-4 text-center"
+                >
+                    Please select the date of your first biweekly delivery
+                </motion.div>
+            )}
         </motion.div>
     );
 };

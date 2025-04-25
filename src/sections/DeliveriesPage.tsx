@@ -49,25 +49,9 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                 selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
                 onDateClick={handleDateClick}
                 isEdit={cart?.nextDelivery ? false : true}
+                showMessage={!cart?.nextDelivery}
             />
-            {
-                !cart?.nextDelivery  && (
-                    <motion.div
-                        animate={{ 
-                            color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            times: [0, 0.25, 0.5, 0.75, 1]
-                        }}
-                        className="mt-4 text-center"
-                    >
-                        Please select the date of your first biweekly delivery
-                    </motion.div>
-                )
-            }
+
             {selectedDate && (
                 <DeliveryInfo
                     selectedDate={selectedDate}

@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import { FiShoppingCart, FiCalendar } from 'react-icons/fi';
 import { DELIVERY_DAYS } from '@/constants/core';
 import { PAGE } from '@/enums/core';
-import useCart from '@/hooks/useCart';
 
 interface DeliveryInfoProps {
     selectedDate: Date;
@@ -13,8 +12,7 @@ interface DeliveryInfoProps {
     goToPage: (page: PAGE) => void;
 }
 
-const DeliveryInfo = ({ selectedDate, nextDelivery, confirmedItems, pendingItems, goToPage }: DeliveryInfoProps) => {
-    const { setDeliveryDate } = useCart();
+const DeliveryInfo = ({ selectedDate, nextDelivery, goToPage }: DeliveryInfoProps) => {
 
     return (
         <motion.div
@@ -24,7 +22,7 @@ const DeliveryInfo = ({ selectedDate, nextDelivery, confirmedItems, pendingItems
             animate={{ 
                 opacity: 1, 
                 y: 0,
-                height: nextDelivery && dayjs(selectedDate).isSame(nextDelivery, 'day') ? 175 : 100
+                height: nextDelivery && dayjs(selectedDate).isSame(nextDelivery, 'day') ? 150 : 100
             }}
             transition={{ 
                 type: "spring",
@@ -73,9 +71,6 @@ const DeliveryInfo = ({ selectedDate, nextDelivery, confirmedItems, pendingItems
                             transition={{ delay: 0.2 }}
                             className="mt-4"
                         >
-                            <div className="text-white/60 text-sm mb-2">
-                                {confirmedItems.length + pendingItems.length} items in cart
-                            </div>
                             <div className="flex gap-2">
                                 <motion.button
                                     onClick={() => goToPage(PAGE.CART)}
