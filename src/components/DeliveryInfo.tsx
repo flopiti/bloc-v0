@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import dayjs from 'dayjs';
-import { FiShoppingCart } from 'react-icons/fi';
+import { FiShoppingCart, FiCalendar } from 'react-icons/fi';
 import { DELIVERY_DAYS } from '@/constants/core';
 import { PAGE } from '@/enums/core';
+import useCart from '@/hooks/useCart';
 
 interface DeliveryInfoProps {
     selectedDate: Date;
@@ -13,6 +14,8 @@ interface DeliveryInfoProps {
 }
 
 const DeliveryInfo = ({ selectedDate, nextDelivery, confirmedItems, pendingItems, goToPage }: DeliveryInfoProps) => {
+    const { setDeliveryDate } = useCart();
+
     return (
         <motion.div
             id="delivery-info"
@@ -63,7 +66,7 @@ const DeliveryInfo = ({ selectedDate, nextDelivery, confirmedItems, pendingItems
                     {dayjs(selectedDate).format('dddd, MMMM D, YYYY')}
                 </div>
                 {nextDelivery && dayjs(selectedDate).isSame(nextDelivery, 'day') && (
-                    <>
+                    <div>
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -73,17 +76,28 @@ const DeliveryInfo = ({ selectedDate, nextDelivery, confirmedItems, pendingItems
                             <div className="text-white/60 text-sm mb-2">
                                 {confirmedItems.length + pendingItems.length} items in cart
                             </div>
-                            <motion.button
-                                onClick={() => goToPage(PAGE.CART)}
-                                className="flex items-center justify-center gap-2 bg-secondary/20 hover:bg-secondary/30 rounded-lg px-4 py-2 transition-colors w-full"
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                <FiShoppingCart className="w-5 h-5 text-secondary" />
-                                <span className="text-white font-medium">View Cart</span>
-                            </motion.button>
+                            <div className="flex gap-2">
+                                <motion.button
+                                    onClick={() => goToPage(PAGE.CART)}
+                                    className="flex items-center justify-center gap-2 bg-secondary/20 hover:bg-secondary/30 rounded-lg px- py-2 transition-colors flex-1"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <FiShoppingCart className="w-5 h-5 text-secondary" />
+                                    <span className="text-white font-medium">View Cart</span>
+                                </motion.button>
+                                <motion.button
+                                    onClick={() => goToPage(PAGE.DELIVERIES)}
+                                    className="flex items-center justify-center gap-2 bg-secondary/20 hover:bg-secondary/30 rounded-lg px-3 py-2 transition-colors flex-1"
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <FiCalendar className="w-5 h-5 text-secondary" />
+                                    <span className="text-white font-medium">Change Date</span>
+                                </motion.button>
+                            </div>
                         </motion.div>
-                    </>
+                    </div>
                 )}
             </motion.div>
         </motion.div>
