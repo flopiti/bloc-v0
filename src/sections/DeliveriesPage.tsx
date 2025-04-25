@@ -92,7 +92,9 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                         className="text-center font-medium"
                     >
                         {DELIVERY_DAYS.includes(dayjs(selectedDate).format('dddd')) 
-                            ? 'DELIVERY DAY'
+                            ? (cart?.nextDelivery && dayjs(selectedDate).isSame(cart.nextDelivery, 'day')
+                                ? 'DELIVERY DAY'
+                                : 'DELIVERY AVAILABLE')
                             : 'DELIVERY UNAVAILABLE'}
                     </motion.div>
                     <motion.div
