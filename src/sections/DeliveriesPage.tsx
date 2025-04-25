@@ -71,7 +71,11 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                     id="delivery-info"
                     layout
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    animate={{ 
+                        opacity: 1, 
+                        y: 0,
+                        height: cart?.nextDelivery && dayjs(selectedDate).isSame(cart.nextDelivery, 'day') ? 200 : 120
+                    }}
                     transition={{ 
                         type: "spring",
                         stiffness: 300,
@@ -119,6 +123,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.2 }}
                                     className="mt-4"
                                 >
                                     <div className="text-white/60 text-sm mb-2">
