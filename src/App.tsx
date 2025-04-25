@@ -36,50 +36,53 @@ const App = () => {
   return (
     <div className="relative">
       <AnimatePresence mode="wait">
-        {!isDrawerOpen && currentView === PAGE.HOME && <Home goToPage={goToPage} />}
-
         {!isDrawerOpen && (
-          <motion.div
-            key={currentView}
-            initial={{ x: 390 }}
-            animate={{ x: 0 }}
-            exit={{ x: 390 }}
-            transition={{ 
-              duration: 0.1,
-              ease: "easeInOut"
-            }}
-            className="w-full"
-            >
-            {currentView === PAGE.DELIVERIES && (
-              <PageLayout 
-                title="Deliveries"
-                goHome={goHome}
-                rightElement={
-                  <span className="px-4 py-2 bg-secondary/20 rounded-full text-secondary text-sm">
-                    Biweekly
-                  </span>
-                }
+          <>
+            {currentView === PAGE.HOME && <Home goToPage={goToPage} />}
+            {currentView !== PAGE.HOME && (
+              <motion.div
+                key={currentView}
+                initial={{ x: 390 }}
+                animate={{ x: 0 }}
+                exit={{ x: 390 }}
+                transition={{ 
+                  duration: 0.1,
+                  ease: "easeInOut"
+                }}
+                className="w-full"
               >
-                <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} />
-              </PageLayout>
+                {currentView === PAGE.DELIVERIES && (
+                  <PageLayout 
+                    title="Deliveries"
+                    goHome={goHome}
+                    rightElement={
+                      <span className="px-4 py-2 bg-secondary/20 rounded-full text-secondary text-sm">
+                        Biweekly
+                      </span>
+                    }
+                  >
+                    <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} />
+                  </PageLayout>
+                )}
+                {currentView === PAGE.CART && (
+                  <PageLayout 
+                    title="Cart"
+                    goHome={goHome}
+                  >
+                    <CartPage goToPage={goToPage}/>  
+                  </PageLayout>
+                )}
+                {currentView === PAGE.PRODUCTS && (
+                  <PageLayout 
+                    title="Products"
+                    goHome={goHome}
+                  >
+                    <ProductsPage />
+                  </PageLayout>
+                )}
+              </motion.div>
             )}
-            {currentView === PAGE.CART && (
-              <PageLayout 
-                title="Cart"
-                goHome={goHome}
-              >
-                <CartPage goToPage={goToPage}/>  
-              </PageLayout>
-            )}
-            {currentView === PAGE.PRODUCTS && (
-              <PageLayout 
-                title="Products"
-                goHome={goHome}
-              >
-                <ProductsPage />
-              </PageLayout>
-            )}
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
 
