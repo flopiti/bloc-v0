@@ -63,7 +63,11 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                 selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
                 onDateClick={handleDateClick}
                 isEdit={canEditDate || !cart?.nextDelivery}
-                showMessage={!cart?.nextDelivery}
+                message={
+                    !cart?.nextDelivery ? 'Please select the date of your first biweekly delivery' 
+                    : canEditDate ? 'Select a date for the delivery' 
+                    : undefined
+                }
             />
 
             <AnimatePresence>
