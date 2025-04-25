@@ -74,7 +74,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                     animate={{ 
                         opacity: 1, 
                         y: 0,
-                        height: cart?.nextDelivery && dayjs(selectedDate).isSame(cart.nextDelivery, 'day') ? 200 : 120
+                        height: cart?.nextDelivery && dayjs(selectedDate).isSame(cart.nextDelivery, 'day') ? 200 : 100
                     }}
                     transition={{ 
                         type: "spring",
