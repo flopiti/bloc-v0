@@ -1,10 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
-import { useItemsStore } from '@/stores/itemsStore';
 import { DEFAULT_TRANSITION } from '@/constants/animations';
 import DrawerCart from '@/components/DrawerCart';
 import ConfirmButton from '@/components/ConfirmButton';
-import SuggestedItems from '@/components/SuggestedItems';
 import { CALENDAR_MODE, PAGE } from '@/enums/core';
 import DrawerSection from '@/components/DrawerSection';
 import { TbShoppingCart, TbTruckDelivery } from 'react-icons/tb';
@@ -18,11 +16,7 @@ interface DrawerProps {
 
 const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
   const { cart, isLoading } = useCartStore();
-  const { items } = useItemsStore();
   const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
-  const suggestedItems = items.filter(({ id }) => !cartItems.some(({ id: cartId }) => cartId === id));
-
-
 
   const isDeliveryThisWeek = () => {
     if (!cart?.nextDelivery) return false;
@@ -31,7 +25,6 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
     const diffDays = deliveryDate.diff(today, 'day');
     return diffDays <= 7;
 };
-
 
   return (
     <motion.div

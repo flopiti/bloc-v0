@@ -1,16 +1,16 @@
 import {  AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
-import Home from './sections/Home';
-import Drawer from './sections/Drawer';
-import './App.css';
-import useCart from './hooks/useCart';
-import useItems from './hooks/useItems';
-import { DrawerButton } from './components/DrawerButton';
-import DeliveriesPage from './sections/DeliveriesPage';
-import { PAGE } from './enums/core';
-import CartPage from './sections/CartPage';
-import PageLayout from './components/PageLayout';
-import ProductsPage from './sections/ProductsPage';
+import Home from '@/sections/Home';
+import Drawer from '@/sections/Drawer';
+import '@/App.css';
+import useCart from '@/hooks/useCart';
+import useItems from '@/hooks/useItems';
+import { DrawerButton } from '@/components/DrawerButton';
+import DeliveriesPage from '@/sections/DeliveriesPage';
+import { PAGE } from '@/enums/core';
+import CartPage from '@/sections/CartPage';
+import PageLayout from '@/components/PageLayout';
+import ProductsPage from '@/sections/ProductsPage';
 
 const START_WITH_DRAWER = false
 

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import EmptyStateButton from "./EmptyStateButton";
+import EmptyStateButton from "@/components/EmptyStateButton";
 import { IconType } from "react-icons";
-import DrawerSectionTitle from "./DrawerSectionTitle";
+import DrawerSectionTitle from "@/components/DrawerSectionTitle";
 
 interface DrawerSectionProps {
     children: React.ReactNode;
