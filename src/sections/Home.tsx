@@ -6,6 +6,7 @@ import { PiBread, PiCheese, PiCoffeeBeanBold } from "react-icons/pi";
 import { TbMeat } from "react-icons/tb";
 import { useState } from "react";
 import HomeNavigationButton from "@/components/HomeNavigationButton";
+import FeaturedSection from "@/components/FeaturedSection";
 
 const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
   const icons = [
@@ -28,7 +29,8 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
       >
         <h1 className="text-3xl font-bold text-white text-center mb-8">Welcome</h1>
         <p className="text-white/60 text-center mb-6">Where would you like to go?</p>
-        
+
+
         <div className="grid grid-cols-3 gap-4">
           <HomeNavigationButton
             icon={<FiShoppingCart className="w-8 h-8 text-secondary mb-2" />}
@@ -47,6 +49,14 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
           />
         </div>
       </motion.div>
+            
+        {/* Featured Section */}
+        <div className="my-8">
+          <FeaturedSection
+            imageUrl="/featured.png"
+            onAddToCart={() => goToPage(PAGE.PRODUCTS)}
+          />
+        </div>
     </div>
   );
 };
