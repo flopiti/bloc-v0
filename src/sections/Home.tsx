@@ -27,6 +27,8 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }  ) => {
       >
         <h1 className="text-3xl font-bold text-white text-center mb-8">Welcome</h1>
         
+        <p className="text-white/60 text-center mb-6">Where would you like to go?</p>
+        
         <div className="grid grid-cols-3 gap-4">
           <motion.button
             onClick={() => goToPage(PAGE.CART)}
