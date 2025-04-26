@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
-import { DEFAULT_TRANSITION, BUTTON_HEIGHT } from '@/constants/animations';
+import { DEFAULT_TRANSITION } from '@/constants/animations';
 import DrawerCart from '@/components/DrawerCart';
 import ConfirmButton from '@/components/ConfirmButton';
 import { CALENDAR_MODE, PAGE } from '@/enums/core';
@@ -11,6 +11,7 @@ import Calendar from '@/components/Calendar';
 
 interface DrawerProps {
   isDrawerOpen: boolean;
+  setIsDrawerOpen: (isOpen: boolean) => void;
   goToPage: (page: PAGE) => void;
 } 
 
@@ -34,7 +35,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
       exit={{ y: "100%" }}
       transition={DEFAULT_TRANSITION}
     >
-      <div className="h-[calc(100vh-5rem)] px-4 py-14 mt-4 mb-16">
+      <div className="h-[calc(100vh-5rem)] px-4 py-14 mt-4 mb-16 overflow-y-auto">
         {/* Cart Calendar */}
         <AnimatePresence>
           {cart && <DrawerSection
@@ -73,9 +74,11 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
         </DrawerSection>
 
         {/* Confirm Button */}
-        <AnimatePresence>
-          {cart && <ConfirmButton cart={cart} isLoading={isLoading}/>}
-        </AnimatePresence>
+        <div className="mt-4">
+          <AnimatePresence>
+            {cart && <ConfirmButton cart={cart} isLoading={isLoading}/>}
+          </AnimatePresence>
+        </div>
       </div>
     </motion.div>
   )

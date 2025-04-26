@@ -102,7 +102,7 @@ const App = () => {
       </div>
 
       {/* Drawer */}
-      <Drawer isDrawerOpen={isDrawerOpen} goToPage={goToPage} />
+      <Drawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} goToPage={goToPage} />
     </div>
   )
 }
