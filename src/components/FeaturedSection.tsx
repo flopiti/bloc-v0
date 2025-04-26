@@ -43,9 +43,6 @@ const FeaturedSection: FC<FeaturedSectionProps> = ({
                     className="w-full h-full object-cover"
                 />
                 
-                {/* Overlay gradient */}
-                {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" /> */}
-
                 {/* Centered Add to cart button */}
                 <div className="absolute inset-0 flex items-end justify-center">
                     <motion.button
