@@ -1,9 +1,7 @@
 import { BUTTON_HEIGHT, DEFAULT_TRANSITION } from "@/constants/animations";
-import useCart from "@/hooks/useCart";
 import { useCartStore } from "@/stores/cartStore";
 import { motion, AnimatePresence } from "framer-motion"
 import { GrBasket } from "react-icons/gr";
-
 
 interface DrawerButtonProps {
     isDrawerOpen: boolean;
@@ -34,7 +32,7 @@ export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 20, opacity: 0 }}
-              className="bg-secondary/50 rounded-full px-3 py-1 text-sm font-medium"
+              className="bg-red-500/75 rounded-full px-3 py-1 text-sm font-medium"
             >
               {unconfirmedCount}
             </motion.div>
