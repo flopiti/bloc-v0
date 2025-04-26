@@ -23,19 +23,28 @@ export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps
       transition={DEFAULT_TRANSITION}
     >
       <motion.button
-        className="w-full h-[3.25rem] bg-white/5 hover:bg-white/10 text-white opacity-65 rounded-xl relative z-10 transition-colors flex items-center justify-center gap-2"
+        className="w-full h-[3.25rem] bg-[#444f64] hover:bg-white/10 text-white opacity-80 rounded-xl relative z-10 transition-colors flex items-center justify-center gap-2"
         onClick={() => setIsDrawerOpen(!isDrawerOpen)}
       >
         <AnimatePresence>
           {unconfirmedCount && unconfirmedCount > 0 ? (
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              className="bg-red-500/75 rounded-full px-3 py-1 text-sm font-medium"
-            >
-              {unconfirmedCount}
-            </motion.div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ 
+                  y: [0, -10, 0],
+                  opacity: 1,
+                  scale: [1, 1.1, 1]
+                }}
+                exit={{ y: 20, opacity: 0 }}
+                className="bg-[#a70104]/75 rounded-full px-3 py-1 text-sm font-medium"
+                whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                key={unconfirmedCount}
+              >
+                {unconfirmedCount}
+              </motion.div>
+            </AnimatePresence>
           ) : (
             <GrBasket className="mx-2 w-6 h-6 text-secondary" />
           )}
