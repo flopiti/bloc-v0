@@ -2,9 +2,9 @@ import dayjs from 'dayjs';
 import {  AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import useCart from '@/hooks/useCart';
-import Calendar from '../components/Calendar';
-import CalendarDelivery from '../components/CalendarDelivery';
-import DeliveryInfo from '../components/DeliveryInfo';
+import Calendar from '@/components/Calendar';
+import CalendarDelivery from '@/components/CalendarDelivery';
+import DeliveryInfo from '@/components/DeliveryInfo';
 import { useState } from 'react';
 import { DELIVERY_DAYS } from '@/constants/core';
 import { PAGE } from '@/enums/core';
@@ -21,7 +21,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
     const [canEditDate, setCanEditDate] = useState(false);
     
     const handleDateClick = (date: dayjs.Dayjs) => {
-        const isToday = date.isSame(dayjs(cart?.nextDelivery), 'day');
+        const isToday = date.isSame(dayjs(), 'day');
         const isDeliveryDay = DELIVERY_DAYS.includes(date.format('dddd'));
         const doesCartHaveDelivery = cart?.nextDelivery;
 
@@ -63,7 +63,11 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                 selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
                 onDateClick={handleDateClick}
                 isEdit={canEditDate || !cart?.nextDelivery}
-                showMessage={!cart?.nextDelivery}
+                message={
+                    !cart?.nextDelivery ? 'Please select the date of your first biweekly delivery' 
+                    : canEditDate ? 'Select a date for the delivery' 
+                    : undefined
+                }
             />
 
             <AnimatePresence>

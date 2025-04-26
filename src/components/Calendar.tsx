@@ -11,10 +11,10 @@ interface CalendarProps {
     mode?: CALENDAR_MODE;
     selectedDate?: dayjs.Dayjs;
     isEdit?: boolean;
-    showMessage?: boolean;
+    message?: string;
 }
 
-const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, selectedDate, isEdit = false, showMessage = false }: CalendarProps) => {
+const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, selectedDate, isEdit = false, message}: CalendarProps) => {
     const isNextDelivery = (date: dayjs.Dayjs) => {
         if (!nextDelivery) return false;
         return date.isSame(dayjs(nextDelivery), 'day');
@@ -53,6 +53,10 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
             transition={{
                 duration: 0.3,
                 ease: "easeOut"
+            }}
+            animate={{
+                scale: isEdit ? 1.02 : 1,
+                backgroundColor: isEdit ? 'rgba(255, 255, 255, 0.07)' : 'rgba(255, 255, 255, 0.05)'
             }}
         >
             {isEdit && (
@@ -131,7 +135,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                     </div>
                 ))}
             </div>
-            {showMessage && (
+            {message && (
                 <motion.div
                     animate={{ 
                         color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
@@ -144,7 +148,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                     }}
                     className="mt-4 text-center"
                 >
-                    Please select the date of your first biweekly delivery
+                    {message}
                 </motion.div>
             )}
         </motion.div>

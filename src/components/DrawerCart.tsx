@@ -1,6 +1,6 @@
 import { Item, Cart } from "@/types/core";
 import { motion } from "framer-motion";
-import ItemBox from "./ItemBox";
+import ItemBox from "@/components/ItemBox";
 
 interface DrawerCartProps {
   cart: Cart | null;
