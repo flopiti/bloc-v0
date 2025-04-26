@@ -18,7 +18,7 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }  ) => {
   const [currentIconIndex] = useState(() => Math.floor(Math.random() * icons.length));
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6">
+    <div className="flex flex-col items-center justify-start min-h-screen p-6">
       <motion.div 
         className="w-full max-w-md"
         initial={{ opacity: 0, y: 20 }}
