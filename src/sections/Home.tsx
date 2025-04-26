@@ -25,13 +25,31 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
         className="w-full max-w-md"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <h1 className="text-3xl font-bold text-white text-center mb-8">Welcome</h1>
-        <p className="text-white/60 text-center mb-6">Where would you like to go?</p>
+        <motion.h1 
+          className="text-3xl font-bold text-white text-center mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+        >
+          Welcome
+        </motion.h1>
+        <motion.p 
+          className="text-white/60 text-center mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
+          Where would you like to go?
+        </motion.p>
 
-
-        <div className="grid grid-cols-3 gap-4">
+        <motion.div 
+          className="grid grid-cols-3 gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
           <HomeNavigationButton
             icon={<FiShoppingCart className="w-8 h-8 text-secondary mb-2" />}
             label="Cart"
@@ -47,16 +65,29 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
             label="Products"
             onClick={() => goToPage(PAGE.PRODUCTS)}
           />
-        </div>
+        </motion.div>
       </motion.div>
             
-        {/* Featured Section */}
-        <div className="my-8">
-          <FeaturedSection
-            imageUrl="/featured.png"
-            onAddToCart={() => goToPage(PAGE.PRODUCTS)}
-          />
-        </div>
+      {/* Featured Section */}
+      <motion.div 
+        className="my-8 w-full max-w-md"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.5 }}
+      >
+        <motion.h2 
+          className="text-white/80 text-sm font-medium tracking-wider mb-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.6 }}
+        >
+          Featured
+        </motion.h2>
+        <FeaturedSection
+          imageUrl="/featured.png"
+          onAddToCart={() => goToPage(PAGE.PRODUCTS)}
+        />
+      </motion.div>
     </div>
   );
 };
