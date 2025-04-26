@@ -42,6 +42,17 @@ export const handlers = [
   http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/add`, async ({ request }) => {
     await delay(DELAY);
     const newItem = await request.json() as Item;
+    
+    // Check if item already exists in either confirmed or pending items
+    const isDuplicate = currentCart?.confirmedItems.some(item => item.id === newItem.id) ||
+                       currentCart?.pendingItems.some(item => item.id === newItem.id);
+    
+    if (isDuplicate) {
+      return new HttpResponse(null, { 
+        status: 400,
+        statusText: 'Item already exists in cart'
+      });
+    }
         
     // Create a new cart state that includes the new item in pendingItems
     // while preserving existing confirmedItems
