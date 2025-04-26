@@ -8,7 +8,8 @@ export const mockItems: Item[] = [
   { id: 3, name: 'Cereal', image: '/cereal.png' },
   { id: 4, name: 'Spaghetti', image: '/spagetti.png' },
   { id: 5, name: 'Ground Meat', image: '/ground-meat.png' },
-  { id: 6, name: 'Coffee', image: '/coffee.png' }
+  { id: 6, name: 'Coffee', image: '/coffee.png' },
+  {id: 7, name:'Strawberries', image: '/strawberries.png'}
 ]; 
 
 // Helper function to convert day name to day number (0-6)
