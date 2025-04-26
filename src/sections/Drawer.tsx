@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
-import { DEFAULT_TRANSITION } from '@/constants/animations';
+import { DEFAULT_TRANSITION, BUTTON_HEIGHT } from '@/constants/animations';
 import DrawerCart from '@/components/DrawerCart';
 import ConfirmButton from '@/components/ConfirmButton';
 import { CALENDAR_MODE, PAGE } from '@/enums/core';
@@ -28,57 +28,56 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
 
   return (
     <motion.div
-      className={`full-screen h-[calc(100vh-5rem)] bottom-0 p-4`}
+      className="fixed inset-0 bg-[#3B465C] h-screen w-full z-50"
       initial={{ y: "100%" }}
       animate={{y: isDrawerOpen ? 0 : "100%"}}
       exit={{ y: "100%" }}
       transition={DEFAULT_TRANSITION}
-  >
+    >
+      <div className="h-[calc(100vh-5rem)] px-4 py-14 mt-4 mb-16">
+        {/* Cart Calendar */}
+        <AnimatePresence>
+          {cart && <DrawerSection
+            goToPage={() => goToPage(PAGE.DELIVERIES)}
+            emptyTitle="No Delivery Schedule"
+            emptySubtitle="Set up your delivery frequency to get started"
+            emptyIcon={TbTruckDelivery}
+            title="Next Delivery"
+            emptyOnClick={() => goToPage(PAGE.DELIVERIES)}
+            subtitle={isDeliveryThisWeek() 
+              ? dayjs(cart?.nextDelivery).format('dddd, MMMM D, YYYY')
+              : "No delivery this week"
+          }
+          icon={TbTruckDelivery}
+          isEmpty={!cart?.nextDelivery}
+          buttonText="View Deliveries"
+          >
+            <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
+          </DrawerSection>}
+        </AnimatePresence>
+        
+        {/* Cart Display */}
+        <DrawerSection                         
+          emptyOnClick={() => goToPage(PAGE.PRODUCTS)}
+          emptyTitle="Your Cart is Empty"
+          emptySubtitle="Select items to start building your cart"
+          emptyIcon={TbShoppingCart}
+          isEmpty={cartItems.length === 0}
+          title="Your Cart"
+          subtitle={`${cartItems.length} ${cartItems.length === 1 ? 'item' : 'items'}`}
+          icon={TbShoppingCart}
+          goToPage={() => goToPage(PAGE.CART)}
+          buttonText="View Cart"
+          >
+          <DrawerCart cart={cart}/>
+        </DrawerSection>
 
-    {/* Cart Calendar */}
-
-    <AnimatePresence>
-      {cart && <DrawerSection
-        goToPage={() => goToPage(PAGE.DELIVERIES)}
-        emptyTitle="No Delivery Schedule"
-        emptySubtitle="Set up your delivery frequency to get started"
-        emptyIcon={TbTruckDelivery}
-        title="Next Delivery"
-        emptyOnClick={() => goToPage(PAGE.DELIVERIES)}
-        subtitle={isDeliveryThisWeek() 
-          ? dayjs(cart?.nextDelivery).format('dddd, MMMM D, YYYY')
-          : "No delivery this week"
-      }
-      icon={TbTruckDelivery}
-      isEmpty={!cart?.nextDelivery}
-      buttonText="View Deliveries"
-      >
-        <Calendar nextDelivery={cart?.nextDelivery} mode={CALENDAR_MODE.ONE_WEEK}/>
-      </DrawerSection>}
-    </AnimatePresence>
-    
-    {/* Cart Display */}
-    <DrawerSection                         
-      emptyOnClick={() => goToPage(PAGE.PRODUCTS)}
-      emptyTitle="Your Cart is Empty"
-      emptySubtitle="Select items to start building your cart"
-      emptyIcon={TbShoppingCart}
-      isEmpty={cartItems.length === 0}
-      title="Your Cart"
-      subtitle={`${cartItems.length} ${cartItems.length === 1 ? 'item' : 'items'}`}
-      icon={TbShoppingCart}
-      goToPage={() => goToPage(PAGE.CART)}
-      buttonText="View Cart"
-      >
-      <DrawerCart cart={cart}/>
-    </DrawerSection>
-
-    {/* Confirm Button */}
-    <AnimatePresence>
-      {cart && <ConfirmButton cart={cart} isLoading={isLoading}/>}
-    </AnimatePresence>
-
-  </motion.div>
+        {/* Confirm Button */}
+        <AnimatePresence>
+          {cart && <ConfirmButton cart={cart} isLoading={isLoading}/>}
+        </AnimatePresence>
+      </div>
+    </motion.div>
   )
 }
 
