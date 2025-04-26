@@ -97,14 +97,12 @@ const App = () => {
       </AnimatePresence>
 
       {/* Drawer Button - Now with higher z-index */}
-      <div className="fixed bottom-0 left-0 right-0 z-[60]">
+      <div className="fixed bottom-0 left-0 right-0 z-[60] p-4">
         <DrawerButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
       </div>
 
       {/* Drawer */}
-      <AnimatePresence>
-        {isDrawerOpen && <Drawer isDrawerOpen={isDrawerOpen} goToPage={goToPage} />}
-      </AnimatePresence>
+      <Drawer isDrawerOpen={isDrawerOpen} goToPage={goToPage} />
     </div>
   )
 }

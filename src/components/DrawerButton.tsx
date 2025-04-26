@@ -8,26 +8,26 @@ interface DrawerButtonProps {
     setIsDrawerOpen: (isDrawerOpen: boolean) => void;
 }
 
-export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps) => {
-
+export const DrawerButton = ({isDrawerOpen, setIsDrawerOpen} : DrawerButtonProps) => {
   const {cart} = useCartStore();
   const unconfirmedCount = cart?.pendingItems.length;
 
   return (
     <motion.div
-      className="full-screen w-1/2 mx-auto rounded-3xl z-20"
-      initial={{ bottom: 0}}
+      className="w-1/2 mx-auto"
+      initial={{ opacity: 0, y: 20 }}
       animate={{ 
+        opacity: 1,
         y: isDrawerOpen ? `calc(-100vh + ${BUTTON_HEIGHT} + 2rem)` : 0,
       }}
       transition={DEFAULT_TRANSITION}
     >
       <motion.button
-        className="w-full h-[3.25rem] bg-[#444f64] hover:bg-white/10 text-white opacity-80 rounded-xl relative z-10 transition-colors flex items-center justify-center gap-2"
+        className={`w-full h-[3.25rem] ${isDrawerOpen ? 'bg-transparent' : 'bg-[#444f64] hover:bg-white/10'} text-white opacity-90 rounded-xl relative z-10 transition-colors flex items-center justify-center gap-2`}
         onClick={() => setIsDrawerOpen(!isDrawerOpen)}
       >
         <AnimatePresence>
-          {unconfirmedCount && unconfirmedCount > 0 ? (
+          {!isDrawerOpen && unconfirmedCount && unconfirmedCount > 0 ? (
             <AnimatePresence mode="wait">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
@@ -45,7 +45,7 @@ export const DrawerButton = ({isDrawerOpen,setIsDrawerOpen,} : DrawerButtonProps
                 {unconfirmedCount}
               </motion.div>
             </AnimatePresence>
-          ) : (
+          ) : !isDrawerOpen && (
             <GrBasket className="mx-2 w-6 h-6 text-secondary" />
           )}
         </AnimatePresence>
