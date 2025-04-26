@@ -10,7 +10,7 @@ const ProductsPage = () => {
     const getRowNumber = (index: number) => Math.floor(index / 2);
 
     return (
-            <div className="grid grid-cols-2 gap-4" style={{ gridAutoRows: '200px' }}>
+            <div className="grid grid-cols-2 gap-4 mb-25" style={{ gridAutoRows: '200px' }}>
                 {items.map((item, index) => (
                     <motion.div
                         key={item.id}
