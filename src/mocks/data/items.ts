@@ -2,6 +2,8 @@ import { Cart, Item } from '@/types/core';
 import dayjs from 'dayjs';
 import { DELIVERY_DAYS } from '@/constants/core';
 
+export const STRAWBERRIES = {id: 7, name:'Strawberries', image: '/strawberries.png'}
+
 export const mockItems: Item[] = [
   { id: 1, name: 'Milk', image: '/milk.png' },
   { id: 2, name: 'Eggs', image: '/eggs.png' },
@@ -9,8 +11,9 @@ export const mockItems: Item[] = [
   { id: 4, name: 'Spaghetti', image: '/spagetti.png' },
   { id: 5, name: 'Ground Meat', image: '/ground-meat.png' },
   { id: 6, name: 'Coffee', image: '/coffee.png' },
-  {id: 7, name:'Strawberries', image: '/strawberries.png'}
+  STRAWBERRIES
 ]; 
+
 
 // Helper function to convert day name to day number (0-6)
 const getDayNumber = (dayName: string): number => {
