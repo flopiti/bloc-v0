@@ -15,7 +15,7 @@ interface DrawerProps {
   goToPage: (page: PAGE) => void;
 } 
 
-const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
+const Drawer = ({ isDrawerOpen, setIsDrawerOpen, goToPage }: DrawerProps) => {
   const { cart, isLoading } = useCartStore();
   const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
 
@@ -43,6 +43,18 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
         WebkitOverflowScrolling: 'touch'
       }}
     >
+      {/* Close Button at Top */}
+      <div className="fixed top-4 left-0 right-0 z-[120] px-4">
+        <div className="w-1/2 mx-auto">
+          <button
+            onClick={() => setIsDrawerOpen(false)}
+            className="w-full h-[3.25rem] bg-transparent text-white opacity-90 rounded-xl transition-colors flex items-center justify-center"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+
       <div className="h-[calc(100vh-5rem)] px-4 py-14 mt-4 mb-16 overflow-y-auto">
         {/* Cart Calendar */}
         <AnimatePresence>

@@ -18,7 +18,7 @@ export const DrawerButton = ({isDrawerOpen, setIsDrawerOpen} : DrawerButtonProps
       initial={{ opacity: 0, y: 20 }}
       animate={{ 
         opacity: 1,
-        y: isDrawerOpen ? `calc(-100vh + ${BUTTON_HEIGHT} + 2rem)` : 0,
+        y: 0
       }}
       transition={DEFAULT_TRANSITION}
       style={{ 
