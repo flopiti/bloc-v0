@@ -53,7 +53,21 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                             setIsClicking(false);
                         }}
                     >
-                        <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
+                        <motion.img 
+                            src={product.image} 
+                            alt={product.name} 
+                            className="w-full h-full object-contain"
+                            key={currentTypeIndex}
+                            initial={{ y: 0 }}
+                            animate={{ 
+                                y: [1, -1, 1],
+                                transition: {
+                                    duration: 0.3,
+                                    times: [0, 0.5, 1],
+                                    ease: "easeInOut"
+                                }
+                            }}
+                        />
                         {isInCart && (
                             <motion.div 
                                 className="absolute top-0 right-0"
