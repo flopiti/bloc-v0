@@ -22,8 +22,9 @@ export const DrawerButton = ({isDrawerOpen, setIsDrawerOpen} : DrawerButtonProps
       }}
       transition={DEFAULT_TRANSITION}
       style={{ 
-        zIndex: isDrawerOpen ? 40 : 10,
-        pointerEvents: 'auto'
+        zIndex: isDrawerOpen ? 110 : 10,
+        pointerEvents: 'auto',
+        position: 'relative'
       }}
     >
       <motion.button
@@ -41,6 +42,10 @@ export const DrawerButton = ({isDrawerOpen, setIsDrawerOpen} : DrawerButtonProps
             times: [0, 0.25, 0.5, 0.75, 1]
         }}
         className={`w-full h-[3.25rem] ${isDrawerOpen ? 'bg-transparent' : 'bg-[#444f64] hover:bg-white/10'} text-white opacity-90 rounded-xl relative z-10 transition-colors flex items-center justify-center gap-2 ${!isDrawerOpen && unconfirmedCount && unconfirmedCount > 0 ? 'border' : ''}`}
+        style={{
+          WebkitTapHighlightColor: 'transparent',
+          touchAction: 'manipulation'
+        }}
       >
         <AnimatePresence>
           {!isDrawerOpen && unconfirmedCount && unconfirmedCount > 0 ? (

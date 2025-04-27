@@ -33,7 +33,7 @@ const App = () => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative min-h-screen w-full overflow-hidden">
       {/* Main Content */}
       <AnimatePresence mode="wait">
         {currentView === PAGE.HOME && (
@@ -96,8 +96,8 @@ const App = () => {
         )}
       </AnimatePresence>
 
-      {/* Drawer Button - Now with higher z-index */}
-      <div className="fixed bottom-0 left-0 right-0 z-[60] p-4">
+      {/* Drawer Button */}
+      <div className="fixed bottom-0 left-0 right-0 z-[120] p-4">
         <DrawerButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
       </div>
 
