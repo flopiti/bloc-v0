@@ -97,9 +97,7 @@ const App = () => {
       </AnimatePresence>
 
       {/* Drawer Button */}
-      <div className="fixed bottom-0 left-0 right-0 z-[120] p-4">
-        <DrawerButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
-      </div>
+      <DrawerButton isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
 
       {/* Drawer */}
       <Drawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} goToPage={goToPage} />
