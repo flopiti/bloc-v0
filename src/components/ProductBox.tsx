@@ -3,7 +3,7 @@ import useCart from "@/hooks/useCart";
 import { Product } from "@/types/core";
 import { useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
-import { FiCheck, FiChevronRight } from "react-icons/fi";
+import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 
 interface ProductProps {
     isAddOpen: boolean;
@@ -42,9 +42,11 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
     return (
         <div className="relative h-full">
             <div className="absolute top-0 left-0 right-0">
-                <div className="h-[8rem]">
+                <div className="h-[8rem] relative">
                     <motion.div
-                        className="h-full rounded-lg overflow-hidden relative group cursor-pointer"
+                        className={`h-full rounded-lg overflow-hidden relative group cursor-pointer ${
+                            isAddOpen && hasProductTypes ? 'w-[85%] mx-auto' : 'w-full'
+                        } transition-all duration-300`}
                         whileHover={{ scale: isClicking ? 1 : 1.05 }}
                         whileTap={{ scale: isClicking ? 1 : 0.95 }}
                         onAnimationComplete={() => {
@@ -63,6 +65,42 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                             </motion.div>
                         )}
                     </motion.div>
+                    {isAddOpen && hasProductTypes && product.productTypes && product.productTypes.length > 1 && (
+                        <>
+                            {currentTypeIndex > 0 && (
+                                <motion.button
+                                    className="absolute top-1/2 left-[-20px] -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleNextType(e);
+                                    }}
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    initial={{ opacity: 0, x: 10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <FiChevronLeft className="text-2xl" size={50} />
+                                </motion.button>
+                            )}
+                            {currentTypeIndex < product.productTypes.length - 1 && (
+                                <motion.button
+                                    className="absolute top-1/2 right-[-20px] -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleNextType(e);
+                                    }}
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <FiChevronRight className="text-2xl" size={50} />
+                                </motion.button>
+                            )}
+                        </>
+                    )}
                 </div>
                 <div className="h-[40px] px-2">
                     <h3 className="text-sm font-medium text-white line-clamp-2">{product.name}</h3>
@@ -79,16 +117,6 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                             transition={{ duration: 0.2, delay: 0.1 }}
                         >
                             <span className="text-xs text-white/70">{product.productTypes[currentTypeIndex]}</span>
-                            {product.productTypes.length > 1 && (
-                                <motion.button
-                                    className="text-white/70 hover:text-white transition-colors"
-                                    onClick={handleNextType}
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                >
-                                    <FiChevronRight className="text-sm" />
-                                </motion.button>
-                            )}
                         </motion.div>
                     )}
                 </AnimatePresence>
