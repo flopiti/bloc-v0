@@ -47,7 +47,7 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          Welcome
+          Welcome v0.2.1
         </motion.h1>
         <motion.p 
           className="text-white/60 text-center mb-6"
