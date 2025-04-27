@@ -6,6 +6,7 @@ on:
       version:
         required: false
         type: string
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -16,7 +17,7 @@ on:
 
 jobs:
   deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_call'
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     
     steps:
