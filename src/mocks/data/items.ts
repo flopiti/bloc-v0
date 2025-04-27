@@ -5,12 +5,12 @@ import { DELIVERY_DAYS } from '@/constants/core';
 export const STRAWBERRIES = {id: 7, name:'Strawberries', image: '/strawberries.png'}
 
 export const mockItems: Product[] = [
-  { id: 1, name: 'Milk', image: '/milk.png', productTypes: ['12-pack', '18-pack'] },
+  { id: 1, name: 'Milk', image: '/milk.png' },
   { id: 2, name: 'Eggs', image: '/eggs.png', productTypes: ['12-pack', '18-pack'] },
-  { id: 3, name: 'Cereal', image: '/cereal.png', productTypes: ['12-pack', '18-pack'] },
-  { id: 4, name: 'Spaghetti', image: '/spagetti.png', productTypes: ['12-pack', '18-pack'] },
-  { id: 5, name: 'Ground Meat', image: '/ground-meat.png', productTypes: ['12-pack', '18-pack'] },
-  { id: 6, name: 'Coffee', image: '/coffee.png', productTypes: ['12-pack', '18-pack'] },
+  { id: 3, name: 'Cereal', image: '/cereal.png' },
+  { id: 4, name: 'Spaghetti', image: '/spagetti.png' },
+  { id: 5, name: 'Ground Meat', image: '/ground-meat.png' },
+  { id: 6, name: 'Coffee', image: '/coffee.png' },
   STRAWBERRIES
 ]; 
 
