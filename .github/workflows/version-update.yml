@@ -1,0 +1,44 @@
+name: Update Version
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  update-version:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+      
+      - name: Update Version
+        run: |
+          # Get current version from file
+          CURRENT_VERSION=$(grep -o 'export const APP_VERSION = "[^"]*"' src/config/version.ts | cut -d'"' -f2)
+          
+          # Parse version numbers
+          IFS='.' read -r major minor patch <<< "${CURRENT_VERSION#v}"
+          
+          # Increment patch version
+          new_patch=$((patch + 1))
+          NEW_VERSION="v$major.$minor.$new_patch"
+          
+          # Update version in file
+          sed -i "s/export const APP_VERSION = \"[^\"]*\"/export const APP_VERSION = \"$NEW_VERSION\"/" src/config/version.ts
+          
+          # Commit and push changes
+          git add src/config/version.ts
+          git commit -m "chore: bump version to $NEW_VERSION [skip ci]"
+          git push 

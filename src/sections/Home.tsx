@@ -10,6 +10,8 @@ import HomeNavigationButton from "@/components/HomeNavigationButton";
 import FeaturedSection from "@/components/FeaturedSection";
 import { STRAWBERRIES } from "@/mocks/data/items";
 import useCart from "@/hooks/useCart";
+import { APP_VERSION } from "@/config/version";
+
 const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
 
   const {addItem} = useCart();
@@ -47,7 +49,7 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          Welcome v0.2.1
+          Welcome {APP_VERSION}
         </motion.h1>
         <motion.p 
           className="text-white/60 text-center mb-6"
