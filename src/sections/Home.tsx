@@ -4,20 +4,30 @@ import { FiShoppingCart, FiCalendar, FiPackage } from "react-icons/fi";
 import { GiKetchup } from "react-icons/gi";
 import { PiBread, PiCheese, PiCoffeeBeanBold } from "react-icons/pi";
 import { TbMeat } from "react-icons/tb";
+import { IoMdNutrition } from "react-icons/io";
 import { useState } from "react";
 import HomeNavigationButton from "@/components/HomeNavigationButton";
 import FeaturedSection from "@/components/FeaturedSection";
-
+import { STRAWBERRIES } from "@/mocks/data/items";
+import useCart from "@/hooks/useCart";
 const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
+
+  const {addItem} = useCart();
+
   const icons = [
-    <FiPackage key="package" className="w-8 h-8 text-secondary mb-2" />,
     <GiKetchup key="ketchup" className="w-8 h-8 text-secondary mb-2" />,
     <PiCoffeeBeanBold key="coffee" className="w-8 h-8 text-secondary mb-2" />,
     <TbMeat key="meat" className="w-8 h-8 text-secondary mb-2" />,
     <PiBread key="bread" className="w-8 h-8 text-secondary mb-2" />,
-    <PiCheese key="cheese" className="w-8 h-8 text-secondary mb-2" />
+    <PiCheese key="cheese" className="w-8 h-8 text-secondary mb-2" />,
+    <IoMdNutrition key="apple" className="w-8 h-8 text-secondary mb-2" />,
   ];
   const [currentIconIndex] = useState(() => Math.floor(Math.random() * icons.length));
+
+
+  const handleAddToCart = () => {
+    addItem(STRAWBERRIES);
+  };
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-6">
@@ -85,7 +95,7 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
         </motion.h2>
         <FeaturedSection
           imageUrl="/featured.png"
-          onAddToCart={() => goToPage(PAGE.PRODUCTS)}
+          onAddToCart={handleAddToCart}
         />
       </motion.div>
     </div>

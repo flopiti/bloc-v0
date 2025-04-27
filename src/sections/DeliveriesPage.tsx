@@ -43,10 +43,6 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
         setSelectedDate(null);
     };
 
-    console.log(cart?.nextDelivery);
-    console.log(canEditDate);
-
-
     return (
         <>
             {cart?.nextDelivery && (

@@ -55,10 +55,8 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
 
     const currentState = getButtonState();
 
-
     const allItems = [...cart.confirmedItems, ...cart.pendingItems];
     const isCartValid = allItems.length > 0 && cart.nextDelivery;
-
 
     if (!isCartValid) return null;
 
@@ -68,11 +66,15 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
           animate={{  y: 0 }}
           exit={{  y: 20 }}
           transition={{ duration: 0.3 }}
-          className="fixed bottom-4 right-4"
+          className="mt-4"
         >
           <motion.button
-            onClick={() => !cart.confirmed && confirmCart()}
-            className="px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden shadow-lg"
+            onClick={(e) => {
+              if (!cart.confirmed) {
+                  confirmCart();
+              }
+            }}
+            className="w-full px-8 py-3 rounded-md text-white font-medium text-base relative overflow-hidden shadow-lg cursor-pointer"
             whileHover={!cart.confirmed ? { scale: 1.02 } : {}}
             whileTap={!cart.confirmed ? { scale: 0.98 } : {}}
             initial={false}
@@ -130,7 +132,9 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
     )
 }
 
-export default ConfirmButton;const CheckMarkAnimation = () => (
+export default ConfirmButton;
+
+const CheckMarkAnimation = () => (
   <motion.div
     initial={{ scale: 0 }}
     animate={{ scale: 1 }}
