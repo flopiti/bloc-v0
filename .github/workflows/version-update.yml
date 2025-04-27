@@ -8,14 +8,17 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   update-version:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.update.outputs.new_version }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -28,6 +31,7 @@ jobs:
           git config --global user.email 'github-actions@github.com'
       
       - name: Update Version
+        id: update
         run: |
           # Get current version from file
           CURRENT_VERSION=$(grep -o 'export const APP_VERSION = "[^"]*"' src/config/version.ts | cut -d'"' -f2)
@@ -46,9 +50,17 @@ jobs:
           git add src/config/version.ts
           git commit -m "chore: bump version to $NEW_VERSION"
           git push
+          
+          # Set output for next job
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: Trigger Deployment
-        uses: peter-evans/repository-dispatch@v2
+        uses: actions/github-script@v6
         with:
-          event-type: version-updated
-          token: ${{ secrets.GITHUB_TOKEN }} 
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy.yml',
+              ref: context.ref
+            }) 

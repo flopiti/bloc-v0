@@ -1,8 +1,11 @@
 name: Deploy to Production
 
 on:
-  repository_dispatch:
-    types: [version-updated]
+  workflow_call:
+    inputs:
+      version:
+        required: false
+        type: string
   push:
     branches:
       - main
@@ -13,7 +16,7 @@ on:
 
 jobs:
   deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'repository_dispatch'
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_call'
     runs-on: ubuntu-latest
     
     steps:
