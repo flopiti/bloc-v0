@@ -29,7 +29,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
 
   return (
     <motion.div
-      className="fixed inset-0 bg-[#3B465C] h-screen w-full z-[100]"
+      className="fixed inset-0 bg-primary h-screen w-full z-[100]"
       initial={{ y: "100%" }}
       animate={{y: isDrawerOpen ? 0 : "100%"}}
       exit={{ y: "100%" }}
