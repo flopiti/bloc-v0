@@ -23,7 +23,6 @@ const DrawerSectionTitle = ({
     buttonText
 }: DrawerSectionTitleProps) => {
 
-    console.log(isPanelOpen)
     return (
         <div className="flex items-center justify-between mb-4">
         <div className="max-w-2/5">

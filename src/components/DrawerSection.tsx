@@ -37,7 +37,6 @@ const DrawerSection = ({
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
-                console.log("clicked outside")
                 setIsPanelOpen(false);
             }
         };
