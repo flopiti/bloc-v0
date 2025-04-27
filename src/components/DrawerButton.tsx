@@ -1,4 +1,4 @@
-import { BUTTON_HEIGHT, DEFAULT_TRANSITION } from "@/constants/animations";
+import {  DEFAULT_TRANSITION } from "@/constants/animations";
 import { useCartStore } from "@/stores/cartStore";
 import { motion, AnimatePresence } from "framer-motion"
 import { GrBasket } from "react-icons/gr";
