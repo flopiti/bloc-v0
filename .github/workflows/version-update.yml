@@ -45,4 +45,10 @@ jobs:
           # Commit and push changes
           git add src/config/version.ts
           git commit -m "chore: bump version to $NEW_VERSION"
-          git push 
+          git push
+
+      - name: Trigger Deployment
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          event-type: version-updated
+          token: ${{ secrets.GITHUB_TOKEN }} 
