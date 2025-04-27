@@ -14,7 +14,7 @@ interface CartPageProps {
 const CartPage = ({ goToPage }: CartPageProps) => {
     const { cart } = useCartStore();
     const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
-
+    console.log(cartItems);
     return (
         <div className="container mx-auto ">
             <div className="bg-white/5 rounded-xl">

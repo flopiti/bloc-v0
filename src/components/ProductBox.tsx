@@ -3,7 +3,7 @@ import useCart from "@/hooks/useCart";
 import { Product } from "@/types/core";
 import { useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
-import { FiCheck } from "react-icons/fi";
+import { FiCheck, FiChevronRight } from "react-icons/fi";
 
 interface ProductProps {
     isAddOpen: boolean;
@@ -14,18 +14,29 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
     const { addItem, removeItem } = useCart();
     const { cart } = useCartStore();
     const [isClicking, setIsClicking] = useState(false);
+    const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
 
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.productId === product.id) : false;
+    const hasProductTypes = product.productTypes && product.productTypes.length > 0;
 
     const handleCartAction = () => {
         if (isClicking) return;
         setIsClicking(true);
         const action = isInCart ? removeItem : addItem;
+        const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
         action({
             productId: product.id,
             productName: product.name,
-            productImage: product.image
+            productImage: product.image,
+            productType
         });
+    };
+
+    const handleNextType = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!hasProductTypes || !product.productTypes) return;
+        const types = product.productTypes;
+        setCurrentTypeIndex((prev) => (prev + 1) % types.length);
     };
 
     return (
@@ -53,11 +64,34 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                         )}
                     </motion.div>
                 </div>
-                <div className="h-[40px] mt-3 px-2">
+                <div className="h-[40px] px-2">
                     <h3 className="text-sm font-medium text-white line-clamp-2">{product.name}</h3>
                 </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0">
+                <AnimatePresence mode="wait">
+                    {isAddOpen && hasProductTypes && product.productTypes && (
+                        <motion.div 
+                            className="flex items-center gap-2 mb-2 px-2"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.2, delay: 0.1 }}
+                        >
+                            <span className="text-xs text-white/70">{product.productTypes[currentTypeIndex]}</span>
+                            {product.productTypes.length > 1 && (
+                                <motion.button
+                                    className="text-white/70 hover:text-white transition-colors"
+                                    onClick={handleNextType}
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                >
+                                    <FiChevronRight className="text-sm" />
+                                </motion.button>
+                            )}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
                 <AnimatePresence mode="wait">
                     {isAddOpen && (
                         <motion.button
