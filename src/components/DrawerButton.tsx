@@ -14,7 +14,7 @@ export const DrawerButton = ({isDrawerOpen, setIsDrawerOpen} : DrawerButtonProps
 
   return (
     <motion.div
-      className="fixed bottom-4 left-0 right-0 z-[120] px-4"
+      className="fixed bottom-4 left-0 right-0 z-[120] px-4 pb-safe"
       initial={{ opacity: 0, y: 20 }}
       animate={{ 
         opacity: 1,
