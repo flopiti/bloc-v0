@@ -68,7 +68,7 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                                 }
                             }}
                         />
-                        {isInCart && (
+                        {isInCart && !isAddOpen && (
                             <motion.div 
                                 className="absolute top-0 right-0"
                                 initial={{ scale: 0, opacity: 0 }}
