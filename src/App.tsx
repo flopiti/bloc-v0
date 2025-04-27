@@ -4,7 +4,7 @@ import Home from '@/sections/Home';
 import Drawer from '@/sections/Drawer';
 import '@/App.css';
 import useCart from '@/hooks/useCart';
-import useItems from '@/hooks/useItems';
+import useProducts from   '@/hooks/useProducts';
 import { DrawerButton } from '@/components/DrawerButton';
 import DeliveriesPage from '@/sections/DeliveriesPage';
 import { PAGE } from '@/enums/core';
@@ -20,7 +20,7 @@ const App = () => {
 
   // Load initial data
   useCart();
-  useItems();
+  useProducts();
 
   const goHome = () => {
     setCurrentView(PAGE.HOME)

@@ -69,7 +69,7 @@ const ConfirmButton = ({ cart, isLoading }: ConfirmButtonProps) => {
           className="mt-4"
         >
           <motion.button
-            onClick={(e) => {
+            onClick={() => {
               if (!cart.confirmed) {
                   confirmCart();
               }

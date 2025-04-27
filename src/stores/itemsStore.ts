@@ -1,16 +1,16 @@
 import { create } from 'zustand';
-import { Item } from '@/types/core';
+import { Product } from '@/types/core';
 
-interface ItemsStore {
-  items: Item[];
+interface ProductsStore {
+  products: Product[];
   isLoading: boolean;
-  setInitialItems: (items: Item[]) => void;
+  setInitialProducts: (products: Product[]) => void;
   setLoading: (loading: boolean) => void;
 }
 
-export const useItemsStore = create<ItemsStore>((set) => ({
-  items: [],
+export const useProductsStore = create<ProductsStore>((set) => ({
+  products: [],
   isLoading: false, 
-  setInitialItems: (items) => set({ items }),
+  setInitialProducts: (products) => set({ products }),
   setLoading: (loading) => set({ isLoading: loading }),
 }));

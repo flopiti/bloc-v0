@@ -1,6 +1,6 @@
 import { PAGE } from "@/enums/core";
 import { motion } from "framer-motion";
-import { FiShoppingCart, FiCalendar, FiPackage } from "react-icons/fi";
+import { FiShoppingCart, FiCalendar } from "react-icons/fi";
 import { GiKetchup } from "react-icons/gi";
 import { PiBread, PiCheese, PiCoffeeBeanBold } from "react-icons/pi";
 import { TbMeat } from "react-icons/tb";
@@ -26,7 +26,11 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
 
 
   const handleAddToCart = () => {
-    addItem(STRAWBERRIES);
+    addItem({
+      productId: STRAWBERRIES.id,
+      productName: STRAWBERRIES.name,
+      productImage: STRAWBERRIES.image
+    });
   };
 
   return (

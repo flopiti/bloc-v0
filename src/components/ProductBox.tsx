@@ -1,27 +1,31 @@
 import { motion, AnimatePresence } from "framer-motion";
 import useCart from "@/hooks/useCart";
-import { Item } from "@/types/core";
+import { Product } from "@/types/core";
 import { useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { FiCheck } from "react-icons/fi";
 
 interface ProductProps {
     isAddOpen: boolean;
-    item: Item;
+    product: Product;
 }
 
-const Product = ({ isAddOpen, item }: ProductProps) => {
+const ProductBox = ({ isAddOpen, product }: ProductProps) => {
     const { addItem, removeItem } = useCart();
     const { cart } = useCartStore();
     const [isClicking, setIsClicking] = useState(false);
 
-    const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.id === item.id) : false;
+    const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.productId === product.id) : false;
 
     const handleCartAction = () => {
         if (isClicking) return;
         setIsClicking(true);
         const action = isInCart ? removeItem : addItem;
-        action(item);
+        action({
+            productId: product.id,
+            productName: product.name,
+            productImage: product.image
+        });
     };
 
     return (
@@ -36,7 +40,7 @@ const Product = ({ isAddOpen, item }: ProductProps) => {
                             setIsClicking(false);
                         }}
                     >
-                        <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                        <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
                         {isInCart && (
                             <motion.div 
                                 className="absolute top-0 right-0"
@@ -50,7 +54,7 @@ const Product = ({ isAddOpen, item }: ProductProps) => {
                     </motion.div>
                 </div>
                 <div className="h-[40px] mt-3 px-2">
-                    <h3 className="text-sm font-medium text-white line-clamp-2">{item.name}</h3>
+                    <h3 className="text-sm font-medium text-white line-clamp-2">{product.name}</h3>
                 </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0">
@@ -77,4 +81,4 @@ const Product = ({ isAddOpen, item }: ProductProps) => {
     );
 }   
 
-export default Product;
+export default ProductBox;

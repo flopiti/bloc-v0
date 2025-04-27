@@ -1,19 +1,20 @@
-import Product from '@/components/Product';
+import ProductBox from '@/components/ProductBox';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useItemsStore } from '@/stores/itemsStore';
+import { useProductsStore } from '@/stores/itemsStore';
+import { Product } from '@/types/core';
 
 const ProductsPage = () => {
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-    const { items } = useItemsStore();
-    
+    const { products } = useProductsStore();
+    console.log(products);
     const getRowNumber = (index: number) => Math.floor(index / 2);
 
     return (
             <div className="grid grid-cols-2 gap-4 mb-25" style={{ gridAutoRows: '200px' }}>
-                {items.map((item, index) => (
+                {products.map((product : Product, index) => (
                     <motion.div
-                        key={item.id}
+                        key={product.id}
                         className="bg-white/5 p-4 rounded-lg shadow-md cursor-pointer"
                         initial={{ height: "200px" }}
                         animate={{
@@ -32,7 +33,7 @@ const ProductsPage = () => {
                             zIndex: expandedIndex === index ? 1 : 0
                         }}
                     >
-                    <Product isAddOpen={expandedIndex === index} item={item}/>
+                    <ProductBox isAddOpen={expandedIndex === index} product={product}/>
                     </motion.div>
                 ))}
             </div>

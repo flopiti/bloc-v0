@@ -1,8 +1,16 @@
 export type Item = {
+  productId: number;
+  productName: string;
+  productImage: string;
+  productType?: string;
+};
+
+export type Product = {
   id: number;
   name: string;
   image: string;
-};
+  productTypes?: string[];
+}
 
 export type Cart = {
   confirmedItems: Item[];

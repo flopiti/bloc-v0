@@ -36,7 +36,7 @@ const SuggestedItems = ({ suggestedItems }: SuggestedItemsProps) => {
         <AnimatePresence mode="popLayout">
           {suggestedItems.slice(0, 3).map((item) => (
             <motion.div 
-              key={item.id}
+              key={item.productId}
               layout
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -53,7 +53,7 @@ const SuggestedItems = ({ suggestedItems }: SuggestedItemsProps) => {
               onClick={() => handleItemClick(item)}
               onAnimationComplete={() => setIsClicking(false)}
             >
-              <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+              <img src={item.productImage} alt={item.productName} className="w-full h-full object-contain" />
             </motion.div>
           ))}
         </AnimatePresence>

@@ -29,7 +29,7 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                     <div className="flex flex-row flex-wrap gap-4 p-4">
                         {cartItems.map((item: Item) => (
                             <motion.div
-                                key={item.id}
+                                key={item.productId}
                                 layout
                                 className="w-[calc(33.333%-1rem)]"
                             >

@@ -154,8 +154,8 @@ const useCart = () => {
                 };
                 return {
                     ...old,
-                    pendingItems: old.pendingItems.filter(i => i.id !== item.id),
-                    confirmedItems: old.confirmedItems.filter(i => i.id !== item.id),
+                    pendingItems: old.pendingItems.filter(i => i.productId !== item.productId),
+                    confirmedItems: old.confirmedItems.filter(i => i.productId !== item.productId),
                     confirmed: false
                 };
             });
