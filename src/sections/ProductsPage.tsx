@@ -7,7 +7,6 @@ import { Product } from '@/types/core';
 const ProductsPage = () => {
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
     const { products } = useProductsStore();
-    console.log(products);
     const getRowNumber = (index: number) => Math.floor(index / 2);
 
     return (
