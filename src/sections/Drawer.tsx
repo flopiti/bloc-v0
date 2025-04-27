@@ -29,7 +29,7 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
 
   return (
     <motion.div
-      className="fixed inset-0 bg-[#3B465C] h-screen w-full z-[100]"
+      className="fixed inset-0 bg-[#3B465C] h-screen w-full z-[100] overflow-hidden"
       initial={{ y: "100%" }}
       animate={{y: isDrawerOpen ? 0 : "100%"}}
       exit={{ y: "100%" }}
@@ -40,7 +40,9 @@ const Drawer = ({ isDrawerOpen, goToPage }: DrawerProps) => {
         left: 0,
         right: 0,
         bottom: 0,
-        WebkitOverflowScrolling: 'touch'
+        WebkitOverflowScrolling: 'touch',
+        transform: 'translateZ(0)',
+        WebkitTransform: 'translateZ(0)'
       }}
     >
       <div className="h-[calc(100vh-5rem)] px-4 py-14 mt-4 mb-16 overflow-y-auto">
