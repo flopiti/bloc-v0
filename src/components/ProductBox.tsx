@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import useCart from "@/hooks/useCart";
 import { Product } from "@/types/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 
@@ -38,6 +38,30 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
         const types = product.productTypes;
         setCurrentTypeIndex((prev) => (prev + 1) % types.length);
     };
+
+    const handlePreviousType = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!hasProductTypes || !product.productTypes) return;
+        const types = product.productTypes;
+        setCurrentTypeIndex((prev) => (prev - 1 + types.length) % types.length);
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!isAddOpen || !hasProductTypes || !product.productTypes) return;
+            
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                setCurrentTypeIndex((prev) => (prev + 1) % product.productTypes!.length);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                setCurrentTypeIndex((prev) => (prev - 1 + product.productTypes!.length) % product.productTypes!.length);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isAddOpen, hasProductTypes, product.productTypes]);
 
     return (
         <div className="relative h-full">
@@ -84,10 +108,7 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                             {currentTypeIndex > 0 && (
                                 <motion.button
                                     className="absolute top-1/2 left-[-20px] -translate-y-1/2 text-white/70 hover:text-white transition-colors"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleNextType(e);
-                                    }}
+                                    onClick={handlePreviousType}
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }}
                                     initial={{ opacity: 0, x: 10 }}
@@ -100,10 +121,7 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                             {currentTypeIndex < product.productTypes.length - 1 && (
                                 <motion.button
                                     className="absolute top-1/2 right-[-20px] -translate-y-1/2 text-white/70 hover:text-white transition-colors"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleNextType(e);
-                                    }}
+                                    onClick={handleNextType}
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }}
                                     initial={{ opacity: 0, x: -10 }}
