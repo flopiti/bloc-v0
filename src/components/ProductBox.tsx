@@ -45,7 +45,7 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                 <div className="h-[8rem] relative">
                     <motion.div
                         className={`h-full rounded-lg overflow-hidden relative group cursor-pointer ${
-                            isAddOpen && hasProductTypes ? 'w-[85%] mx-auto' : 'w-full'
+                            isAddOpen && hasProductTypes ? 'w-[85%] mx-auto' : 'mx-auto w-full'
                         } transition-all duration-300`}
                         whileHover={{ scale: isClicking ? 1 : 1.05 }}
                         whileTap={{ scale: isClicking ? 1 : 0.95 }}
