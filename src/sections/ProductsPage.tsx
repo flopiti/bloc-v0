@@ -13,14 +13,15 @@ const ProductsPage = () => {
     const { products } = useProductsStore();
     const getRowNumber = (index: number) => Math.floor(index / 2);
 
+    const clickedProduct = expandedIndex !== null ? products[expandedIndex] : null;
+    const clickedProductHasTypes = clickedProduct?.productTypes && clickedProduct.productTypes.length > 0;
+    const clickedExpandedHeight = clickedProductHasTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
+
     return (
         <div className="grid grid-cols-2 gap-4 mb-25" style={{ gridAutoRows: `${PRODUCT_BOX_HEIGHT}px` }}>
             {products.map((product : Product, index) => {
                 const hasProductTypes = product.productTypes && product.productTypes.length > 0;
                 const expandedHeight = hasProductTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
-                const clickedProduct = expandedIndex !== null ? products[expandedIndex] : null;
-                const clickedProductHasTypes = clickedProduct?.productTypes && clickedProduct.productTypes.length > 0;
-                const clickedExpandedHeight = clickedProductHasTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
                 return (
                 <motion.div
                     key={product.id}
