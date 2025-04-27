@@ -4,7 +4,7 @@ import Home from '@/sections/Home';
 import Drawer from '@/sections/Drawer';
 import '@/App.css';
 import useCart from '@/hooks/useCart';
-import useProducts from   '@/hooks/useProducts';
+import useProducts from '@/hooks/useProducts';
 import { DrawerButton } from '@/components/DrawerButton';
 import DeliveriesPage from '@/sections/DeliveriesPage';
 import { PAGE } from '@/enums/core';
@@ -46,7 +46,7 @@ const App = () => {
               duration: 0.3,
               ease: "easeInOut"
             }}
-            className="w-full"
+            className="w-full h-full"
           >
             <Home goToPage={goToPage} />
           </motion.div>
@@ -58,10 +58,10 @@ const App = () => {
             animate={{ x: 0 }}
             exit={{ x: 390 }}
             transition={{ 
-              duration: 0.1,
+              duration: 0.3,
               ease: "easeInOut"
             }}
-            className="w-full"
+            className="w-full h-full"
           >
             {currentView === PAGE.DELIVERIES && (
               <PageLayout 
