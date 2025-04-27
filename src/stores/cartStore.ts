@@ -37,8 +37,8 @@ export const useCartStore = create<CartStore>((set, get) => ({
       } 
       const newCart = { 
         ...state.cart, 
-        pendingItems: state.cart.pendingItems.filter(i => i.id !== item.id), 
-        confirmedItems: state.cart.confirmedItems.filter(i => i.id !== item.id)
+        pendingItems: state.cart.pendingItems.filter(i => i.productId !== item.productId), 
+        confirmedItems: state.cart.confirmedItems.filter(i => i.productId !== item.productId)
       };
       console.log('Updated cart state:', newCart);
       return { cart: newCart }; 

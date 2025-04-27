@@ -8,7 +8,7 @@ interface ItemBoxProps {
 const ItemBox = ({ item }: ItemBoxProps) => {
   return (
     <motion.div
-      key={item.id}
+      key={item.productId}
       layout
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -23,7 +23,7 @@ const ItemBox = ({ item }: ItemBoxProps) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
     >
-        <img src={item.image} alt={item.name} className="object-cover" />
+        <img src={item.productImage} alt={item.productName} className="object-cover" />
     </motion.div>  )
 }
 

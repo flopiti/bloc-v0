@@ -8,7 +8,7 @@ const DELAY = 1000;
 let currentCart: Cart;
 
 export const handlers = [
-  http.get(`${import.meta.env.VITE_API_BASE_URL}/items`, async () => {
+  http.get(`${import.meta.env.VITE_API_BASE_URL}/products`, async () => {
     await delay(DELAY);
     return HttpResponse.json(mockItems);
   }),
@@ -44,8 +44,8 @@ export const handlers = [
     const newItem = await request.json() as Item;
     
     // Check if item already exists in either confirmed or pending items
-    const isDuplicate = currentCart?.confirmedItems.some(item => item.id === newItem.id) ||
-                       currentCart?.pendingItems.some(item => item.id === newItem.id);
+    const isDuplicate = currentCart?.confirmedItems.some(item => item.productId === newItem.productId) ||
+                       currentCart?.pendingItems.some(item => item.productId === newItem.productId);
     
     if (isDuplicate) {
       return new HttpResponse(null, { 
@@ -112,8 +112,8 @@ export const handlers = [
     // Remove the item from the cart
     currentCart = {
       ...currentCart,
-      pendingItems: currentCart.pendingItems.filter(i => i.id !== item.id),
-      confirmedItems: currentCart.confirmedItems.filter(i => i.id !== item.id)
+      pendingItems: currentCart.pendingItems.filter(i => i.productId !== item.productId),
+      confirmedItems: currentCart.confirmedItems.filter(i => i.productId !== item.productId)
     };
     
     return HttpResponse.json(currentCart);

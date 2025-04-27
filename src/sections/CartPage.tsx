@@ -14,7 +14,7 @@ interface CartPageProps {
 const CartPage = ({ goToPage }: CartPageProps) => {
     const { cart } = useCartStore();
     const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
-
+    console.log(cartItems);
     return (
         <div className="container mx-auto ">
             <div className="bg-white/5 rounded-xl">
@@ -29,7 +29,7 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                     <div className="flex flex-row flex-wrap gap-4 p-4">
                         {cartItems.map((item: Item) => (
                             <motion.div
-                                key={item.id}
+                                key={item.productId}
                                 layout
                                 className="w-[calc(33.333%-1rem)]"
                             >
