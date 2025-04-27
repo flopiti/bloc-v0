@@ -39,9 +39,17 @@ jobs:
           # Parse version numbers
           IFS='.' read -r major minor patch <<< "${CURRENT_VERSION#v}"
           
-          # Increment patch version
-          new_patch=$((patch + 1))
-          NEW_VERSION="v$major.$minor.$new_patch"
+          # Check for version bump keyword in commit message or PR title
+          if [[ "${{ github.event.head_commit.message }}" == *"[minor]"* ]] || [[ "${{ github.event.pull_request.title }}" == *"[minor]"* ]]; then
+            # Increment minor version and reset patch
+            new_minor=$((minor + 1))
+            new_patch=0
+            NEW_VERSION="v$major.$new_minor.$new_patch"
+          else
+            # Increment patch version
+            new_patch=$((patch + 1))
+            NEW_VERSION="v$major.$minor.$new_patch"
+          fi
           
           # Update version in file
           sed -i "s/export const APP_VERSION = \"[^\"]*\"/export const APP_VERSION = \"$NEW_VERSION\"/" src/config/version.ts
