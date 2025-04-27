@@ -94,7 +94,7 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.2 }}
                                 >
-                                    <FiChevronLeft className="text-2xl" size={50} />
+                                    <FiChevronLeft className="text-2xl" size={50} strokeWidth={1} />
                                 </motion.button>
                             )}
                             {currentTypeIndex < product.productTypes.length - 1 && (
@@ -110,7 +110,7 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.2 }}
                                 >
-                                    <FiChevronRight className="text-2xl" size={50} />
+                                    <FiChevronRight className="text-2xl" size={50} strokeWidth={1} />
                                 </motion.button>
                             )}
                         </>
