@@ -34,7 +34,8 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
       productImage: STRAWBERRIES.image
     });
   };
-
+ 
+  
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-6">
       <motion.div 
