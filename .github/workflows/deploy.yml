@@ -1,11 +1,6 @@
-name: Deploy to Production
+name: Update Version and Deploy
 
 on:
-  workflow_call:
-    inputs:
-      version:
-        required: false
-        type: string
   workflow_dispatch:
   push:
     branches:
@@ -15,14 +10,46 @@ on:
     branches:
       - main  # or your default branch name
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
-  deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch'
+  update-and-deploy:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+      
+      - name: Update Version
+        id: update
+        run: |
+          # Get current version from file
+          CURRENT_VERSION=$(grep -o 'export const APP_VERSION = "[^"]*"' src/config/version.ts | cut -d'"' -f2)
+          
+          # Parse version numbers
+          IFS='.' read -r major minor patch <<< "${CURRENT_VERSION#v}"
+          
+          # Increment patch version
+          new_patch=$((patch + 1))
+          NEW_VERSION="v$major.$minor.$new_patch"
+          
+          # Update version in file
+          sed -i "s/export const APP_VERSION = \"[^\"]*\"/export const APP_VERSION = \"$NEW_VERSION\"/" src/config/version.ts
+          
+          # Commit and push changes
+          git add src/config/version.ts
+          git commit -m "chore: bump version to $NEW_VERSION"
+          git push
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
