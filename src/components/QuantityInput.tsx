@@ -40,7 +40,7 @@ const QuantityInput = ({ quantity, onIncrement, onDecrement }: QuantityInputProp
                 <div className="w-8 h-6 relative overflow-hidden">
                     <motion.span
                         key={quantity}
-                        initial={isIncreasing ? { y: -50, opacity: 0 } : { opacity: 0 }}
+                        initial={isIncreasing ? { y: -50, opacity: 0 } : { y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ type: "spring", stiffness: 500, damping: 30, duration: 0.1 }}
                         className="absolute inset-0 flex items-center justify-center text-white"
