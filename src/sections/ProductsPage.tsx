@@ -21,21 +21,6 @@ const ProductsPage = () => {
     const clickedProductHasTypes = clickedProduct?.productTypes && clickedProduct.productTypes.length > 0;
     const clickedExpandedHeight = clickedProductHasTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
 
-    if (!imagesLoaded) {
-        return (
-            <div className="grid grid-cols-2 gap-4 mb-25" style={{ gridAutoRows: `${PRODUCT_BOX_HEIGHT}px` }}>
-                {products.map((product) => (
-                    <div
-                        key={product.id}
-                        className="bg-white/5 p-4 rounded-lg shadow-md"
-                    >
-                        <ProductBox isLoading={true} isAddOpen={false} product={product} />
-                    </div>
-                ))}
-            </div>
-        );
-    }
-
     return (
         <motion.div 
             className="grid grid-cols-2 gap-4 mb-25" 
@@ -48,8 +33,8 @@ const ProductsPage = () => {
                 const hasProductTypes = product.productTypes && product.productTypes.length > 0;
                 const expandedHeight = hasProductTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
                 return (
-                <motion.div
-                    key={product.id}
+                    <motion.div
+                        key={product.id}
                         className="bg-white/5 p-4 rounded-lg shadow-md cursor-pointer"
                         initial={{ height: "200px" }}
                         animate={{
@@ -68,11 +53,15 @@ const ProductsPage = () => {
                             zIndex: expandedIndex === index ? 1 : 0
                         }}
                     >
-                    <ProductBox isAddOpen={expandedIndex === index} product={product}/>
+                        <ProductBox 
+                            isAddOpen={expandedIndex === index} 
+                            product={product}
+                            isLoading={!imagesLoaded}
+                        />
                     </motion.div>
                 )
             })}
-            </motion.div>
+        </motion.div>
     );
 };
 
