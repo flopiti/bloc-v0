@@ -234,21 +234,21 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                 <AnimatePresence mode="wait">
                     {isAddOpen && (
                         <motion.div
-                            className="flex items-center justify-center gap-2 mb-2"
+                            className="flex items-center justify-center gap-2 "
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2, delay: 0.2 }}
                         >
-                            <div className="flex items-center bg-white/10 rounded-lg px-2">
+                            <div className="flex items-center bg-white/10 rounded-lg px-4 mt-2 w-full justify-between">
                                 <button
                                     onClick={decrementQuantity}
                                     className="text-white/70 hover:text-white p-1"
                                 >
                                     {quantity === 1 ? (
-                                        <FiTrash2 size={16} />
+                                        <FiTrash2 size={18} />
                                     ) : (
-                                        <FiMinus size={16} />
+                                        <FiMinus size={24} />
                                     )}
                                 </button>
                                 <span className="w-8 text-white text-center">{quantity}</span>
@@ -256,7 +256,7 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                                     onClick={incrementQuantity}
                                     className="text-white/70 hover:text-white p-1"
                                 >
-                                    <FiPlus size={16} />
+                                    <FiPlus size={24} />
                                 </button>
                             </div>
                         </motion.div>
