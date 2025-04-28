@@ -52,8 +52,8 @@ const ProductsPage = () => {
                         <div className="h-[8rem] relative">
                             <div className="h-full w-full bg-white/10 animate-pulse rounded-lg" />
                         </div>
-                        <div className="h-[40px] px-2 mt-2">
-                            <div className="h-4 bg-white/10 rounded animate-pulse" />
+                        <div className="h-[40px] mt-2">
+                            <div className="h-4 bg-white/10 rounded w-3/5 animate-pulse" />
                         </div>
                     </div>
                 ))}
