@@ -10,13 +10,12 @@ const PRODUCT_EXPANDED_HEIGHT = 40;
 const PRODUCT_EXPANDED_HEIGHT_FOR_TYPES=60
 
 const ProductsPage = () => {
-    const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
     const { products } = useProductsStore();
-    const imagesLoaded = useImages(products.map(product => product.image));
+    const { imagesLoaded } = useImages(products.map(product => product.image));
 
-    
+    const [expandedIndex, setExpandedIndex] = useState<number | null>(null);    
     const getRowNumber = (index: number) => Math.floor(index / 2);
-
     const clickedProduct = expandedIndex !== null ? products[expandedIndex] : null;
     const clickedProductHasTypes = clickedProduct?.productTypes && clickedProduct.productTypes.length > 0;
     const clickedExpandedHeight = clickedProductHasTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;

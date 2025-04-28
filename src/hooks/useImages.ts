@@ -37,5 +37,5 @@ export const useImages = (images: string[]) => {
         preloadImages();
     }, [images]);
 
-    return imagesLoaded;
+    return {imagesLoaded};
 }; 
