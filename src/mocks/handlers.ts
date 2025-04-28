@@ -44,8 +44,8 @@ export const handlers = [
     const newItem = await request.json() as Item;
     
     // Check if item already exists in either confirmed or pending items
-    const isDuplicate = currentCart?.confirmedItems.some(item => item.productId === newItem.productId) ||
-                       currentCart?.pendingItems.some(item => item.productId === newItem.productId);
+    const isDuplicate = currentCart?.confirmedItems.some(item => item.product.id === newItem.product.id) ||
+                       currentCart?.pendingItems.some(item => item.product.id === newItem.product.id);
     
     if (isDuplicate) {
       return new HttpResponse(null, { 
@@ -112,8 +112,8 @@ export const handlers = [
     // Remove the item from the cart
     currentCart = {
       ...currentCart,
-      pendingItems: currentCart.pendingItems.filter(i => i.productId !== item.productId),
-      confirmedItems: currentCart.confirmedItems.filter(i => i.productId !== item.productId)
+      pendingItems: currentCart.pendingItems.filter(i => i.product.id !== item.product.id),
+      confirmedItems: currentCart.confirmedItems.filter(i => i.product.id !== item.product.id)
     };
     
     return HttpResponse.json(currentCart);
@@ -122,10 +122,10 @@ export const handlers = [
   http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/edit`, async ({ request }) => {
     await delay(DELAY);
     const editedItem = await request.json() as Item;
-    
+
     // Find the item in either confirmed or pending items
-    const existingItem = currentCart.confirmedItems.find(item => item.productId === editedItem.productId) ||
-                        currentCart.pendingItems.find(item => item.productId === editedItem.productId);
+    const existingItem = currentCart.confirmedItems.find(item => item.product.id === editedItem.product.id) ||
+                        currentCart.pendingItems.find(item => item.product.id === editedItem.product.id);
     
     if (!existingItem) {
       return new HttpResponse(null, { 
@@ -135,8 +135,8 @@ export const handlers = [
     }
     
     // Remove the item from both confirmed and pending items
-    const newConfirmedItems = currentCart.confirmedItems.filter(item => item.productId !== editedItem.productId);
-    const newPendingItems = currentCart.pendingItems.filter(item => item.productId !== editedItem.productId);
+    const newConfirmedItems = currentCart.confirmedItems.filter(item => item.product.id !== editedItem.product.id);
+    const newPendingItems = currentCart.pendingItems.filter(item => item.product.id !== editedItem.product.id);
     
     // Add the edited item to pending items
     currentCart = {

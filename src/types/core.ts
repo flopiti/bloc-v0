@@ -1,21 +1,19 @@
-export type Item = {
-  productId: number;
-  productName: string;
-  productImage: string;
-  productType?: string;
-  quantity: number;
-};
-
 export type Product = {
   id: number;
   name: string;
   image: string;
   productTypes?: string[];
-}
+};
+
+export type Item = {
+  product: Product;
+  quantity: number;
+  productType?: string;
+};
 
 export type Cart = {
   confirmedItems: Item[];
-  pendingItems : Item[];
+  pendingItems: Item[];
   confirmed: boolean;
-  nextDelivery?: Date 
+  nextDelivery?: Date;
 };

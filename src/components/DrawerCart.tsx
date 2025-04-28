@@ -13,7 +13,7 @@ const DrawerCart = ({ cart }: DrawerCartProps) => {
         <div className="flex flex-row flex-wrap gap-2">
             {cartItems.map((item: Item) => (
                 <motion.div
-                    key={item.productId}
+                    key={item.product.id}
                     layout
                     className="w-[calc(33.333%-0.5rem)]"
                 >

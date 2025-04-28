@@ -23,8 +23,8 @@ const getDayNumber = (dayName: string): number => {
 // Confirmed cart with items
 const confirmedCart: Cart = {
   confirmedItems: [
-    { productId: 1, productName: 'Milk', productImage: '/milk.png', quantity: 1 },
-    { productId: 2, productName: 'Eggs', productImage: '/eggs.png', quantity: 1 }
+    { product: { id: 1, name: 'Milk', image: '/milk.png' }, quantity: 1 },
+    { product: { id: 2, name: 'Eggs', image: '/eggs.png' }, quantity: 1 }
   ],
   pendingItems: [],
   confirmed: true,
@@ -43,9 +43,7 @@ const getRandomCart = (): Cart => {
   const numItems = Math.floor(Math.random() * mockItems.length);
   const shuffled = [...mockItems].sort(() => 0.5 - Math.random());
   const selectedItems = shuffled.slice(0, numItems).map(item => ({
-    productId: item.id,
-    productName: item.name,
-    productImage: item.image,
+    product: item,
     quantity: Math.floor(Math.random() * 5) + 1
   }));
   

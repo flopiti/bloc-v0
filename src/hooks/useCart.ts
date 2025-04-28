@@ -154,8 +154,8 @@ const useCart = () => {
                 };
                 return {
                     ...old,
-                    pendingItems: old.pendingItems.filter(i => i.productId !== item.productId),
-                    confirmedItems: old.confirmedItems.filter(i => i.productId !== item.productId),
+                    pendingItems: old.pendingItems.filter(i => i.product.id !== item.product.id),
+                    confirmedItems: old.confirmedItems.filter(i => i.product.id !== item.product.id),
                     confirmed: false
                 };
             });
@@ -193,8 +193,8 @@ const useCart = () => {
                 };
 
                 // Remove the item from both confirmed and pending items
-                const newConfirmedItems = old.confirmedItems.filter(item => item.productId !== editedItem.productId);
-                const newPendingItems = old.pendingItems.filter(item => item.productId !== editedItem.productId);
+                const newConfirmedItems = old.confirmedItems.filter(item => item.product.id !== editedItem.product.id);
+                const newPendingItems = old.pendingItems.filter(item => item.product.id !== editedItem.product.id);
 
                 return {
                     ...old,
