@@ -1,13 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
-import useCart from "@/hooks/useCart";
-import { Item, Product } from "@/types/core";
-import { useState, useEffect } from "react";
-import { useCartStore } from "@/stores/cartStore";
-import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
+import { Product } from "@/types/core";
+import { FiCheck } from "react-icons/fi";
 import QuantityInput from "./QuantityInput";
 import LeftRightNavigator from "./LeftRightNavigator";
 import ProductBoxSkeleton from "./ProductBoxSkeleton";
-import { withClickHandler } from "@/utils/ui";
+import useProduct from "@/hooks/useProduct";
 
 interface ProductProps {
     isOpen: boolean;
@@ -16,51 +13,7 @@ interface ProductProps {
 }
 
 const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
-    const { addItem, removeItem, editItem } = useCart();
-    const { cart } = useCartStore();
-    
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [quantity, setQuantity] = useState(0);
-
-    const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.product.id === product.id) : false;
-    const hasProductTypes = product.productTypes && product.productTypes.length > 0;
-
-    const createCartItem = (quantity: number): Item => ({
-        product,
-        quantity,
-        productType: hasProductTypes && product.productTypes ? product.productTypes[currentIndex] : undefined
-    });
-
-    const updateQuantity = withClickHandler((delta: number) => {
-        if (delta === 0) {
-            removeItem(createCartItem(1));
-            setQuantity(0);
-        } else if (quantity === 0 && delta > 0) {
-            addItem(createCartItem(1));
-            setQuantity(1);
-        } else if (delta > 0) {
-            editItem(createCartItem(delta));
-            setQuantity(delta);
-        }
-    });
-
-    // Helper function to update product type
-    const updateProductType = (newIndex: number) => {
-        if (!hasProductTypes || !product.productTypes) return;
-        
-        setCurrentIndex(newIndex);
-        
-        // If item is in cart, update its type
-        if (isInCart && cart) {
-            const cartItem = [...cart.confirmedItems, ...cart.pendingItems].find(item => item.product.id === product.id);
-            if (cartItem) {
-                editItem({
-                    ...cartItem,
-                    productType: product.productTypes[newIndex]
-                });
-            }
-        }
-    };
+    const { currentIndex, quantity, updateQuantity, updateProductType, hasProductTypes, isInCart } = useProduct(product);
 
     if (isLoading) {
         return <ProductBoxSkeleton />;
