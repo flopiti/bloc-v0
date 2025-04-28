@@ -63,8 +63,14 @@ jobs:
             while [ $attempt -le $max_attempts ] && [ "$success" = false ]; do
               echo "Attempt $attempt of $max_attempts"
               
+              # Stash any changes
+              git stash
+              
               # Pull latest changes with rebase
               git pull --rebase origin main
+              
+              # Apply stashed changes
+              git stash pop
               
               # Add and commit changes
               git add src/config/version.ts
