@@ -39,6 +39,7 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                                     {item.productType && (
                                         <p className="text-sm text-gray-400">{item.productType}</p>
                                     )}
+                                    <p className="text-sm text-gray-400">Quantity: {item.quantity}</p>
                                 </div>
                             </motion.div>
                         ))}
