@@ -16,82 +16,57 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
     const { addItem, removeItem, editItem } = useCart();
     const { cart } = useCartStore();
     
-    const [isClicking, setIsClicking] = useState(false);
     const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
     const [quantity, setQuantity] = useState(0);
 
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.product.id === product.id) : false;
     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
 
-    const handleAddToCart = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        if (isClicking) return;
-        setIsClicking(true);
-        const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
-        const item: Item = {
-            product: product,
-            quantity: 1,
-            productType: productType
-        };
-        addItem(item);
-        setQuantity(1);
-        setIsClicking(false);
-    };
+    // Helper function to create cart item
+    const createCartItem = (quantity: number): Item => ({
+        product,
+        quantity,
+        productType: hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined
+    });
 
-    const handleRemoveFromCart = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        if (isClicking) return;
-        setIsClicking(true);
-        const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
-        const item: Item = {
-            product: product,
-            quantity: 1,
-            productType: productType
-        };
-        removeItem(item);
-        setQuantity(0);
-        setIsClicking(false);
-    };
+    // Helper function to handle click events
+    type ClickHandler = (() => void) | ((arg: number) => void);
 
-    const handleEditQuantity = (e: React.MouseEvent, newQuantity: number) => {
-        e.stopPropagation();
-        if (isClicking) return;
-        setIsClicking(true);
-        const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
-        const item: Item = {
-            product: product,
-            quantity: newQuantity,
-            productType: productType
+    const withClickHandler = (handler: ClickHandler) => 
+        (e: React.MouseEvent, arg?: number) => {
+            e.stopPropagation();
+            if (arg !== undefined) {
+                (handler as (arg: number) => void)(arg);
+            } else {
+                (handler as () => void)();
+            }
         };
-        editItem(item);
-        setQuantity(newQuantity);
-        setIsClicking(false);
-    };
 
-    const incrementQuantity = (e: React.MouseEvent) => {
-        e.stopPropagation();
+    const incrementQuantity = withClickHandler(() => {
         const newQuantity = quantity + 1;
         if (quantity === 0) {
-            handleAddToCart(e);
+            addItem(createCartItem(1));
+            setQuantity(1);
         } else {
-            handleEditQuantity(e, newQuantity);
+            editItem(createCartItem(newQuantity));
+            setQuantity(newQuantity);
         }
-    };
+    });
 
-    const decrementQuantity = (e: React.MouseEvent) => {
-        e.stopPropagation();
+    const decrementQuantity = withClickHandler(() => {
         if (quantity === 1) {
-            handleRemoveFromCart(e);
+            removeItem(createCartItem(1));
+            setQuantity(0);
         } else if (quantity > 1) {
-            handleEditQuantity(e, quantity - 1);
+            editItem(createCartItem(quantity - 1));
+            setQuantity(quantity - 1);
         }
-    };
+    });
 
-    const handleNextType = (e: React.MouseEvent) => {
-        e.stopPropagation();
+    // Helper function to update product type
+    const updateProductType = (newIndex: number) => {
         if (!hasProductTypes || !product.productTypes) return;
-        const types = product.productTypes;
-        const newIndex = (currentTypeIndex + 1) % types.length;
+        
         setCurrentTypeIndex(newIndex);
         
         // If item is in cart, update its type
@@ -100,30 +75,23 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
             if (cartItem) {
                 editItem({
                     ...cartItem,
-                    productType: types[newIndex]
+                    productType: product.productTypes[newIndex]
                 });
             }
         }
     };
 
-    const handlePreviousType = (e: React.MouseEvent) => {
-        e.stopPropagation();
+    const handleNextType = withClickHandler(() => {
         if (!hasProductTypes || !product.productTypes) return;
-        const types = product.productTypes;
-        const newIndex = (currentTypeIndex - 1 + types.length) % types.length;
-        setCurrentTypeIndex(newIndex);
-        
-        // If item is in cart, update its type
-        if (isInCart && cart) {
-            const cartItem = [...cart.confirmedItems, ...cart.pendingItems].find(item => item.product.id === product.id);
-            if (cartItem) {
-                editItem({
-                    ...cartItem,
-                    productType: types[newIndex]
-                });
-            }
-        }
-    };
+        const newIndex = (currentTypeIndex + 1) % product.productTypes.length;
+        updateProductType(newIndex);
+    });
+
+    const handlePreviousType = withClickHandler(() => {
+        if (!hasProductTypes || !product.productTypes) return;
+        const newIndex = (currentTypeIndex - 1 + product.productTypes.length) % product.productTypes.length;
+        updateProductType(newIndex);
+    });
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -131,16 +99,18 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
             
             if (e.key === 'ArrowRight') {
                 e.preventDefault();
-                setCurrentTypeIndex((prev) => (prev + 1) % product.productTypes!.length);
+                const newIndex = (currentTypeIndex + 1) % product.productTypes!.length;
+                updateProductType(newIndex);
             } else if (e.key === 'ArrowLeft') {
                 e.preventDefault();
-                setCurrentTypeIndex((prev) => (prev - 1 + product.productTypes!.length) % product.productTypes!.length);
+                const newIndex = (currentTypeIndex - 1 + product.productTypes!.length) % product.productTypes!.length;
+                updateProductType(newIndex);
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen, hasProductTypes, product.productTypes]);
+    }, [isOpen, hasProductTypes, product.productTypes, currentTypeIndex]);
 
     if (isLoading) {
         return (
@@ -165,11 +135,8 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
                         className={`h-full rounded-lg overflow-hidden relative group cursor-pointer ${
                             isOpen && hasProductTypes ? 'w-[85%] mx-auto' : 'mx-auto w-full'
                         } transition-all duration-300`}
-                        whileHover={{ scale: isClicking ? 1 : 1.05 }}
-                        whileTap={{ scale: isClicking ? 1 : 0.95 }}
-                        onAnimationComplete={() => {
-                            setIsClicking(false);
-                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         <motion.img 
                             src={product.image} 
