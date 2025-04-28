@@ -6,6 +6,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import QuantityInput from "./QuantityInput";
 
+
 interface ProductProps {
     isAddOpen: boolean;
     product: Product;
@@ -21,6 +22,11 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
 
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.productId === product.id) : false;
     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
+
+    // Reset type index when type changes
+    useEffect(() => {
+        setCurrentTypeIndex(0);
+    }, [currentTypeIndex]);
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.stopPropagation();
