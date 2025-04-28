@@ -24,9 +24,6 @@ const ProductsPage = () => {
         <motion.div 
             className="grid grid-cols-2 gap-4 mb-25" 
             style={{ gridAutoRows: `${PRODUCT_BOX_HEIGHT}px` }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
         >
             {products.map((product : Product, index) => {
                 const hasProductTypes = product.productTypes && product.productTypes.length > 0;
