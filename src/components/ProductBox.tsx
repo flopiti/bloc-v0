@@ -7,12 +7,12 @@ import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import QuantityInput from "./QuantityInput";
 
 interface ProductProps {
-    isAddOpen: boolean;
+    isOpen: boolean;
     product: Product;
     isLoading?: boolean;
 }
 
-const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => {
+const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
     const { addItem, removeItem, editItem } = useCart();
     const { cart } = useCartStore();
     
@@ -129,7 +129,7 @@ const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => 
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (!isAddOpen || !hasProductTypes || !product.productTypes) return;
+            if (!isOpen || !hasProductTypes || !product.productTypes) return;
             
             if (e.key === 'ArrowRight') {
                 e.preventDefault();
@@ -142,7 +142,7 @@ const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => 
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isAddOpen, hasProductTypes, product.productTypes]);
+    }, [isOpen, hasProductTypes, product.productTypes]);
 
     if (isLoading) {
         return (
@@ -165,7 +165,7 @@ const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => 
                 <div className="h-[8rem] relative">
                     <motion.div
                         className={`h-full rounded-lg overflow-hidden relative group cursor-pointer ${
-                            isAddOpen && hasProductTypes ? 'w-[85%] mx-auto' : 'mx-auto w-full'
+                            isOpen && hasProductTypes ? 'w-[85%] mx-auto' : 'mx-auto w-full'
                         } transition-all duration-300`}
                         whileHover={{ scale: isClicking ? 1 : 1.05 }}
                         whileTap={{ scale: isClicking ? 1 : 0.95 }}
@@ -188,7 +188,7 @@ const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => 
                                 }
                             }}
                         />
-                        {isInCart && !isAddOpen && (
+                        {isInCart && !isOpen && (
                             <motion.div 
                                 className="absolute top-0 right-0"
                                 initial={{ scale: 0, opacity: 0 }}
@@ -199,7 +199,7 @@ const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => 
                             </motion.div>
                         )}
                     </motion.div>
-                    {isAddOpen && hasProductTypes && product.productTypes && product.productTypes.length > 1 && (
+                    {isOpen && hasProductTypes && product.productTypes && product.productTypes.length > 1 && (
                         <>
                             {currentTypeIndex > 0 && (
                                 <motion.button
@@ -236,7 +236,7 @@ const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => 
             </div>
             <div className="absolute bottom-0 left-0 right-0">
                 <AnimatePresence mode="wait">
-                    {isAddOpen && hasProductTypes && product.productTypes && (
+                    {isOpen && hasProductTypes && product.productTypes && (
                         <motion.div 
                             className="flex items-center gap-2 mb-2 px-2"
                             initial={{ opacity: 0, y: 10 }}
@@ -249,7 +249,7 @@ const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => 
                     )}
                 </AnimatePresence>
                 <AnimatePresence mode="wait">
-                    {isAddOpen && (
+                    {isOpen && (
                         <QuantityInput
                             quantity={quantity}
                             onIncrement={incrementQuantity}

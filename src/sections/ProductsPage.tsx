@@ -53,7 +53,7 @@ const ProductsPage = () => {
                         }}
                     >
                         <ProductBox 
-                            isAddOpen={expandedIndex === index} 
+                            isOpen={expandedIndex === index} 
                             product={product}
                             isLoading={!imagesLoaded}
                         />
