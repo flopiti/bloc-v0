@@ -4,6 +4,7 @@ import { Product } from "@/types/core";
 import { useState, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { FiCheck, FiChevronRight, FiChevronLeft, FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
+import QuantityInput from "./QuantityInput";
 
 interface ProductProps {
     isAddOpen: boolean;
@@ -233,33 +234,11 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                 </AnimatePresence>
                 <AnimatePresence mode="wait">
                     {isAddOpen && (
-                        <motion.div
-                            className="flex items-center justify-center gap-2 "
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            transition={{ duration: 0.2, delay: 0.2 }}
-                        >
-                            <div className="flex items-center bg-white/10 rounded-lg px-4 mt-2 w-full justify-between">
-                                <button
-                                    onClick={decrementQuantity}
-                                    className="text-white/70 hover:text-white p-1"
-                                >
-                                    {quantity === 1 ? (
-                                        <FiTrash2 size={18} />
-                                    ) : (
-                                        <FiMinus size={24} />
-                                    )}
-                                </button>
-                                <span className="w-8 text-white text-center">{quantity}</span>
-                                <button
-                                    onClick={incrementQuantity}
-                                    className="text-white/70 hover:text-white p-1"
-                                >
-                                    <FiPlus size={24} />
-                                </button>
-                            </div>
-                        </motion.div>
+                        <QuantityInput
+                            quantity={quantity}
+                            onIncrement={incrementQuantity}
+                            onDecrement={decrementQuantity}
+                        />
                     )}
                 </AnimatePresence>
             </div>
