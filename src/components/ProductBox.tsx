@@ -43,24 +43,18 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
             }
         };
 
-    const incrementQuantity = withClickHandler(() => {
-        const newQuantity = quantity + 1;
-        if (quantity === 0) {
-            addItem(createCartItem(1));
-            setQuantity(1);
-        } else {
-            editItem(createCartItem(newQuantity));
-            setQuantity(newQuantity);
-        }
-    });
-
-    const decrementQuantity = withClickHandler(() => {
-        if (quantity === 1) {
+    const updateQuantity = withClickHandler((delta: number) => {
+        const newQuantity = quantity + delta;
+        
+        if (newQuantity === 0) {
             removeItem(createCartItem(1));
             setQuantity(0);
-        } else if (quantity > 1) {
-            editItem(createCartItem(quantity - 1));
-            setQuantity(quantity - 1);
+        } else if (quantity === 0 && delta > 0) {
+            addItem(createCartItem(1));
+            setQuantity(1);
+        } else if (newQuantity > 0) {
+            editItem(createCartItem(newQuantity));
+            setQuantity(newQuantity);
         }
     });
 
@@ -179,8 +173,8 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
                     {isOpen && (
                         <QuantityInput
                             quantity={quantity}
-                            onIncrement={incrementQuantity}
-                            onDecrement={decrementQuantity}
+                            onIncrement={(e) => updateQuantity(e, 1)}
+                            onDecrement={(e) => updateQuantity(e, -1)}
                         />
                     )}
                 </AnimatePresence>
