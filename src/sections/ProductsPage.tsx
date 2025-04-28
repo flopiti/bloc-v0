@@ -1,8 +1,9 @@
 import ProductBox from '@/components/ProductBox';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useProductsStore } from '@/stores/itemsStore';
 import { Product } from '@/types/core';
+import { useImages } from '@/hooks/useImages';
 
 const PRODUCT_BOX_HEIGHT = 190;
 const PRODUCT_EXPANDED_HEIGHT = 40;
@@ -11,46 +12,14 @@ const PRODUCT_EXPANDED_HEIGHT_FOR_TYPES=60
 const ProductsPage = () => {
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
     const { products } = useProductsStore();
-    const [imagesLoaded, setImagesLoaded] = useState(false);
+    const imagesLoaded = useImages(products.map(product => product.image));
+
+    
     const getRowNumber = (index: number) => Math.floor(index / 2);
 
     const clickedProduct = expandedIndex !== null ? products[expandedIndex] : null;
     const clickedProductHasTypes = clickedProduct?.productTypes && clickedProduct.productTypes.length > 0;
     const clickedExpandedHeight = clickedProductHasTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
-
-    useEffect(() => {
-        const preloadImages = async () => {
-            const imagePromises = products.map(product => {
-                return new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.src = product.image;
-                    img.onload = () => {
-                        // Cache the image in the browser
-                        img.style.display = 'none';
-                        document.body.appendChild(img);
-                        setTimeout(() => {
-                            document.body.removeChild(img);
-                            resolve(true);
-                        }, 0);
-                    };
-                    img.onerror = reject;
-                });
-            });
-
-            try {
-                await Promise.all(imagePromises);
-                // Add a small delay to ensure smooth transition
-                setTimeout(() => {
-                    setImagesLoaded(true);
-                }, 300);
-            } catch (error) {
-                console.error('Error preloading images:', error);
-                setImagesLoaded(true);
-            }
-        };
-
-        preloadImages();
-    }, [products]);
 
     if (!imagesLoaded) {
         return (
