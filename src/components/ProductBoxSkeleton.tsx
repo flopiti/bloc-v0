@@ -1,9 +1,7 @@
-import React from 'react';
 
-const ProductBoxSkeleton = () => {
-    return (
-        <div className="relative h-full">
-            <div className="absolute top-0 left-0 right-0">
+const ProductBoxSkeleton = () => (
+    <div className="relative h-full">
+        <div className="absolute top-0 left-0 right-0">
                 <div className="h-[8rem] relative">
                     <div className="h-full w-full bg-white/10 animate-pulse rounded-lg" />
                 </div>
@@ -13,6 +11,6 @@ const ProductBoxSkeleton = () => {
             </div>
         </div>
     );
-};
+
 
 export default ProductBoxSkeleton; 
