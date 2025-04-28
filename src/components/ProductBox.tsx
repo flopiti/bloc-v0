@@ -18,6 +18,7 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
     const [isClicking, setIsClicking] = useState(false);
     const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
     const [quantity, setQuantity] = useState(0);
+    const [isImageLoading, setIsImageLoading] = useState(true);
 
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.productId === product.id) : false;
     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
@@ -157,10 +158,26 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                             setIsClicking(false);
                         }}
                     >
+                        {isImageLoading && (
+                            <motion.div
+                                className="absolute inset-0 bg-white/10"
+                                animate={{
+                                    background: [
+                                        "linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 100%)",
+                                        "linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 100%)"
+                                    ]
+                                }}
+                                transition={{
+                                    duration: 1.5,
+                                    repeat: Infinity,
+                                    ease: "linear"
+                                }}
+                            />
+                        )}
                         <motion.img 
                             src={product.image} 
                             alt={product.name} 
-                            className="w-full h-full object-contain"
+                            className={`w-full h-full object-contain transition-opacity duration-300 ${isImageLoading ? 'opacity-0' : 'opacity-100'}`}
                             key={currentTypeIndex}
                             initial={{ y: 0 }}
                             animate={{ 
@@ -171,6 +188,8 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                                     ease: "easeInOut"
                                 }
                             }}
+                            onLoad={() => setIsImageLoading(false)}
+                            onError={() => setIsImageLoading(false)}
                         />
                         {isInCart && !isAddOpen && (
                             <motion.div 
