@@ -54,10 +54,41 @@ jobs:
           # Update version in file
           sed -i "s/export const APP_VERSION = \"[^\"]*\"/export const APP_VERSION = \"$NEW_VERSION\"/" src/config/version.ts
           
-          # Commit and push changes
-          git add src/config/version.ts
-          git commit -m "chore: bump version to $NEW_VERSION"
-          git push
+          # Function to retry git operations
+          retry_git_operation() {
+            local max_attempts=3
+            local attempt=1
+            local success=false
+            
+            while [ $attempt -le $max_attempts ] && [ "$success" = false ]; do
+              echo "Attempt $attempt of $max_attempts"
+              
+              # Pull latest changes with rebase
+              git pull --rebase origin main
+              
+              # Add and commit changes
+              git add src/config/version.ts
+              git commit -m "chore: bump version to $NEW_VERSION"
+              
+              # Try to push
+              if git push origin main; then
+                success=true
+                echo "Successfully pushed changes"
+              else
+                echo "Push failed, retrying..."
+                sleep 2
+                attempt=$((attempt + 1))
+              fi
+            done
+            
+            if [ "$success" = false ]; then
+              echo "Failed to push changes after $max_attempts attempts"
+              exit 1
+            fi
+          }
+          
+          # Execute retry function
+          retry_git_operation
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
