@@ -1,0 +1,68 @@
+import { motion } from "framer-motion";
+import { FiCheck } from "react-icons/fi";
+import { Product } from "@/types/core";
+
+// Animation variants
+const imageVariants = {
+    hover: { scale: 1.05 },
+    tap: { scale: 0.95 }
+};
+
+const checkmarkVariants = {
+    initial: { scale: 0, opacity: 0 },
+    animate: { scale: 1, opacity: 1 }
+};
+
+interface ProductImageProps {
+    product: Product;
+    isOpen: boolean;
+    hasProductTypes: boolean;
+    isInCart: boolean;
+    currentIndex: number;
+}
+
+const ProductImage = ({ 
+    product, 
+    isOpen, 
+    hasProductTypes, 
+    isInCart, 
+    currentIndex 
+}: ProductImageProps) => (
+    <motion.div
+        className={`h-full rounded-lg overflow-hidden relative group cursor-pointer ${
+            isOpen && hasProductTypes ? 'w-[85%] mx-auto' : 'mx-auto w-full'
+        } transition-all duration-300`}
+        variants={imageVariants}
+        whileHover="hover"
+        whileTap="tap"
+    >
+        <motion.img 
+            src={product.image} 
+            alt={product.name} 
+            className="w-full h-full object-contain"
+            key={currentIndex}
+            initial={{ y: 0 }}
+            animate={{ 
+                y: [1, -1, 1],
+                transition: {
+                    duration: 0.3,
+                    times: [0, 0.5, 1],
+                    ease: "easeInOut"
+                }
+            }}
+        />
+        {isInCart && !isOpen && (
+            <motion.div 
+                className="absolute top-0 right-0"
+                variants={checkmarkVariants}
+                initial="initial"
+                animate="animate"
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+                <FiCheck className="text-white text-xl" />
+            </motion.div>
+        )}
+    </motion.div>
+);
+
+export default ProductImage; 
