@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import useCart from "@/hooks/useCart";
-import { Product } from "@/types/core";
+import { Item, Product } from "@/types/core";
 import { useState, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
@@ -20,7 +20,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
     const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
     const [quantity, setQuantity] = useState(0);
 
-    const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.productId === product.id) : false;
+    const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.product.id === product.id) : false;
     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
 
     const handleAddToCart = (e: React.MouseEvent) => {
@@ -28,13 +28,12 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
         if (isClicking) return;
         setIsClicking(true);
         const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
-        addItem({
-            productId: product.id,
-            productName: product.name,
-            productImage: product.image,
-            productType,
-            quantity: 1
-        });
+        const item: Item = {
+            product: product,
+            quantity: 1,
+            productType: productType
+        };
+        addItem(item);
         setQuantity(1);
         setIsClicking(false);
     };
@@ -43,13 +42,13 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
         e.stopPropagation();
         if (isClicking) return;
         setIsClicking(true);
-        removeItem({
-            productId: product.id,
-            productName: product.name,
-            productImage: product.image,
-            productType: hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined,
-            quantity: 1
-        });
+        const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
+        const item: Item = {
+            product: product,
+            quantity: 1,
+            productType: productType
+        };
+        removeItem(item);
         setQuantity(0);
         setIsClicking(false);
     };
@@ -59,13 +58,12 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
         if (isClicking) return;
         setIsClicking(true);
         const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
-        editItem({
-            productId: product.id,
-            productName: product.name,
-            productImage: product.image,
-            productType,
-            quantity: newQuantity
-        });
+        const item: Item = {
+            product: product,
+            quantity: newQuantity,
+            productType: productType
+        };
+        editItem(item);
         setQuantity(newQuantity);
         setIsClicking(false);
     };
@@ -98,7 +96,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
         
         // If item is in cart, update its type
         if (isInCart && cart) {
-            const cartItem = [...cart.confirmedItems, ...cart.pendingItems].find(item => item.productId === product.id);
+            const cartItem = [...cart.confirmedItems, ...cart.pendingItems].find(item => item.product.id === product.id);
             if (cartItem) {
                 editItem({
                     ...cartItem,
@@ -117,7 +115,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
         
         // If item is in cart, update its type
         if (isInCart && cart) {
-            const cartItem = [...cart.confirmedItems, ...cart.pendingItems].find(item => item.productId === product.id);
+            const cartItem = [...cart.confirmedItems, ...cart.pendingItems].find(item => item.product.id === product.id);
             if (cartItem) {
                 editItem({
                     ...cartItem,

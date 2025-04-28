@@ -29,9 +29,7 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
 
   const handleAddToCart = () => {
     addItem({
-      productId: STRAWBERRIES.id,
-      productName: STRAWBERRIES.name,
-      productImage: STRAWBERRIES.image,
+      product: STRAWBERRIES,
       quantity: 1
     });
   };
