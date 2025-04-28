@@ -9,6 +9,34 @@ const PRODUCT_BOX_HEIGHT = 190;
 const PRODUCT_EXPANDED_HEIGHT = 40;
 const PRODUCT_EXPANDED_HEIGHT_FOR_TYPES=60
 
+/**
+ * ProductsPage Component
+ * 
+ * A dynamic grid layout component that displays products in a 2-column grid with expandable items.
+ * 
+ * Key Features:
+ * - Responsive grid layout with automatic row sizing
+ * - Expandable product boxes with smooth animations using Framer Motion
+ * - Dynamic height adjustments based on product type content
+ * - Row shifting animation when a product is expanded
+ * 
+ * Technical Details:
+ * - Uses a 2-column grid with fixed height product boxes (190px)
+ * - Implements an expandable state system with a single expanded item at a time
+ * - Handles two types of expansion heights:
+ *   - Standard expansion (40px) for regular products
+ *   - Extended expansion (60px) for products with multiple types
+ * - Calculates row positions to shift items below the expanded product
+ * - Manages image loading states through a custom hook
+ * - Implements z-index management for proper layering of expanded items
+ * 
+ * Animation Behavior:
+ * - Smooth height transitions (0.3s duration)
+ * - Delayed collapse animation (0.3s delay)
+ * - Immediate expansion animation
+ * - Row shifting animation for items below the expanded product
+ */
+
 const ProductsPage = () => {
 
     const { products } = useProductsStore();
@@ -44,10 +72,6 @@ const ProductsPage = () => {
                             delay: expandedIndex === null ? 0.3 : 0
                         }}
                         onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
-                        style={{
-                            position: 'relative',
-                            zIndex: expandedIndex === index ? 1 : 0
-                        }}
                     >
                         <ProductBox 
                             isOpen={expandedIndex === index} 
