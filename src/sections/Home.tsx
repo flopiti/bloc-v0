@@ -31,7 +31,8 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
     addItem({
       productId: STRAWBERRIES.id,
       productName: STRAWBERRIES.name,
-      productImage: STRAWBERRIES.image
+      productImage: STRAWBERRIES.image,
+      quantity: 1
     });
   };
  

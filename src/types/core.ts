@@ -11,7 +11,6 @@ export type Product = {
   name: string;
   image: string;
   productTypes?: string[];
-  quantity: number;
 }
 
 export type Cart = {

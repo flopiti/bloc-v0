@@ -3,7 +3,7 @@ import useCart from "@/hooks/useCart";
 import { Product } from "@/types/core";
 import { useState, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
-import { FiCheck, FiChevronRight, FiChevronLeft, FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
+import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import QuantityInput from "./QuantityInput";
 
 interface ProductProps {
