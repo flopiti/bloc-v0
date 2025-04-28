@@ -7,23 +7,21 @@ import { useCartStore } from "@/stores/cartStore";
 
 const useProduct = (product: Product) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [quantity, setQuantity] = useState(0);
     const { addItem, removeItem, editItem } = useCart();
     const { cart } = useCartStore();
 
     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.product.id === product.id) : false;
 
+    const quantity = isInCart && cart ? [...cart.confirmedItems, ...cart.pendingItems].find(item => item.product.id === product.id)?.quantity ?? 0 : 0;
+
     const updateQuantity = withClickHandler((delta: number) => {
         if (delta === 0) {
             removeItem(createCartItem(1));
-            setQuantity(0);
         } else if (quantity === 0 && delta > 0) {
             addItem(createCartItem(1));
-            setQuantity(1);
         } else if (delta > 0) {
             editItem(createCartItem(delta));
-            setQuantity(delta);
         }
     });
 
