@@ -42,7 +42,7 @@ const ProductsPage = () => {
                 // Add a small delay to ensure smooth transition
                 setTimeout(() => {
                     setImagesLoaded(true);
-                }, 100);
+                }, 300);
             } catch (error) {
                 console.error('Error preloading images:', error);
                 setImagesLoaded(true);
