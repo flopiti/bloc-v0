@@ -7,6 +7,7 @@ import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import QuantityInput from "./QuantityInput";
 import LeftRightNavigator from "./LeftRightNavigator";
 import ProductBoxSkeleton from "./ProductBoxSkeleton";
+import { withClickHandler } from "@/utils/ui";
 
 interface ProductProps {
     isOpen: boolean;
@@ -24,25 +25,11 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.product.id === product.id) : false;
     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
 
-    // Helper function to create cart item
     const createCartItem = (quantity: number): Item => ({
         product,
         quantity,
         productType: hasProductTypes && product.productTypes ? product.productTypes[currentIndex] : undefined
     });
-
-    // Helper function to handle click events
-    type ClickHandler = (() => void) | ((arg: number) => void);
-
-    const withClickHandler = (handler: ClickHandler) => 
-        (e: React.MouseEvent, arg?: number) => {
-            e.stopPropagation();
-            if (arg !== undefined) {
-                (handler as (arg: number) => void)(arg);
-            } else {
-                (handler as () => void)();
-            }
-        };
 
     const updateQuantity = withClickHandler((delta: number) => {
         if (delta === 0) {
