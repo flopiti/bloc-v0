@@ -1,6 +1,4 @@
 import { AnimatePresence } from "framer-motion";
-
-// Components
 import { Product } from "@/types/core";
 import QuantityInput from "./QuantityInput";
 import LeftRightNavigator from "./LeftRightNavigator";
@@ -10,7 +8,6 @@ import ProductImage from "./ProductImage";
 import ProductTypeDisplay from "./ProductTypeDisplay";
 import ProductHeader from "./ProductHeader";
 
-// Types
 interface ProductProps {
     isOpen: boolean;
     product: Product;
@@ -33,6 +30,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
 
     return (
         <div className="relative h-full">
+            
             {/* Top section */}
             <div className="absolute top-0 left-0 right-0">
                 <div className="h-[8rem] relative">
