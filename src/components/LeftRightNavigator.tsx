@@ -5,15 +5,11 @@ import { useEffect } from "react";
 
 interface LeftRightNavigatorProps {
     currentIndex: number;
-    handlePreviousType: (e: React.MouseEvent) => void;
-    handleNextType: (e: React.MouseEvent) => void;
     updateProductType: (newIndex: number) => void;
     length: number;
 }
 
-const LeftRightNavigator = ({ currentIndex, handlePreviousType, handleNextType, updateProductType, length }: LeftRightNavigatorProps) => {
-
-
+const LeftRightNavigator = ({ currentIndex, updateProductType, length }: LeftRightNavigatorProps) => {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (length === 0) return;
@@ -31,7 +27,19 @@ const LeftRightNavigator = ({ currentIndex, handlePreviousType, handleNextType, 
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [length, currentIndex]);
+    }, [length, currentIndex, updateProductType]);
+
+    const handlePreviousType = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        const newIndex = (currentIndex - 1 + length) % length;
+        updateProductType(newIndex);
+    };
+
+    const handleNextType = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        const newIndex = (currentIndex + 1) % length;
+        updateProductType(newIndex);
+    };
 
     return (
         <>

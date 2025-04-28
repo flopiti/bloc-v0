@@ -74,19 +74,6 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
         }
     };
 
-    const handleNextType = withClickHandler(() => {
-        if (!hasProductTypes || !product.productTypes) return;
-        const newIndex = (currentIndex + 1) % product.productTypes.length;
-        updateProductType(newIndex);
-    });
-
-    const handlePreviousType = withClickHandler(() => {
-        if (!hasProductTypes || !product.productTypes) return;
-        const newIndex = (currentIndex - 1 + product.productTypes.length) % product.productTypes.length;
-        updateProductType(newIndex);
-    });
-
-
     if (isLoading) {
         return (
             <div className="relative h-full">
@@ -142,8 +129,6 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
                     {isOpen && hasProductTypes && product.productTypes && product.productTypes.length > 1 && (
                         <LeftRightNavigator 
                             currentIndex={currentIndex}
-                            handlePreviousType={handlePreviousType}
-                            handleNextType={handleNextType}
                             updateProductType={updateProductType}
                             length={product.productTypes.length}
                         />
