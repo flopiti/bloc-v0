@@ -34,6 +34,13 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                                 className="w-[calc(33.333%-1rem)]"
                             >
                                 <ItemBox item={item} />
+                                <div className="mt-2 text-center">
+                                    <h3 className="font-medium">{item.productName}</h3>
+                                    {item.productType && (
+                                        <p className="text-sm text-gray-400">{item.productType}</p>
+                                    )}
+                                    <p className="text-sm text-gray-400">Quantity: {item.quantity}</p>
+                                </div>
                             </motion.div>
                         ))}
                         <motion.div

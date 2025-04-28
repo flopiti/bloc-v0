@@ -47,7 +47,14 @@ export const cartService = {
       console.error('Error removing item:', error);
       throw error;
     }
-  }
+  },
 
-  
+  async editItem(item: Item): Promise<void> {
+    try {
+      await axios.put(`${API_BASE_URL}/cart/edit`, item);
+    } catch (error) {
+      console.error('Error editing item:', error);
+      throw error;
+    }
+  }
 }; 
