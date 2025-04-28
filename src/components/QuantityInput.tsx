@@ -17,23 +17,27 @@ const QuantityInput = ({ quantity, onIncrement, onDecrement }: QuantityInputProp
             transition={{ duration: 0.2, delay: 0.2 }}
         >
             <div className="flex items-center bg-white/10 rounded-lg px-4 mt-2 w-full justify-between">
-                <button
+                <motion.button
                     onClick={onDecrement}
                     className="text-white/70 hover:text-white p-1"
+                    whileTap={{ scale: 0.8 }}
+                    transition={{ duration: 0.1 }}
                 >
                     {quantity === 1 ? (
                         <FiTrash2 size={18} />
                     ) : (
                         <FiMinus size={24} />
                     )}
-                </button>
+                </motion.button>
                 <span className="w-8 text-white text-center">{quantity}</span>
-                <button
+                <motion.button
                     onClick={onIncrement}
                     className="text-white/70 hover:text-white p-1"
+                    whileTap={{ scale: 0.8 }}
+                    transition={{ duration: 0.1 }}
                 >
                     <FiPlus size={24} />
-                </button>
+                </motion.button>
             </div>
         </motion.div>
     );
