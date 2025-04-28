@@ -1,6 +1,6 @@
 import ProductBox from '@/components/ProductBox';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useProductsStore } from '@/stores/itemsStore';
 import { Product } from '@/types/core';
 
@@ -10,12 +10,61 @@ const PRODUCT_EXPANDED_HEIGHT_FOR_TYPES=60
 
 const ProductsPage = () => {
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const { products } = useProductsStore();
     const getRowNumber = (index: number) => Math.floor(index / 2);
 
     const clickedProduct = expandedIndex !== null ? products[expandedIndex] : null;
     const clickedProductHasTypes = clickedProduct?.productTypes && clickedProduct.productTypes.length > 0;
     const clickedExpandedHeight = clickedProductHasTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
+
+    // Preload all product images
+    useEffect(() => {
+        let isMounted = true;
+
+        const preloadImages = async () => {
+            try {
+                const imagePromises = products.map(product => {
+                    return new Promise((resolve) => {
+                        const img = new Image();
+                        img.src = product.image;
+                        img.onload = () => resolve(true);
+                        img.onerror = () => resolve(false);
+                    });
+                });
+
+                await Promise.all(imagePromises);
+                if (isMounted) {
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.error('Error preloading images:', error);
+                if (isMounted) {
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        preloadImages();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [products]);
+
+    if (isLoading) {
+        return (
+            <div className="grid grid-cols-2 gap-4 mb-25" style={{ gridAutoRows: `${PRODUCT_BOX_HEIGHT}px` }}>
+                {products.map((_, index) => (
+                    <div
+                        key={index}
+                        className="bg-white/5 p-4 rounded-lg shadow-md animate-pulse"
+                        style={{ height: `${PRODUCT_BOX_HEIGHT}px` }}
+                    />
+                ))}
+            </div>
+        );
+    }
 
     return (
         <div className="grid grid-cols-2 gap-4 mb-25" style={{ gridAutoRows: `${PRODUCT_BOX_HEIGHT}px` }}>

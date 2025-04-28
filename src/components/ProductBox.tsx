@@ -6,22 +6,6 @@ import { useCartStore } from "@/stores/cartStore";
 import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import QuantityInput from "./QuantityInput";
 
-// Add custom pulse animation
-const pulseAnimation = {
-    initial: { 
-        backgroundPosition: "0% 50%",
-        opacity: 0.5
-    },
-    animate: {
-        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-        opacity: [0.5, 0.8, 0.5],
-        transition: {
-            duration: 2,
-            repeat: Infinity,
-            ease: "linear"
-        }
-    }
-};
 
 interface ProductProps {
     isAddOpen: boolean;
@@ -35,40 +19,13 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
     const [isClicking, setIsClicking] = useState(false);
     const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
     const [quantity, setQuantity] = useState(0);
-    const [isImageLoading, setIsImageLoading] = useState(true);
-    const [preloadedImages, setPreloadedImages] = useState<{ [key: string]: boolean }>({});
 
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.productId === product.id) : false;
     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
 
-    // Preload all product type images
+    // Reset type index when type changes
     useEffect(() => {
-        if (hasProductTypes && product.productTypes) {
-            product.productTypes.forEach((_, index) => {
-                const img = new Image();
-                img.src = product.image;
-                img.onload = () => {
-                    setPreloadedImages(prev => ({
-                        ...prev,
-                        [index]: true
-                    }));
-                };
-            });
-        } else {
-            const img = new Image();
-            img.src = product.image;
-            img.onload = () => {
-                setPreloadedImages(prev => ({
-                    ...prev,
-                    [0]: true
-                }));
-            };
-        }
-    }, [product.image, hasProductTypes, product.productTypes]);
-
-    // Reset loading state when type changes
-    useEffect(() => {
-        setIsImageLoading(true);
+        setCurrentTypeIndex(0);
     }, [currentTypeIndex]);
 
     const handleAddToCart = (e: React.MouseEvent) => {
@@ -206,20 +163,6 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                             setIsClicking(false);
                         }}
                     >
-                        {isImageLoading && (
-                            <div className="absolute inset-0 ">
-                                <motion.div 
-                                    className="w-full h-9/10 rounded-lg "
-                                    style={{
-                                        background: "linear-gradient(90deg, #4B5563 0%, #6B7280 50%, #4B5563 100%)",
-                                        backgroundSize: "200% 100%"
-                                    }}
-                                    variants={pulseAnimation}
-                                    initial="initial"
-                                    animate="animate"
-                                />
-                            </div>
-                        )}
                         <motion.img 
                             src={product.image} 
                             alt={product.name} 
@@ -234,8 +177,6 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                                     ease: "easeInOut"
                                 }
                             }}
-                            onLoad={() => setIsImageLoading(false)}
-                            style={{ opacity: isImageLoading ? 0 : 1 }}
                         />
                         {isInCart && !isAddOpen && (
                             <motion.div 
