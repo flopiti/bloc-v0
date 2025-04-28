@@ -3,7 +3,7 @@ import useCart from "@/hooks/useCart";
 import { Product } from "@/types/core";
 import { useState, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
-import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
+import { FiCheck, FiChevronRight, FiChevronLeft, FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
 
 interface ProductProps {
     isAddOpen: boolean;
@@ -16,21 +16,75 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
     
     const [isClicking, setIsClicking] = useState(false);
     const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
+    const [quantity, setQuantity] = useState(0);
 
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.productId === product.id) : false;
     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
 
-    const handleCartAction = () => {
+    const handleAddToCart = (e: React.MouseEvent) => {
+        e.stopPropagation();
         if (isClicking) return;
         setIsClicking(true);
-        const action = isInCart ? removeItem : addItem;
         const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
-        action({
+        addItem({
             productId: product.id,
             productName: product.name,
             productImage: product.image,
-            productType
+            productType,
+            quantity: 1
         });
+        setQuantity(1);
+        setIsClicking(false);
+    };
+
+    const handleRemoveFromCart = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (isClicking) return;
+        setIsClicking(true);
+        removeItem({
+            productId: product.id,
+            productName: product.name,
+            productImage: product.image,
+            productType: hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined,
+            quantity: 1
+        });
+        setQuantity(0);
+        setIsClicking(false);
+    };
+
+    const handleEditQuantity = (e: React.MouseEvent, newQuantity: number) => {
+        e.stopPropagation();
+        if (isClicking) return;
+        setIsClicking(true);
+        const productType = hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined;
+        editItem({
+            productId: product.id,
+            productName: product.name,
+            productImage: product.image,
+            productType,
+            quantity: newQuantity
+        });
+        setQuantity(newQuantity);
+        setIsClicking(false);
+    };
+
+    const incrementQuantity = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        const newQuantity = quantity + 1;
+        if (quantity === 0) {
+            handleAddToCart(e);
+        } else {
+            handleEditQuantity(e, newQuantity);
+        }
+    };
+
+    const decrementQuantity = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (quantity === 1) {
+            handleRemoveFromCart(e);
+        } else if (quantity > 1) {
+            handleEditQuantity(e, quantity - 1);
+        }
     };
 
     const handleNextType = (e: React.MouseEvent) => {
@@ -179,20 +233,33 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
                 </AnimatePresence>
                 <AnimatePresence mode="wait">
                     {isAddOpen && (
-                        <motion.button
-                            className={`w-full py-2 px-4 rounded-lg transition-colors ${
-                                isInCart 
-                                    ? 'bg-red-500/50 hover:bg-red-600' 
-                                    : 'bg-blue-500 hover:bg-blue-600'
-                            } text-white`}
-                            onClick={handleCartAction}
+                        <motion.div
+                            className="flex items-center justify-center gap-2 mb-2"
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2, delay: 0.2 }}
                         >
-                            {isInCart ? 'Remove' : 'Add to Cart'}
-                        </motion.button>
+                            <div className="flex items-center bg-white/10 rounded-lg px-2">
+                                <button
+                                    onClick={decrementQuantity}
+                                    className="text-white/70 hover:text-white p-1"
+                                >
+                                    {quantity === 1 ? (
+                                        <FiTrash2 size={16} />
+                                    ) : (
+                                        <FiMinus size={16} />
+                                    )}
+                                </button>
+                                <span className="w-8 text-white text-center">{quantity}</span>
+                                <button
+                                    onClick={incrementQuantity}
+                                    className="text-white/70 hover:text-white p-1"
+                                >
+                                    <FiPlus size={16} />
+                                </button>
+                            </div>
+                        </motion.div>
                     )}
                 </AnimatePresence>
             </div>

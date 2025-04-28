@@ -3,6 +3,7 @@ export type Item = {
   productName: string;
   productImage: string;
   productType?: string;
+  quantity: number;
 };
 
 export type Product = {
@@ -10,11 +11,12 @@ export type Product = {
   name: string;
   image: string;
   productTypes?: string[];
+  quantity: number;
 }
 
 export type Cart = {
   confirmedItems: Item[];
   pendingItems : Item[];
   confirmed: boolean;
-  nextDelivery?: Date ;
+  nextDelivery?: Date 
 };
