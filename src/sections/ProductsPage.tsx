@@ -24,17 +24,28 @@ const ProductsPage = () => {
                 return new Promise((resolve, reject) => {
                     const img = new Image();
                     img.src = product.image;
-                    img.onload = resolve;
+                    img.onload = () => {
+                        // Cache the image in the browser
+                        img.style.display = 'none';
+                        document.body.appendChild(img);
+                        setTimeout(() => {
+                            document.body.removeChild(img);
+                            resolve(true);
+                        }, 0);
+                    };
                     img.onerror = reject;
                 });
             });
 
             try {
                 await Promise.all(imagePromises);
-                setImagesLoaded(true);
+                // Add a small delay to ensure smooth transition
+                setTimeout(() => {
+                    setImagesLoaded(true);
+                }, 100);
             } catch (error) {
                 console.error('Error preloading images:', error);
-                setImagesLoaded(true); // Still show the products even if some images fail to load
+                setImagesLoaded(true);
             }
         };
 
@@ -62,7 +73,13 @@ const ProductsPage = () => {
     }
 
     return (
-        <div className="grid grid-cols-2 gap-4 mb-25" style={{ gridAutoRows: `${PRODUCT_BOX_HEIGHT}px` }}>
+        <motion.div 
+            className="grid grid-cols-2 gap-4 mb-25" 
+            style={{ gridAutoRows: `${PRODUCT_BOX_HEIGHT}px` }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+        >
             {products.map((product : Product, index) => {
                 const hasProductTypes = product.productTypes && product.productTypes.length > 0;
                 const expandedHeight = hasProductTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
@@ -91,7 +108,7 @@ const ProductsPage = () => {
                     </motion.div>
                 )
             })}
-            </div>
+            </motion.div>
     );
 };
 
