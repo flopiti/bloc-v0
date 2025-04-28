@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useCartStore } from "@/stores/cartStore";
 import { FiCheck, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import QuantityInput from "./QuantityInput";
+import LeftRightNavigator from "./LeftRightNavigator";
 
 interface ProductProps {
     isOpen: boolean;
@@ -16,7 +17,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
     const { addItem, removeItem, editItem } = useCart();
     const { cart } = useCartStore();
     
-    const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [quantity, setQuantity] = useState(0);
 
     const isInCart = cart ? [...cart.confirmedItems, ...cart.pendingItems].some(cartItem => cartItem.product.id === product.id) : false;
@@ -26,7 +27,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
     const createCartItem = (quantity: number): Item => ({
         product,
         quantity,
-        productType: hasProductTypes && product.productTypes ? product.productTypes[currentTypeIndex] : undefined
+        productType: hasProductTypes && product.productTypes ? product.productTypes[currentIndex] : undefined
     });
 
     // Helper function to handle click events
@@ -67,7 +68,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
     const updateProductType = (newIndex: number) => {
         if (!hasProductTypes || !product.productTypes) return;
         
-        setCurrentTypeIndex(newIndex);
+        setCurrentIndex(newIndex);
         
         // If item is in cart, update its type
         if (isInCart && cart) {
@@ -83,34 +84,16 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
 
     const handleNextType = withClickHandler(() => {
         if (!hasProductTypes || !product.productTypes) return;
-        const newIndex = (currentTypeIndex + 1) % product.productTypes.length;
+        const newIndex = (currentIndex + 1) % product.productTypes.length;
         updateProductType(newIndex);
     });
 
     const handlePreviousType = withClickHandler(() => {
         if (!hasProductTypes || !product.productTypes) return;
-        const newIndex = (currentTypeIndex - 1 + product.productTypes.length) % product.productTypes.length;
+        const newIndex = (currentIndex - 1 + product.productTypes.length) % product.productTypes.length;
         updateProductType(newIndex);
     });
 
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (!isOpen || !hasProductTypes || !product.productTypes) return;
-            
-            if (e.key === 'ArrowRight') {
-                e.preventDefault();
-                const newIndex = (currentTypeIndex + 1) % product.productTypes!.length;
-                updateProductType(newIndex);
-            } else if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                const newIndex = (currentTypeIndex - 1 + product.productTypes!.length) % product.productTypes!.length;
-                updateProductType(newIndex);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen, hasProductTypes, product.productTypes, currentTypeIndex]);
 
     if (isLoading) {
         return (
@@ -142,7 +125,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
                             src={product.image} 
                             alt={product.name} 
                             className="w-full h-full object-contain"
-                            key={currentTypeIndex}
+                            key={currentIndex}
                             initial={{ y: 0 }}
                             animate={{ 
                                 y: [1, -1, 1],
@@ -165,34 +148,13 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
                         )}
                     </motion.div>
                     {isOpen && hasProductTypes && product.productTypes && product.productTypes.length > 1 && (
-                        <>
-                            {currentTypeIndex > 0 && (
-                                <motion.button
-                                    className="absolute top-1/2 left-[-20px] -translate-y-1/2 text-white/70 hover:text-white transition-colors"
-                                    onClick={handlePreviousType}
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    initial={{ opacity: 0, x: 10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <FiChevronLeft className="text-2xl" size={50} strokeWidth={1} />
-                                </motion.button>
-                            )}
-                            {currentTypeIndex < product.productTypes.length - 1 && (
-                                <motion.button
-                                    className="absolute top-1/2 right-[-20px] -translate-y-1/2 text-white/70 hover:text-white transition-colors"
-                                    onClick={handleNextType}
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <FiChevronRight className="text-2xl" size={50} strokeWidth={1} />
-                                </motion.button>
-                            )}
-                        </>
+                        <LeftRightNavigator 
+                            currentIndex={currentIndex}
+                            handlePreviousType={handlePreviousType}
+                            handleNextType={handleNextType}
+                            updateProductType={updateProductType}
+                            length={product.productTypes.length}
+                        />
                     )}
                 </div>
                 <div className="h-[40px] px-2">
@@ -209,7 +171,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2, delay: 0.1 }}
                         >
-                            <span className="text-xs text-white/70">{product.productTypes[currentTypeIndex]}</span>
+                            <span className="text-xs text-white/70">{product.productTypes[currentIndex]}</span>
                         </motion.div>
                     )}
                 </AnimatePresence>
