@@ -60,12 +60,7 @@ const ProductsPage = () => {
                         key={product.id}
                         className="bg-white/5 p-4 rounded-lg shadow-md"
                     >
-                        <div className="h-[8rem] relative">
-                            <div className="h-full w-full bg-white/10 animate-pulse rounded-lg" />
-                        </div>
-                        <div className="h-[40px] mt-2">
-                            <div className="h-4 bg-white/10 rounded w-3/5 animate-pulse" />
-                        </div>
+                        <ProductBox isLoading={true} isAddOpen={false} product={product} />
                     </div>
                 ))}
             </div>

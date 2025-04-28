@@ -9,9 +9,10 @@ import QuantityInput from "./QuantityInput";
 interface ProductProps {
     isAddOpen: boolean;
     product: Product;
+    isLoading?: boolean;
 }
 
-const ProductBox = ({ isAddOpen, product }: ProductProps) => {
+const ProductBox = ({ isAddOpen, product, isLoading = false }: ProductProps) => {
     const { addItem, removeItem, editItem } = useCart();
     const { cart } = useCartStore();
     
@@ -142,6 +143,21 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isAddOpen, hasProductTypes, product.productTypes]);
+
+    if (isLoading) {
+        return (
+            <div className="relative h-full">
+                <div className="absolute top-0 left-0 right-0">
+                    <div className="h-[8rem] relative">
+                        <div className="h-full w-full bg-white/10 animate-pulse rounded-lg" />
+                    </div>
+                    <div className="h-[40px] mt-2">
+                        <div className="h-4 bg-white/10 rounded w-3/5 animate-pulse" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="relative h-full">
