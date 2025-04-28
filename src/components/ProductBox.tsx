@@ -44,12 +44,12 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
         };
 
     const updateQuantity = withClickHandler((delta: number) => {
-        const newQuantity = quantity + delta;
+        const newQuantity = delta;
         
         if (newQuantity === 0) {
             removeItem(createCartItem(1));
             setQuantity(0);
-        } else if (quantity === 0 && delta > 0) {
+        } else if (quantity === 0 && newQuantity > 0) {
             addItem(createCartItem(1));
             setQuantity(1);
         } else if (newQuantity > 0) {
@@ -173,8 +173,7 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
                     {isOpen && (
                         <QuantityInput
                             quantity={quantity}
-                            onIncrement={(e) => updateQuantity(e, 1)}
-                            onDecrement={(e) => updateQuantity(e, -1)}
+                            onUpdateQuantity={updateQuantity}
                         />
                     )}
                 </AnimatePresence>
