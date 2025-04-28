@@ -11,8 +11,9 @@ interface ProductProps {
 }
 
 const ProductBox = ({ isAddOpen, product }: ProductProps) => {
-    const { addItem, removeItem } = useCart();
+    const { addItem, removeItem, editItem } = useCart();
     const { cart } = useCartStore();
+    
     const [isClicking, setIsClicking] = useState(false);
     const [currentTypeIndex, setCurrentTypeIndex] = useState(0);
 
@@ -36,14 +37,38 @@ const ProductBox = ({ isAddOpen, product }: ProductProps) => {
         e.stopPropagation();
         if (!hasProductTypes || !product.productTypes) return;
         const types = product.productTypes;
-        setCurrentTypeIndex((prev) => (prev + 1) % types.length);
+        const newIndex = (currentTypeIndex + 1) % types.length;
+        setCurrentTypeIndex(newIndex);
+        
+        // If item is in cart, update its type
+        if (isInCart && cart) {
+            const cartItem = [...cart.confirmedItems, ...cart.pendingItems].find(item => item.productId === product.id);
+            if (cartItem) {
+                editItem({
+                    ...cartItem,
+                    productType: types[newIndex]
+                });
+            }
+        }
     };
 
     const handlePreviousType = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (!hasProductTypes || !product.productTypes) return;
         const types = product.productTypes;
-        setCurrentTypeIndex((prev) => (prev - 1 + types.length) % types.length);
+        const newIndex = (currentTypeIndex - 1 + types.length) % types.length;
+        setCurrentTypeIndex(newIndex);
+        
+        // If item is in cart, update its type
+        if (isInCart && cart) {
+            const cartItem = [...cart.confirmedItems, ...cart.pendingItems].find(item => item.productId === product.id);
+            if (cartItem) {
+                editItem({
+                    ...cartItem,
+                    productType: types[newIndex]
+                });
+            }
+        }
     };
 
     useEffect(() => {

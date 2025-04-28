@@ -117,5 +117,35 @@ export const handlers = [
     };
     
     return HttpResponse.json(currentCart);
+  }),
+
+  http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/edit`, async ({ request }) => {
+    await delay(DELAY);
+    const editedItem = await request.json() as Item;
+    
+    // Find the item in either confirmed or pending items
+    const existingItem = currentCart.confirmedItems.find(item => item.productId === editedItem.productId) ||
+                        currentCart.pendingItems.find(item => item.productId === editedItem.productId);
+    
+    if (!existingItem) {
+      return new HttpResponse(null, { 
+        status: 404,
+        statusText: 'Item not found in cart'
+      });
+    }
+    
+    // Remove the item from both confirmed and pending items
+    const newConfirmedItems = currentCart.confirmedItems.filter(item => item.productId !== editedItem.productId);
+    const newPendingItems = currentCart.pendingItems.filter(item => item.productId !== editedItem.productId);
+    
+    // Add the edited item to pending items
+    currentCart = {
+      ...currentCart,
+      confirmedItems: newConfirmedItems,
+      pendingItems: [...newPendingItems, editedItem],
+      confirmed: false // Set to unconfirmed when an item is edited
+    };
+    
+    return HttpResponse.json(currentCart);
   })
 ]; 

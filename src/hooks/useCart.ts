@@ -175,6 +175,50 @@ const useCart = () => {
         },
     });
 
+    const editItemMutation = useMutation({
+        mutationFn: (item: Item) => cartService.editItem(item),
+        onMutate: async (editedItem: Item) => {
+            // Cancel any outgoing refetches
+            await queryClient.cancelQueries({ queryKey: ['cart'] });
+
+            // Snapshot the previous value
+            const previousCart = queryClient.getQueryData<Cart>(['cart']);
+
+            // Optimistically update to the new value
+            queryClient.setQueryData<Cart>(['cart'], (old) => {
+                if (!old) return { 
+                    confirmedItems: [],
+                    pendingItems: [],
+                    confirmed: false,
+                };
+
+                // Remove the item from both confirmed and pending items
+                const newConfirmedItems = old.confirmedItems.filter(item => item.productId !== editedItem.productId);
+                const newPendingItems = old.pendingItems.filter(item => item.productId !== editedItem.productId);
+
+                return {
+                    ...old,
+                    confirmedItems: newConfirmedItems,
+                    pendingItems: [...newPendingItems, editedItem],
+                    confirmed: false
+                };
+            });
+
+            return { previousCart };
+        },
+        onError: (err: Error, editedItem: Item, context) => {
+            // Revert to the previous value on error
+            console.error('Error editing item:', editedItem, err);
+            if (context?.previousCart) {
+                queryClient.setQueryData(['cart'], context.previousCart);
+            }
+        },
+        onSettled: () => {
+            // Refetch cart after mutation
+            queryClient.invalidateQueries({ queryKey: ['cart'] });
+        },
+    });
+
     // Update cart state based on query state
     useEffect(() => {
         if (cart) {
@@ -191,7 +235,8 @@ const useCart = () => {
         addItem: addItemMutation.mutate,
         confirmCart: confirmCartMutation.mutate,
         setDeliveryDate: setDeliveryDateMutation.mutate,
-        removeItem: removeItemMutation.mutate
+        removeItem: removeItemMutation.mutate,
+        editItem: editItemMutation.mutate
     };
 };
 
