@@ -44,17 +44,15 @@ const ProductBox = ({ isOpen, product, isLoading = false }: ProductProps) => {
         };
 
     const updateQuantity = withClickHandler((delta: number) => {
-        const newQuantity = delta;
-        
-        if (newQuantity === 0) {
+        if (delta === 0) {
             removeItem(createCartItem(1));
             setQuantity(0);
-        } else if (quantity === 0 && newQuantity > 0) {
+        } else if (quantity === 0 && delta > 0) {
             addItem(createCartItem(1));
             setQuantity(1);
-        } else if (newQuantity > 0) {
-            editItem(createCartItem(newQuantity));
-            setQuantity(newQuantity);
+        } else if (delta > 0) {
+            editItem(createCartItem(delta));
+            setQuantity(delta);
         }
     });
 
