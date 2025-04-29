@@ -91,7 +91,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
             <motion.div 
                 className="flex flex-col gap-4"
                 animate={{ 
-                    y: cart?.nextDelivery ? 0 : -10,
+                    y: cart?.nextDelivery ? 0 : 10,
                     transition: {
                         duration: 0.3,
                         ease: [0.4, 0, 0.2, 1]
