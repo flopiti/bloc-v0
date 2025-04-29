@@ -50,7 +50,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
     };
 
     return (
-        <>
+        <div className="flex flex-col">
             {cart?.nextDelivery && (
                 <CalendarDelivery
                     nextDelivery={cart.nextDelivery}
@@ -60,17 +60,28 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                 />
             )}
 
-            <Calendar 
-                nextDelivery={cart?.nextDelivery}
-                selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
-                onDateClick={handleDateClick}
-                isEdit={canEditDate || !cart?.nextDelivery}
-                message={
-                    !cart?.nextDelivery ? 'Please select the date of your first biweekly delivery' 
-                    : canEditDate ? 'Select a date for the delivery' 
-                    : undefined
-                }
-            />
+            <div className="flex flex-col gap-4">
+                <Calendar 
+                    nextDelivery={cart?.nextDelivery}
+                    selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
+                    onDateClick={handleDateClick}
+                    isEdit={canEditDate || !cart?.nextDelivery}
+                    message={
+                        !cart?.nextDelivery ? 'Please select the date of your first biweekly delivery' 
+                        : canEditDate ? 'Select a date for the delivery' 
+                        : undefined
+                    }
+                />
+
+                {canEditDate && cart?.nextDelivery && (
+                    <button
+                        onClick={handleCancelDelivery}
+                        className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                    >
+                        Cancel Delivery
+                    </button>
+                )}
+            </div>
 
             <AnimatePresence>
                 {selectedDate && !canEditDate && (
@@ -84,16 +95,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                     />
                 )}
             </AnimatePresence>
-
-            {canEditDate && cart?.nextDelivery && (
-                <button
-                    onClick={handleCancelDelivery}
-                    className="mt-4 w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
-                >
-                    Cancel Delivery
-                </button>
-            )}
-        </>
+        </div>
     );
 };
 
