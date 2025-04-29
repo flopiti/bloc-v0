@@ -10,26 +10,28 @@ interface CalendarDeliveryProps {
 }
 
 const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm, onClick }: CalendarDeliveryProps) => {
-
-
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-                type: "spring",
-                stiffness: 300,
-                damping: 25
+            exit={{ 
+                opacity: 0,
+                transition: {
+                    duration: 0.2,
+                    ease: "easeOut"
+                }
             }}
-            layout
+            transition={{ 
+                duration: 0.2,
+                ease: "easeOut"
+            }}
             className={`mb-6 p-4 bg-white/5 rounded-xl flex flex-col gap-3 ${!isConfirmed ? 'cursor-pointer hover:bg-white/10' : ''}`}
             onClick={onClick}
         >
             <motion.div 
-                layout 
                 className="flex items-center gap-3"
             >
-                <TbTruckDelivery className="w-6 h-6 text-blue-500" />
+                <TbTruckDelivery className="w-7 h-7 mx-1 text-white" strokeWidth={1.5}/>
                 <div>
                     <div className="text-white/60 text-sm">Next Delivery</div>
                     <div className="text-white font-medium">
@@ -40,13 +42,19 @@ const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm, onClick }: Cal
             <AnimatePresence mode="wait">
                 {!isConfirmed && (
                     <motion.div
-                        layout
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
+                        exit={{ 
+                            opacity: 0, 
+                            height: 0,
+                            transition: {
+                                duration: 0.2,
+                                ease: "easeOut"
+                            }
+                        }}
                         transition={{ 
-                            duration: 0.1,
-                            ease: "easeInOut"
+                            duration: 0.2,
+                            ease: "easeOut"
                         }}
                     >
                         <motion.button

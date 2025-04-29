@@ -147,5 +147,18 @@ export const handlers = [
     };
     
     return HttpResponse.json(currentCart);
+  }),
+
+  http.put(`${import.meta.env.VITE_API_BASE_URL}/cart/cancel-delivery`, async () => {
+    await delay(DELAY);
+    
+    // Remove the next delivery date and set to unconfirmed
+    currentCart = {
+      ...currentCart,
+      nextDelivery: undefined,
+      confirmed: false
+    };
+    
+    return HttpResponse.json(currentCart);
   })
 ]; 

@@ -9,6 +9,7 @@ interface CartStore {
   setLoading: (loading: boolean) => void;
   confirmCart: () => void;
   setDeliveryDate: (deliveryDate: Date) => void;
+  cancelDelivery: () => void;
   isCartValid: () => boolean;
 }
 
@@ -57,6 +58,12 @@ export const useCartStore = create<CartStore>((set, get) => ({
       throw new Error('Cart is not initialized');
     }
     return { cart: { ...state.cart, confirmed: true } };
+  }),
+  cancelDelivery: () => set((state) => {
+    if (!state.cart) {
+      throw new Error('Cart is not initialized');
+    }
+    return { cart: { ...state.cart, nextDelivery: undefined, confirmed: false } };
   }),
   isCartValid: () => {
     const state = get();
