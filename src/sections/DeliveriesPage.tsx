@@ -32,7 +32,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
             setCanEditDate(false);
         }
         else if(!isEditMode) {
-            setSelectedDate(date.toDate());
+            setSelectedDate(selectedDate?.getTime() === date.toDate().getTime() ? null : date.toDate());
         }
     };
 
