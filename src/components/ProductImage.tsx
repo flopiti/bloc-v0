@@ -13,11 +13,6 @@ const checkmarkVariants = {
     animate: { scale: 1, opacity: 1 }
 };
 
-const priceVariants = {
-    initial: { opacity: 0, x: -20 },
-    animate: { opacity: 1, x: 0 }
-};
-
 interface ProductImageProps {
     product: Product;
     isOpen: boolean;
@@ -73,7 +68,6 @@ const ProductImage = ({
             </motion.div>
             <motion.div
                 className="absolute -top-6 -left-6 z-50"
-                variants={priceVariants}
                 initial="initial"
                 animate="animate"
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
