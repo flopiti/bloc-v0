@@ -53,7 +53,7 @@ const ProductsPage = () => {
         if (!searchQuery) return products;
         return products.filter(product => 
             product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.description?.toLowerCase().includes(searchQuery.toLowerCase())
+            product.productTypes?.some(type => type.toLowerCase().includes(searchQuery.toLowerCase()))
         );
     }, [products, searchQuery]);
 
