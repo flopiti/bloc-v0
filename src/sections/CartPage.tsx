@@ -7,7 +7,8 @@ import { PAGE } from "@/enums/core";
 import EmptyStateButton from "@/components/EmptyStateButton";
 import { TbShoppingCart } from "react-icons/tb";
 import { useState } from "react";
-import { IoGridOutline, IoListOutline } from "react-icons/io5";
+import { GrBasket } from "react-icons/gr";
+import { FaDollarSign } from "react-icons/fa";
 
 interface CartPageProps {
     goToPage: (page: PAGE) => void;
@@ -16,7 +17,7 @@ interface CartPageProps {
 const CartPage = ({ goToPage }: CartPageProps) => {
     const { cart } = useCartStore();
     const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
-    const [isGridView, setIsGridView] = useState(true);
+    const [isGridView, setIsGridView] = useState(false);
     console.log(cartItems);
     return (
         <div className="container mx-auto ">
@@ -34,13 +35,13 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                         onClick={() => setIsGridView(true)}
                         className={`p-2 rounded-lg ${isGridView ? 'bg-white/10' : 'bg-white/5'}`}
                     >
-                        <IoGridOutline className="text-white/80 text-xl" />
+                        <GrBasket className="text-white/80 text-xl" />
                     </button>
                     <button
                         onClick={() => setIsGridView(false)}
                         className={`p-2 rounded-lg ${!isGridView ? 'bg-white/10' : 'bg-white/5'}`}
                     >
-                        <IoListOutline className="text-white/80 text-xl" />
+                        <FaDollarSign className="text-white/80 text-xl" />
                     </button>
                 </div>
             </div>
