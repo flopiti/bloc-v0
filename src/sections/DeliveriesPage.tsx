@@ -98,18 +98,27 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                     }
                 }}
             >
-                <Calendar 
-                    nextDelivery={cart?.nextDelivery}
-                    selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
-                    onDateClick={handleDateClick}
-                    isEdit={canEditDate || !cart?.nextDelivery}
-                    message={
-                        !cart?.nextDelivery ? 'Please select the date of your first biweekly delivery' 
-                        : canEditDate ? 'Select a date for the delivery' 
-                        : undefined
-                    }
-                />
-
+                <div>
+                    <motion.h2 
+                        className="text-white/80 text-sm font-medium tracking-wider mb-4"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3, delay: 0.6 }}
+                        >
+                        Delivery Calendar
+                    </motion.h2>
+                    <Calendar 
+                        nextDelivery={cart?.nextDelivery}
+                        selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
+                        onDateClick={handleDateClick}
+                        isEdit={canEditDate || !cart?.nextDelivery}
+                        message={
+                            !cart?.nextDelivery ? 'Please select the date of your first biweekly delivery' 
+                            : canEditDate ? 'Select a date for the delivery' 
+                            : undefined
+                        }
+                    />
+                </div>
                 <AnimatePresence mode="wait">
                     {canEditDate && cart?.nextDelivery && (
                         <motion.div
