@@ -1,6 +1,6 @@
 import ProductBox from '@/components/ProductBox';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useProductsStore } from '@/stores/itemsStore';
 import { Product } from '@/types/core';
 import { useImages } from '@/hooks/useImages';
@@ -39,9 +39,9 @@ const PRODUCT_EXPANDED_HEIGHT_FOR_TYPES=60
  */
 
 const ProductsPage = () => {
-
     const { products } = useProductsStore();
     const { imagesLoaded } = useImages(products.map(product => product.image));
+    const [searchQuery, setSearchQuery] = useState('');
 
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);    
     const getRowNumber = (index: number) => Math.floor(index / 2);
@@ -49,14 +49,25 @@ const ProductsPage = () => {
     const clickedProductHasTypes = clickedProduct?.productTypes && clickedProduct.productTypes.length > 0;
     const clickedExpandedHeight = clickedProductHasTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
 
+    const filteredProducts = useMemo(() => {
+        if (!searchQuery) return products;
+        return products.filter(product => 
+            product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.description?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [products, searchQuery]);
+
     return (
         <div className="space-y-6">
-            <SearchBar />
+            <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+            />
             <motion.div 
                 className="grid grid-cols-2 gap-4 mb-25" 
                 style={{ gridAutoRows: `${PRODUCT_BOX_HEIGHT}px` }}
             >
-                {products.map((product : Product, index) => {
+                {filteredProducts.map((product : Product, index) => {
                     const hasProductTypes = product.productTypes && product.productTypes.length > 0;
                     const expandedHeight = hasProductTypes ? PRODUCT_EXPANDED_HEIGHT_FOR_TYPES : PRODUCT_EXPANDED_HEIGHT;
                     return (
