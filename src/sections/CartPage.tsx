@@ -27,7 +27,7 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.6 }}
                 >
-                    Items in your next delivery
+                    Next Delivery Items
                 </motion.h2>
                 <div className="flex items-center gap-2">
                     <button
