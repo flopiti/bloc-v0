@@ -8,11 +8,6 @@ import DeliveryInfo from '@/components/DeliveryInfo';
 import { useState } from 'react';
 import { DELIVERY_DAYS } from '@/constants/core';
 import { PAGE } from '@/enums/core';
-import { FiShoppingCart, FiCalendar } from 'react-icons/fi';
-import { GiKetchup } from 'react-icons/gi';
-import { PiBread, PiCheese, PiCoffeeBeanBold } from 'react-icons/pi';
-import { TbMeat } from 'react-icons/tb';
-import { IoMdNutrition } from 'react-icons/io';
 import { FiFrown } from 'react-icons/fi';
 
 interface DeliveriesPageProps {
