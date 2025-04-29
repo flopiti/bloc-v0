@@ -73,7 +73,6 @@ const ProductImage = ({
             </motion.div>
             <motion.div
                 className="absolute -top-6 -left-6 z-50"
-                variants={priceVariants}
                 initial="initial"
                 animate="animate"
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
