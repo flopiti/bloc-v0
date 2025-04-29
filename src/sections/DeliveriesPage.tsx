@@ -76,7 +76,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                 {canEditDate && cart?.nextDelivery && (
                     <button
                         onClick={handleCancelDelivery}
-                        className="w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                        className=" py-2 mx-20 text-red-600/90 border-2 border-red-600/85 rounded-md transition-colors"
                     >
                         Cancel Delivery
                     </button>
