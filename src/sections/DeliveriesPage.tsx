@@ -51,14 +51,16 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
 
     return (
         <div className="flex flex-col">
-            {cart?.nextDelivery && (
-                <CalendarDelivery
-                    nextDelivery={cart.nextDelivery}
-                    isConfirmed={cart.confirmed}
-                    onConfirm={handleConfirmDelivery}
-                    onClick={() => cart.nextDelivery && setSelectedDate(cart.nextDelivery)}
-                />
-            )}
+            <AnimatePresence>
+                {cart?.nextDelivery && (
+                    <CalendarDelivery
+                        nextDelivery={cart.nextDelivery}
+                        isConfirmed={cart.confirmed}
+                        onConfirm={handleConfirmDelivery}
+                        onClick={() => cart.nextDelivery && setSelectedDate(cart.nextDelivery)}
+                    />
+                )}
+            </AnimatePresence>
 
             <div className="flex flex-col gap-4">
                 <Calendar 
