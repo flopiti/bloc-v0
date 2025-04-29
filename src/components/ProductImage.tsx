@@ -13,11 +13,6 @@ const checkmarkVariants = {
     animate: { scale: 1, opacity: 1 }
 };
 
-const priceVariants = {
-    initial: { opacity: 0, x: -20 },
-    animate: { opacity: 1, x: 0 }
-};
-
 interface ProductImageProps {
     product: Product;
     isOpen: boolean;
