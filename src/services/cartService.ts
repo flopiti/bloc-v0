@@ -56,5 +56,14 @@ export const cartService = {
       console.error('Error editing item:', error);
       throw error;
     }
+  },
+
+  async cancelDelivery(): Promise<void> {
+    try {
+      await axios.put(`${API_BASE_URL}/cart/cancel-delivery`);
+    } catch (error) {
+      console.error('Error canceling delivery:', error);
+      throw error;
+    }
   }
 }; 

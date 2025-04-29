@@ -16,7 +16,7 @@ interface DeliveriesPageProps {
 
 const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
     const { cart, isCartValid } = useCartStore();
-    const { setDeliveryDate, confirmCart } = useCart();
+    const { setDeliveryDate, confirmCart, cancelDelivery } = useCart();
     const [selectedDate,setSelectedDate] = useState<Date | null>(null);
     const [canEditDate, setCanEditDate] = useState(false);
     
@@ -40,6 +40,12 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
 
     const handleEditDate = () => {
         setCanEditDate(true);
+        setSelectedDate(null);
+    };
+
+    const handleCancelDelivery = () => {
+        cancelDelivery();
+        setCanEditDate(false);
         setSelectedDate(null);
     };
 
@@ -78,6 +84,15 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                     />
                 )}
             </AnimatePresence>
+
+            {canEditDate && cart?.nextDelivery && (
+                <button
+                    onClick={handleCancelDelivery}
+                    className="mt-4 w-full py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                >
+                    Cancel Delivery
+                </button>
+            )}
         </>
     );
 };
