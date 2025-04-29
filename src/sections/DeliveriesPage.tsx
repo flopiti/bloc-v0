@@ -51,18 +51,53 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
 
     return (
         <div className="flex flex-col">
-            <AnimatePresence>
-                {cart?.nextDelivery && (
-                    <CalendarDelivery
-                        nextDelivery={cart.nextDelivery}
-                        isConfirmed={cart.confirmed}
-                        onConfirm={handleConfirmDelivery}
-                        onClick={() => cart.nextDelivery && setSelectedDate(cart.nextDelivery)}
-                    />
-                )}
-            </AnimatePresence>
+            <motion.div
+                animate={{ 
+                    height: cart?.nextDelivery ? "auto" : 0,
+                    transition: {
+                        duration: 0.3,
+                        ease: [0.4, 0, 0.2, 1]
+                    }
+                }}
+            >
+                <AnimatePresence mode="wait">
+                    {cart?.nextDelivery && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ 
+                                opacity: 0,
+                                transition: {
+                                    duration: 0.3,
+                                    ease: [0.4, 0, 0.2, 1]
+                                }
+                            }}
+                            transition={{
+                                duration: 0.3,
+                                ease: [0.4, 0, 0.2, 1]
+                            }}
+                        >
+                            <CalendarDelivery
+                                nextDelivery={cart.nextDelivery}
+                                isConfirmed={cart.confirmed}
+                                onConfirm={handleConfirmDelivery}
+                                onClick={() => cart.nextDelivery && setSelectedDate(cart.nextDelivery)}
+                            />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.div>
 
-            <div className="flex flex-col gap-4">
+            <motion.div 
+                className="flex flex-col gap-4"
+                animate={{ 
+                    y: cart?.nextDelivery ? 0 : -10,
+                    transition: {
+                        duration: 0.3,
+                        ease: [0.4, 0, 0.2, 1]
+                    }
+                }}
+            >
                 <Calendar 
                     nextDelivery={cart?.nextDelivery}
                     selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
@@ -75,13 +110,23 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                     }
                 />
 
-                <AnimatePresence>
+                <AnimatePresence mode="wait">
                     {canEditDate && cart?.nextDelivery && (
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.2 }}
+                            exit={{ 
+                                opacity: 0,
+                                y: -10,
+                                transition: {
+                                    duration: 0.3,
+                                    ease: [0.4, 0, 0.2, 1]
+                                }
+                            }}
+                            transition={{
+                                duration: 0.3,
+                                ease: [0.4, 0, 0.2, 1]
+                            }}
                             className="w-full flex justify-center"
                         >
                             <button
@@ -93,18 +138,35 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                         </motion.div>
                     )}
                 </AnimatePresence>
-            </div>
+            </motion.div>
 
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {selectedDate && !canEditDate && (
-                    <DeliveryInfo
-                        setCanEditDate={handleEditDate}
-                        selectedDate={selectedDate}
-                        nextDelivery={cart?.nextDelivery}
-                        confirmedItems={cart?.confirmedItems || []}
-                        pendingItems={cart?.pendingItems || []}
-                        goToPage={goToPage}
-                    />
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ 
+                            opacity: 0,
+                            y: 20,
+                            transition: {
+                                duration: 0.3,
+                                ease: [0.4, 0, 0.2, 1]
+                            }
+                        }}
+                        transition={{
+                            duration: 0.3,
+                            ease: [0.4, 0, 0.2, 1]
+                        }}
+                    >
+                        <DeliveryInfo
+                            setCanEditDate={handleEditDate}
+                            selectedDate={selectedDate}
+                            nextDelivery={cart?.nextDelivery}
+                            confirmedItems={cart?.confirmedItems || []}
+                            pendingItems={cart?.pendingItems || []}
+                            goToPage={goToPage}
+                        />
+                    </motion.div>
                 )}
             </AnimatePresence>
         </div>
