@@ -26,13 +26,20 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
         const doesCartHaveDelivery = cart?.nextDelivery;
 
         const isEditMode = canEditDate || !doesCartHaveDelivery;
+
+        // If clicking on already selected date, deselect it
+        if (selectedDate && date.isSame(dayjs(selectedDate), 'day')) {
+            setSelectedDate(null);
+            return;
+        }
+
         //For now we only set dates when you have no date
         if(!isToday && isDeliveryDay && isEditMode) {
             setDeliveryDate(date.toDate());
             setCanEditDate(false);
         }
         else if(!isEditMode) {
-            setSelectedDate(selectedDate?.getTime() === date.toDate().getTime() ? null : date.toDate());
+            setSelectedDate(date.toDate());
         }
     };
 

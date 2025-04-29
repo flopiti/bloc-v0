@@ -31,7 +31,7 @@ const CalendarDelivery = ({ nextDelivery, isConfirmed, onConfirm, onClick }: Cal
             <motion.div 
                 className="flex items-center gap-3"
             >
-                <TbTruckDelivery className="w-6 h-6 text-blue-500" />
+                <TbTruckDelivery className="w-7 h-7 mx-1 text-white" strokeWidth={1.5}/>
                 <div>
                     <div className="text-white/60 text-sm">Next Delivery</div>
                     <div className="text-white font-medium">
