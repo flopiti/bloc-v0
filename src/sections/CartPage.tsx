@@ -84,12 +84,29 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                                     </div>
                                     {!isGridView && (
                                         <div className="w-24 text-right">
-                                            <p className="text-sm text-white">${item.product.price.toFixed(2)}</p>
+                                            <p className="text-sm text-white">{item.quantity} × ${item.product.price.toFixed(2)}</p>
+                                            <p className="text-sm text-white">${(item.quantity * item.product.price).toFixed(2)}</p>
                                         </div>
                                     )}
                                 </div>
                             </motion.div>
                         ))}
+                        {!isGridView && cartItems.length > 0 && (
+                            <div className="mt-4 pt-4 border-t border-white/10">
+                                <div className="flex justify-between items-center mb-2">
+                                    <p className="text-sm text-gray-400">Subtotal</p>
+                                    <p className="text-sm text-white">${cartItems.reduce((sum, item) => sum + (item.quantity * item.product.price), 0).toFixed(2)}</p>
+                                </div>
+                                <div className="flex justify-between items-center mb-2">
+                                    <p className="text-sm text-gray-400">GST/HST (15%)</p>
+                                    <p className="text-sm text-white">${(cartItems.reduce((sum, item) => sum + (item.quantity * item.product.price), 0) * 0.15).toFixed(2)}</p>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <p className="text-sm font-medium text-white">Total</p>
+                                    <p className="text-sm font-medium text-white">${(cartItems.reduce((sum, item) => sum + (item.quantity * item.product.price), 0) * 1.15).toFixed(2)}</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
