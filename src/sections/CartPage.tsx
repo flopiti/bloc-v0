@@ -17,7 +17,16 @@ const CartPage = ({ goToPage }: CartPageProps) => {
     console.log(cartItems);
     return (
         <div className="container mx-auto ">
+            <motion.h2 
+                className="text-white/80 text-sm font-medium tracking-wider mb-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.6 }}
+            >
+                Items in your next delivery
+            </motion.h2>
             <div className="bg-white/5 rounded-xl">
+            
                 {cartItems.length === 0 ? (
                     <EmptyStateButton
                         onClick={() => goToPage(PAGE.PRODUCTS)}
@@ -35,7 +44,7 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                             >
                                 <ItemBox item={item} />
                                 <div className="mt-2 text-center">
-                                    <h3 className="font-medium">{item.product.name}</h3>
+                                    <h3 className="font-medium text-white">{item.product.name}</h3>
                                     {item.productType && (
                                         <p className="text-sm text-gray-400">{item.productType}</p>
                                     )}
