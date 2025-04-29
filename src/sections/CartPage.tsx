@@ -71,6 +71,11 @@ const CartPage = ({ goToPage }: CartPageProps) => {
                                         )}
                                         <p className="text-sm text-gray-400">Quantity: {item.quantity}</p>
                                     </div>
+                                    {!isGridView && (
+                                        <div className="w-24 text-right">
+                                            <p className="text-sm text-white">${item.product.price.toFixed(2)}</p>
+                                        </div>
+                                    )}
                                 </div>
                             </motion.div>
                         ))}
