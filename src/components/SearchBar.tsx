@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react';
+import { MdSearch } from 'react-icons/md';
 
 interface SearchBarProps {
   value: string;
@@ -17,9 +17,8 @@ const SearchBar = ({ value, onChange }: SearchBarProps) => {
                  focus:border-b-2 focus:border-white/50 focus:rounded-none focus:rounded-t-lg
                  placeholder:text-white/50 text-white"
       />
-      <Search 
+      <MdSearch 
         className="absolute right-4 bottom-3.5 text-white/50 w-5 h-5" 
-        strokeWidth={1.5}
       />
     </div>
   );
