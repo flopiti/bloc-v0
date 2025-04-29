@@ -2,15 +2,15 @@ import { Cart, Product } from '@/types/core';
 import dayjs from 'dayjs';
 import { DELIVERY_DAYS } from '@/constants/core';
 
-export const STRAWBERRIES = {id: 7, name:'Strawberries', image: '/strawberries.png'}
+export const STRAWBERRIES = {id: 7, name:'Strawberries', image: '/strawberries.png', price: 10}
 
 export const mockItems: Product[] = [
-  { id: 1, name: 'Milk', image: '/milk.png', productTypes: ['1%', '2%' ,'Oat'] },
-  { id: 2, name: 'Eggs', image: '/eggs.png', productTypes: ['12-pack', '18-pack'] },
-  { id: 3, name: 'Cereal', image: '/cereal.png' },
-  { id: 4, name: 'Spaghetti', image: '/spagetti.png' },
-  { id: 5, name: 'Ground Meat', image: '/ground-meat.png' },
-  { id: 6, name: 'Coffee', image: '/coffee.png' },
+  { id: 1, name: 'Milk', image: '/milk.png', productTypes: ['1%', '2%' ,'Oat'], price: 4 },
+  { id: 2, name: 'Eggs', image: '/eggs.png', productTypes: ['12-pack', '18-pack'], price: 3 },
+  { id: 3, name: 'Cereal', image: '/cereal.png', price: 5 },
+  { id: 4, name: 'Spaghetti', image: '/spagetti.png', price: 2 },
+  { id: 5, name: 'Ground Meat', image: '/ground-meat.png', price: 10 },
+  { id: 6, name: 'Coffee', image: '/coffee.png', price: 10 },
 STRAWBERRIES
 ]; 
 
@@ -23,8 +23,8 @@ const getDayNumber = (dayName: string): number => {
 // Confirmed cart with items
 const confirmedCart: Cart = {
   confirmedItems: [
-    { product: { id: 1, name: 'Milk', image: '/milk.png' }, quantity: 1 },
-    { product: { id: 2, name: 'Eggs', image: '/eggs.png' }, quantity: 1 }
+    { product: { id: 1, name: 'Milk', image: '/milk.png', price: 4 }, quantity: 1 },
+    { product: { id: 2, name: 'Eggs', image: '/eggs.png', price: 3 }, quantity: 1 }
   ],
   pendingItems: [],
   confirmed: true,
