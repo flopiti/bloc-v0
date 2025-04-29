@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {  AnimatePresence } from 'framer-motion';
+import {  AnimatePresence, motion } from 'framer-motion';
 import { useCartStore } from '@/stores/cartStore';
 import useCart from '@/hooks/useCart';
 import Calendar from '@/components/Calendar';
@@ -73,14 +73,24 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
                     }
                 />
 
-                {canEditDate && cart?.nextDelivery && (
-                    <button
-                        onClick={handleCancelDelivery}
-                        className=" py-2 mx-20 text-red-600/90 border-2 border-red-600/85 rounded-md transition-colors"
-                    >
-                        Cancel Delivery
-                    </button>
-                )}
+                <AnimatePresence>
+                    {canEditDate && cart?.nextDelivery && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            className="w-full flex justify-center"
+                        >
+                            <button
+                                onClick={handleCancelDelivery}
+                                className="py-2 px-4 text-red-600/90 border-2 border-red-600/85 rounded-md transition-colors"
+                            >
+                                Cancel Delivery
+                            </button>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
 
             <AnimatePresence>
