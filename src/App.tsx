@@ -44,35 +44,30 @@ const App = () => {
 
   const currentPage = pages.find(p => p.page === currentView);
 
+  const slideAnimation = (direction: 'forward' | 'backward') => ({
+    initial: { x: direction === 'forward' ? 390 : -390 },
+    animate: { x: 0 },
+    exit: { x: direction === 'forward' ? 390 : -390 },
+    transition: { 
+      duration: 0.3,
+      ease: "easeInOut"
+    }
+  });
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-primary">
-      {/* Main Content */}
       <AnimatePresence mode="wait">
         {currentView === PAGE.HOME ? (
           <motion.div
             key={currentView}
-            initial={{ x: -390 }}
-            animate={{ x: 0 }}
-            exit={{ x: -390 }}
-            transition={{ 
-              duration: 0.3,
-              ease: "easeInOut"
-            }}
-            className="w-full h-full"
+            {...slideAnimation('backward')}
           >
             <Home />
           </motion.div>
         ) : (
           <motion.div
             key={currentView}
-            initial={{ x: 390 }}
-            animate={{ x: 0 }}
-            exit={{ x: 390 }}
-            transition={{ 
-              duration: 0.3,
-              ease: "easeInOut"
-            }}
-            className="w-full h-full"
+            {...slideAnimation('forward')}
           > 
             {currentPage && (
               <PageLayout 
