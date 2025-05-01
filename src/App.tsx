@@ -51,26 +51,18 @@ const App = () => {
             {currentView === PAGE.DELIVERIES && (
               <PageLayout 
                 title="Deliveries"
-                rightElement={
-                  <span className="px-4 py-2 bg-secondary/20 rounded-full text-secondary text-sm">
-                    Biweekly
-                  </span>
-                }
+                rightElementText="Biweekly"
               >
                 <DeliveriesPage />
               </PageLayout>
             )}
             {currentView === PAGE.CART && (
-              <PageLayout 
-                title="Cart"
-              >
+              <PageLayout title="Cart">
                 <CartPage />  
               </PageLayout>
             )}
             {currentView === PAGE.PRODUCTS && (
-              <PageLayout 
-                title="Products"
-              >
+              <PageLayout title="Products">
                 <ProductsPage />
               </PageLayout>
             )}

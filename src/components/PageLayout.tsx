@@ -5,10 +5,10 @@ import { useNavigationStore } from '@/stores/navigationStore';
 interface PageLayoutProps {
     title: string;
     children: React.ReactNode;
-    rightElement?: React.ReactNode;
+    rightElementText?: string;
 }
 
-const PageLayout = ({ title, children, rightElement }: PageLayoutProps) => {
+const PageLayout = ({ title, children, rightElementText }: PageLayoutProps) => {
     const { goToPage } = useNavigationStore();
 
     return (
@@ -27,7 +27,11 @@ const PageLayout = ({ title, children, rightElement }: PageLayoutProps) => {
                     </button>
                     <h1 className="text-2xl font-bold text-white">{title}</h1>
                 </div>
-                {rightElement}
+                {rightElementText && (
+                    <span className="px-4 py-2 bg-secondary/20 rounded-full text-secondary text-sm">
+                        {rightElementText}
+                    </span>
+                )}
             </div>
             {children}
         </div>
