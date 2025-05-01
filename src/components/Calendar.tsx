@@ -5,6 +5,7 @@ import { isPastOrToday, WEEK_DAYS, NEXT_FOUR_WEEKS, TODAY } from '@/utils/dates'
 import { CALENDAR_MODE } from '@/enums/core';
 import { DELIVERY_DAYS } from '@/constants/core';
 import PulseContainer from './PulseContainer';
+import PulsingMessage from './PulsingMessage';
 
 interface CalendarProps {
     nextDelivery?: Date;
@@ -111,22 +112,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                     ))}
                 </div>
 
-                {message && (
-                    <motion.div
-                        animate={{ 
-                            color: ['rgba(255, 255, 255, 0.6)', 'rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0.6)']
-                        }}
-                        transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            times: [0, 0.25, 0.5, 0.75, 1]
-                        }}
-                        className="mt-4 text-center"
-                    >
-                        {message}
-                    </motion.div>
-                )}
+                {message && <PulsingMessage message={message} />}
 
             </div>
         </PulseContainer>
