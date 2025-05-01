@@ -10,6 +10,7 @@ import CartPage from '@/sections/CartPage';
 import PageLayout from '@/components/PageLayout';
 import ProductsPage from '@/sections/ProductsPage';
 import { useNavigationStore } from '@/stores/navigationStore';
+import { PageConfig } from '@/types/ui';
 
 const App = () => {
   const { isDrawerOpen, currentView } = useNavigationStore();
@@ -18,7 +19,7 @@ const App = () => {
   useCart();
   useProducts();
 
-  const pages = [
+  const pages : PageConfig[] = [
     {
       page: PAGE.HOME,
       title: "Home",
@@ -42,7 +43,7 @@ const App = () => {
     }
   ]
 
-  const currentPage = pages.find(p => p.page === currentView);
+  const currentPage = pages.find((page: PageConfig) => page.page === currentView);
 
   const slideAnimation = (direction: 'forward' | 'backward') => ({
     initial: { x: direction === 'forward' ? 390 : -390 },
