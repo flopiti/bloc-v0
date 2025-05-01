@@ -41,10 +41,7 @@ const Home = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.5 }}
       >
-        <Featured
-          imageUrl="/featured.png"
-          onAddToCart={handleAddToCart}
-        />
+        <Featured />
       </motion.div>
     </div>
   );
