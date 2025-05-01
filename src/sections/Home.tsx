@@ -1,19 +1,10 @@
 import { APP_VERSION } from "@/config/version";
-import useProduct from "@/hooks/useProduct";
 import NavigationGrid from "@/components/NavigationGrid";
-import { STRAWBERRIES } from "@/mocks/data/items";
 import { motion } from "framer-motion";
 import Featured from "@/components/Featured";
 
 const Home = () => {
 
-  const {updateQuantity, quantity} = useProduct(STRAWBERRIES);
-
-  const handleAddToCart = () => {
-    updateQuantity(quantity + 1);
-  };
- 
-  
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-6 pt-safe">
       <motion.div 
