@@ -7,7 +7,7 @@ interface FeaturedSectionProps {
     onAddToCart: () => void;
 }
 
-const FeaturedSection = ({ imageUrl, onAddToCart }: FeaturedSectionProps) => (
+const Featured = ({ imageUrl, onAddToCart }: FeaturedSectionProps) => (
     <>
         <SubHeader text="Featured" />
         <PulseContainer>
@@ -36,4 +36,4 @@ const FeaturedSection = ({ imageUrl, onAddToCart }: FeaturedSectionProps) => (
     </>
 );
 
-export default FeaturedSection; 
+export default Featured; 

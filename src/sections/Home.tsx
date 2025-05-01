@@ -3,7 +3,7 @@ import useProduct from "@/hooks/useProduct";
 import NavigationGrid from "@/components/NavigationGrid";
 import { STRAWBERRIES } from "@/mocks/data/items";
 import { motion } from "framer-motion";
-import FeaturedSection from "@/components/FeaturedSection";
+import Featured from "@/components/Featured";
 
 const Home = () => {
 
@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-6 pt-safe">
       <motion.div 
-        className="w-full max-w-md"
+        className="w-full"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
@@ -36,12 +36,12 @@ const Home = () => {
             
       {/* Featured Section */}
       <motion.div 
-        className="my-8 w-full max-w-md"
+        className="my-8 w-full"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.5 }}
       >
-        <FeaturedSection
+        <Featured
           imageUrl="/featured.png"
           onAddToCart={handleAddToCart}
         />
