@@ -22,7 +22,7 @@ const App = () => {
     <div className="relative min-h-screen w-full overflow-hidden bg-primary">
       {/* Main Content */}
       <AnimatePresence mode="wait">
-        {currentView === PAGE.HOME && (
+        {currentView === PAGE.HOME ?  (
           <motion.div
             key={currentView}
             initial={{ x: -390 }}
@@ -36,8 +36,7 @@ const App = () => {
           >
             <Home />
           </motion.div>
-        )}
-        {currentView !== PAGE.HOME && (
+        ) : (
           <motion.div
             key={currentView}
             initial={{ x: 390 }}
