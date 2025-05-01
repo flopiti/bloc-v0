@@ -16,25 +16,25 @@ interface CalendarProps {
 }
 
 const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, selectedDate, isEdit = false, message}: CalendarProps) => {
-    const isNextDelivery = (date: dayjs.Dayjs) => {
+    const isNextDelivery = (date: dayjs.Dayjs) : boolean => {
         if (!nextDelivery) return false;
         return date.isSame(dayjs(nextDelivery), 'day');
     };
 
-    const isTwoWeeksFromNextDelivery = (date: dayjs.Dayjs) => {
+    const isTwoWeeksFromNextDelivery = (date: dayjs.Dayjs) : boolean => {
         if (!nextDelivery) return false;
         const twoWeeksFromNext = dayjs(nextDelivery).add(2, 'week');
         return date.isSame(twoWeeksFromNext, 'day');
     };
 
-    const getDates = () => {
+    const getDates = () : dayjs.Dayjs[] => {
         if (mode === CALENDAR_MODE.ONE_WEEK) {
             return Array.from({ length: 7 }, (_, i) => TODAY.add(i, 'day'));
         }
         return NEXT_FOUR_WEEKS.flat();
     };
 
-    const getWeekDays = () => {
+    const getWeekDays = () : string[] => {
         if (mode === CALENDAR_MODE.ONE_WEEK) {
             return Array.from({ length: 7 }, (_, i) => TODAY.add(i, 'day').format('ddd'));
         }
@@ -51,16 +51,14 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
     return (
         <PulseContainer pulse={isEdit}>
             <div className="bg-white/5 rounded-xl p-4 relative">
-                <div className="grid grid-cols-7 gap-2 mb-2">
-                {weekDays.map((day, dayIndex) => (
-                    <div key={dayIndex} className="text-center">
-                        <div className="text-white/60 text-xs">
-                            {day}
-                        </div>
-                    </div>
-                ))}
-                </div>
                 <div className="grid grid-cols-7 gap-2">
+                    {weekDays.map((day, dayIndex) => (
+                        <div key={dayIndex} className="text-center">
+                            <div className="text-white/60 text-xs mb-2">
+                                {day}
+                            </div>
+                        </div>
+                    ))}
                     {dates.map((date, index) => (
                         <div key={index} className="text-center">
                             <motion.button 
