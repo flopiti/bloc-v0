@@ -1,5 +1,4 @@
 import {  AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
 import Home from '@/sections/Home';
 import Drawer from '@/sections/Drawer';
 import useCart from '@/hooks/useCart';
@@ -10,19 +9,11 @@ import { PAGE } from '@/enums/core';
 import CartPage from '@/sections/CartPage';
 import PageLayout from '@/components/PageLayout';
 import ProductsPage from '@/sections/ProductsPage';
-
-const START_WITH_DRAWER = false
+import { useNavigationStore } from '@/stores/navigationStore';
 
 const App = () => {
+  const { isDrawerOpen, setIsDrawerOpen, goToPage, currentView } = useNavigationStore();
 
-  // App Navigation Logic
-  const [isDrawerOpen, setIsDrawerOpen] = useState(START_WITH_DRAWER)
-  const [currentView, setCurrentView] = useState<PAGE>(PAGE.HOME)
-
-  const goToPage = (page: PAGE) : void => {
-    setCurrentView(page)
-    setIsDrawerOpen(false)
-  }
 
   // Load initial data that will be be in stores
   useCart();
