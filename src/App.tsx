@@ -12,7 +12,7 @@ import ProductsPage from '@/sections/ProductsPage';
 import { useNavigationStore } from '@/stores/navigationStore';
 
 const App = () => {
-  const { isDrawerOpen, goToPage, currentView } = useNavigationStore();
+  const { isDrawerOpen, currentView } = useNavigationStore();
 
   // Load initial data that will be be in stores
   useCart();
@@ -65,7 +65,7 @@ const App = () => {
               <PageLayout 
                 title="Cart"
               >
-                <CartPage goToPage={goToPage}/>  
+                <CartPage />  
               </PageLayout>
             )}
             {currentView === PAGE.PRODUCTS && (

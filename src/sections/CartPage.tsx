@@ -9,15 +9,13 @@ import { TbShoppingCart } from "react-icons/tb";
 import { useState } from "react";
 import { GrBasket } from "react-icons/gr";
 import { FaDollarSign } from "react-icons/fa";
+import { useNavigationStore } from "@/stores/navigationStore";
 
-interface CartPageProps {
-    goToPage: (page: PAGE) => void;
-}
-
-const CartPage = ({ goToPage }: CartPageProps) => {
+const CartPage = () => {
     const { cart } = useCartStore();
     const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
     const [isGridView, setIsGridView] = useState(false);
+    const { goToPage } = useNavigationStore();
     console.log(cartItems);
     return (
         <div className="container mx-auto ">
