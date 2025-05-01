@@ -2,7 +2,6 @@ import {  AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 import Home from '@/sections/Home';
 import Drawer from '@/sections/Drawer';
-import '@/App.css';
 import useCart from '@/hooks/useCart';
 import useProducts from '@/hooks/useProducts';
 import { DrawerButton } from '@/components/DrawerButton';
