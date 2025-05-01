@@ -1,5 +1,4 @@
 import { Item, Product } from "@/types/core";
-import { withClickHandler } from "@/utils/ui";
 import { useState } from "react";
 import useCart from "./useCart";
 import { useCartStore } from "@/stores/cartStore";
