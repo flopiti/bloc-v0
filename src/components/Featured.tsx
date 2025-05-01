@@ -12,7 +12,7 @@ const Featured = () => {
     };
 
     return (
-        <>
+        <div>
             <SubHeader text="Featured" />
             <PulseContainer>
 
@@ -37,7 +37,7 @@ const Featured = () => {
                 </div>
             </div>
         </PulseContainer>
-        </>
+        </div>
     );
 };
 

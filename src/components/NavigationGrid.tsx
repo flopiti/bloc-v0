@@ -22,39 +22,39 @@ const NavigationGrid = () => {
   const [currentIconIndex] = useState(() => Math.floor(Math.random() * icons.length));
 
   return (
-    <>
-    <motion.p 
-        className="text-white/60 text-center mb-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, delay: 0.2 }}
-    >
-        Where would you like to go?
-    </motion.p>
+    <div>
+      <motion.p 
+          className="text-white/60 text-center mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+      >
+          Where would you like to go?
+      </motion.p>
 
-    <motion.div 
-      className="grid grid-cols-3 gap-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: 0.3 }}
-    >
-      <HomeNavigationButton
-        icon={<FiShoppingCart className="w-8 h-8 text-secondary mb-2" />}
-        label="Cart"
-        onClick={() => goToPage(PAGE.CART)}
-      />
-      <HomeNavigationButton
-        icon={<FiCalendar className="w-8 h-8 text-secondary mb-2" />}
-        label="Deliveries"
-        onClick={() => goToPage(PAGE.DELIVERIES)}
-      />
-      <HomeNavigationButton
-        icon={icons[currentIconIndex]}
-        label="Products"
-        onClick={() => goToPage(PAGE.PRODUCTS)}
-      />
-    </motion.div>
-    </>
+      <motion.div 
+        className="grid grid-cols-3 gap-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.3 }}
+      >
+        <HomeNavigationButton
+          icon={<FiShoppingCart className="w-8 h-8 text-secondary mb-2" />}
+          label="Cart"
+          onClick={() => goToPage(PAGE.CART)}
+        />
+        <HomeNavigationButton
+          icon={<FiCalendar className="w-8 h-8 text-secondary mb-2" />}
+          label="Deliveries"
+          onClick={() => goToPage(PAGE.DELIVERIES)}
+        />
+        <HomeNavigationButton
+          icon={icons[currentIconIndex]}
+          label="Products"
+          onClick={() => goToPage(PAGE.PRODUCTS)}
+        />
+      </motion.div>
+    </div>
   );
 };
 
