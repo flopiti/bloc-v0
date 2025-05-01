@@ -1,7 +1,7 @@
 import ProductBox from '@/components/ProductBox';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useMemo } from 'react';
-import { useProductsStore } from '@/stores/itemsStore';
+import { useProductsStore } from '@/stores/productStore';
 import { Product } from '@/types/core';
 import { useImages } from '@/hooks/useImages';
 import SearchBar from '@/components/SearchBar';
