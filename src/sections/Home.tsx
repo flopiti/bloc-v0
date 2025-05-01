@@ -11,9 +11,9 @@ import FeaturedSection from "@/components/FeaturedSection";
 import { STRAWBERRIES } from "@/mocks/data/items";
 import { APP_VERSION } from "@/config/version";
 import useProduct from "@/hooks/useProduct";
-
-const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
-
+import { useNavigationStore } from "@/stores/navigationStore";
+const Home = () => {
+  const { goToPage } = useNavigationStore();
 
   const {updateQuantity, quantity} = useProduct(STRAWBERRIES);
   const icons = [

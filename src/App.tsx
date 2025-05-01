@@ -14,7 +14,6 @@ import { useNavigationStore } from '@/stores/navigationStore';
 const App = () => {
   const { isDrawerOpen, setIsDrawerOpen, goToPage, currentView } = useNavigationStore();
 
-
   // Load initial data that will be be in stores
   useCart();
   useProducts();
@@ -35,7 +34,7 @@ const App = () => {
             }}
             className="w-full h-full"
           >
-            <Home goToPage={goToPage} />
+            <Home />
           </motion.div>
         )}
         {currentView !== PAGE.HOME && (
@@ -49,11 +48,10 @@ const App = () => {
               ease: "easeInOut"
             }}
             className="w-full h-full"
-          >
+          > 
             {currentView === PAGE.DELIVERIES && (
               <PageLayout 
                 title="Deliveries"
-                goHome={() => goToPage(PAGE.HOME)}
                 rightElement={
                   <span className="px-4 py-2 bg-secondary/20 rounded-full text-secondary text-sm">
                     Biweekly
@@ -66,7 +64,6 @@ const App = () => {
             {currentView === PAGE.CART && (
               <PageLayout 
                 title="Cart"
-                goHome={() => goToPage(PAGE.HOME)}
               >
                 <CartPage goToPage={goToPage}/>  
               </PageLayout>
@@ -74,7 +71,6 @@ const App = () => {
             {currentView === PAGE.PRODUCTS && (
               <PageLayout 
                 title="Products"
-                goHome={() => goToPage(PAGE.HOME)}
               >
                 <ProductsPage />
               </PageLayout>
