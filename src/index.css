@@ -17,3 +17,8 @@
   --color-secondary: #E9E8D4;
   --light-blue: #3399ff;
 }
+
+/* Custom utility classes */
+.btn-primary {
+  @apply bg-primary text-white;
+}
