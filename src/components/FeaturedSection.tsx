@@ -14,15 +14,7 @@ const FeaturedSection: FC<FeaturedSectionProps> = ({
     return (
         <>
             <SubHeader text="Featured" />
-            <motion.div 
-                className=" overflow-hidden"
-                initial={{ scale: 1 }}
-                animate={{ scale: 1.02 }}
-                transition={{
-                    duration: 0.3,
-                    ease: "easeOut"
-                }}
-            >
+            <div className=" overflow-hidden">
                 <motion.div
                     className="border-[3px] border-secondary rounded-xl overflow-hidden"
                     animate={{
@@ -56,7 +48,7 @@ const FeaturedSection: FC<FeaturedSectionProps> = ({
                         </div>
                     </div>
                 </motion.div>
-            </motion.div>
+            </div>
         </>
     );
 };
