@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { DELIVERY_DAYS } from '@/constants/core';
 import { FiFrown } from 'react-icons/fi';
 import { useNavigationStore } from '@/stores/navigationStore';
+import SubHeader from '@/components/SubHeader';
 
 const DeliveriesPage = () => {
     const { cart, isCartValid } = useCartStore();
@@ -103,14 +104,7 @@ const DeliveriesPage = () => {
                 }}
             >
                 <div>
-                    <motion.h2 
-                        className="text-white/80 text-sm font-medium tracking-wider mb-4"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3, delay: 0.6 }}
-                        >
-                        Delivery Calendar
-                    </motion.h2>
+                    <SubHeader text="Delivery Calendar" />
                     <Calendar 
                         nextDelivery={cart?.nextDelivery}
                         selectedDate={selectedDate ? dayjs(selectedDate) : undefined}
