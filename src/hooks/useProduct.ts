@@ -15,7 +15,7 @@ const useProduct = (product: Product) => {
 
     const quantity = isInCart && cart ? [...cart.confirmedItems, ...cart.pendingItems].find(item => item.product.id === product.id)?.quantity ?? 0 : 0;
 
-    const updateQuantity = withClickHandler((delta: number) => {
+    const updateQuantity = (delta: number) => {
         if (delta === 0) {
             removeItem(createCartItem(1));
         } else if (quantity === 0 && delta > 0) {
@@ -23,7 +23,7 @@ const useProduct = (product: Product) => {
         } else if (delta > 0) {
             editItem(createCartItem(delta));
         }
-    });
+    };
 
 
     const createCartItem = (quantity: number): Item => ({

@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
 import { useRef, useEffect } from "react";
-
+import { withClickHandler } from "@/utils/ui";
 interface QuantityInputProps {
     quantity: number;
-    onUpdateQuantity: (e: React.MouseEvent, delta: number) => void;
+    onUpdateQuantity: (delta: number) => void;
 }
 
 const QuantityInput = ({ quantity, onUpdateQuantity }: QuantityInputProps) => {
@@ -25,7 +25,7 @@ const QuantityInput = ({ quantity, onUpdateQuantity }: QuantityInputProps) => {
         >
             <div className="flex items-center bg-white/10 rounded-lg px-4 mt-2 w-full justify-between">
                 <motion.button
-                    onClick={(e) => onUpdateQuantity(e, quantity - 1)}
+                    onClick={withClickHandler(() => onUpdateQuantity(quantity - 1))}
                     className={`text-white/70 hover:text-white p-1 ${quantity === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     whileTap={{ scale: quantity === 0 ? 1 : 0.8 }}
                     transition={{ duration: 0.1 }}
@@ -49,7 +49,7 @@ const QuantityInput = ({ quantity, onUpdateQuantity }: QuantityInputProps) => {
                     </motion.span>
                 </div>
                 <motion.button
-                    onClick={(e) => onUpdateQuantity(e, quantity + 1)}
+                    onClick={withClickHandler(() => onUpdateQuantity( quantity + 1))}
                     className="text-white/70 hover:text-white p-1"
                     whileTap={{ scale: 0.8 }}
                     transition={{ duration: 0.1 }}

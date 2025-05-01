@@ -9,13 +9,13 @@ import { useState } from "react";
 import HomeNavigationButton from "@/components/HomeNavigationButton";
 import FeaturedSection from "@/components/FeaturedSection";
 import { STRAWBERRIES } from "@/mocks/data/items";
-import useCart from "@/hooks/useCart";
 import { APP_VERSION } from "@/config/version";
+import useProduct from "@/hooks/useProduct";
 
 const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
 
-  const {addItem} = useCart();
 
+  const {updateQuantity, quantity} = useProduct(STRAWBERRIES);
   const icons = [
     <GiKetchup key="ketchup" className="w-8 h-8 text-secondary mb-2" />,
     <PiCoffeeBeanBold key="coffee" className="w-8 h-8 text-secondary mb-2" />,
@@ -28,10 +28,7 @@ const Home = ({ goToPage }: { goToPage: (page: PAGE) => void }) => {
 
 
   const handleAddToCart = () => {
-    addItem({
-      product: STRAWBERRIES,
-      quantity: 1
-    });
+    updateQuantity(quantity + 1);
   };
  
   

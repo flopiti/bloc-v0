@@ -2,7 +2,7 @@ import { Cart, Product } from '@/types/core';
 import dayjs from 'dayjs';
 import { DELIVERY_DAYS } from '@/constants/core';
 
-export const STRAWBERRIES = {id: 7, name:'Strawberries', image: '/strawberries.png', price: 10}
+export const STRAWBERRIES : Product = {id: 7, name:'Strawberries', image: '/strawberries.png', price: 10}
 
 export const mockItems: Product[] = [
   { id: 1, name: 'Milk', image: '/milk.png', productTypes: ['1%', '2%' ,'Oat'], price: 4 },
