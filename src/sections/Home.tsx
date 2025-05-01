@@ -28,7 +28,7 @@ const Home = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          Welcome {APP_VERSION}
+          Alpha {APP_VERSION}
         </motion.h1>
 
         <NavigationGrid />
