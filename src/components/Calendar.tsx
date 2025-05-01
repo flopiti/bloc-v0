@@ -50,27 +50,17 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
 
     return (
         <PulseContainer pulse={isEdit}>
-            <motion.div 
-                className="bg-white/5 rounded-xl p-4 relative"
-                transition={{
-                    duration: 0.3,
-                    ease: "easeOut"
-                }}
-                animate={{
-                    scale: isEdit ? 1.02 : 1,
-                    backgroundColor: isEdit ? 'rgba(255, 255, 255, 0.07)' : 'rgba(255, 255, 255, 0.05)'
-                }}
-            >
-                    <div className="grid grid-cols-7 gap-2 mb-2">
-                    {weekDays.map((day, dayIndex) => (
-                        <div key={dayIndex} className="text-center">
-                            <div className="text-white/60 text-xs">
-                                {day}
-                            </div>
+            <div className="bg-white/5 rounded-xl p-4 relative">
+                <div className="grid grid-cols-7 gap-2 mb-2">
+                {weekDays.map((day, dayIndex) => (
+                    <div key={dayIndex} className="text-center">
+                        <div className="text-white/60 text-xs">
+                            {day}
                         </div>
-                    ))}
                     </div>
-                    <div className="grid grid-cols-7 gap-2">
+                ))}
+                </div>
+                <div className="grid grid-cols-7 gap-2">
                     {dates.map((date, index) => (
                         <div key={index} className="text-center">
                             <motion.button 
@@ -140,7 +130,7 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                     </motion.div>
                 )}
 
-            </motion.div>
+            </div>
         </PulseContainer>
     );
 };
