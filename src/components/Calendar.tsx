@@ -65,31 +65,18 @@ const Calendar = ({ nextDelivery, onDateClick, mode = CALENDAR_MODE.FOUR_WEEKS, 
                             <motion.button 
                                 type="button"
                                 onClick={() => onDateClick?.(date)}
-                                className={`flex items-center justify-center rounded-full text-sm ${
-                                    isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'
-                                } ${
-                                    isPastOrToday(date) || (mode === CALENDAR_MODE.FOUR_WEEKS && !isDeliveryDay(date))
-                                        ? 'text-white/30 cursor-not-allowed' 
-                                        : 'text-white hover:bg-white/10'
-                                } ${isEdit ? 'cursor-pointer' : 'cursor-default'}`}
-                                style={{
-                                    backgroundColor: isTwoWeeksFromNextDelivery(date) 
-                                        ? 'rgba(30, 58, 138, 0.5)' 
-                                        : selectedDate?.isSame(date, 'day') 
-                                            ? 'rgba(255, 255, 255, 0.1)' 
-                                            : 'transparent',
-                                    border: selectedDate?.isSame(date, 'day') ? '2px solid white' : 'none'
-                                }}
+                                className={`flex items-center justify-center rounded-full text-sm ${isNextDelivery(date) ? 'w-11 h-11 -m-1' : 'w-8 h-8'} ${isPastOrToday(date) || (mode === CALENDAR_MODE.FOUR_WEEKS && !isDeliveryDay(date)) 
+                                    ? 'text-white/30' 
+                                        : 'text-white'
+                                    } ${isTwoWeeksFromNextDelivery(date) ? 'bg-light-blue' : ''}
+                                    ${selectedDate?.isSame(date, 'day') ? 'border-2 border-white/10' : ''}
+                                    `
+                                }
                                 initial={false}
                                 animate={{
                                     scale: selectedDate?.isSame(date, 'day') ? 1.1 : 1
                                 }}
-                                whileHover={isEdit ? {
-                                    scale: 1.05,
-                                    backgroundColor: isTwoWeeksFromNextDelivery(date)
-                                        ? 'rgba(30, 58, 138, 0.7)'
-                                        : 'rgba(255, 255, 255, 0.1)'
-                                } : undefined}
+
                             >
                                 {isNextDelivery(date) ? (
                                     <motion.div
