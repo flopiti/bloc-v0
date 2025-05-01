@@ -11,15 +11,14 @@ const FeaturedSection = ({ imageUrl, onAddToCart }: FeaturedSectionProps) => (
         <SubHeader text="Featured" />
         <div className=" overflow-hidden">
             <motion.div
-                className="border-[3px] border-secondary rounded-xl overflow-hidden"
+                className="border-[0.2rem] border-secondary rounded-xl overflow-hidden"
                 animate={{
-                    borderColor: ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.1)'],
+                    borderColor: ['rgba(255, 255, 255, 0.2)', 'rgba(255, 255, 255, 0.7)', 'rgba(255, 255, 255, 0.2)'],
                 }}
                 transition={{
                     duration: 2,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    times: [0, 0.25, 0.5, 0.75, 1]
                 }}
             >
                 {/* Image container */}
