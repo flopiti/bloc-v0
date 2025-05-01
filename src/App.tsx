@@ -11,6 +11,7 @@ import PageLayout from '@/components/PageLayout';
 import ProductsPage from '@/sections/ProductsPage';
 import { useNavigationStore } from '@/stores/navigationStore';
 import { PageConfig } from '@/types/ui';
+import { slideAnimation } from '@/utils/animations';
 
 const PAGES: PageConfig[] = [
   { page: PAGE.HOME, title: "Home", component: <Home /> },
@@ -20,7 +21,9 @@ const PAGES: PageConfig[] = [
 ];
 
 const App = () => {
+
   const { isDrawerOpen, currentView } = useNavigationStore();
+
   useCart();
   useProducts();
 
@@ -32,14 +35,12 @@ const App = () => {
       <AnimatePresence mode="wait">
         <motion.div
           key={currentView}
-          initial={{ x: isHome ? -390 : 390 }}
-          animate={{ x: 0 }}
-          exit={{ x: isHome ? -390 : 390 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          {...slideAnimation(isHome)}
         >
           {isHome ? (
             <Home />
-          ) : currentPage && (
+          ) : 
+          currentPage && (
             <PageLayout 
               title={currentPage.title}
               rightElementText={currentPage.rightElementText}
