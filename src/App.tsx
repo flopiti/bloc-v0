@@ -18,11 +18,37 @@ const App = () => {
   useCart();
   useProducts();
 
+  const pages = [
+    {
+      page: PAGE.HOME,
+      title: "Home",
+      component: <Home />
+    },
+    {
+      page: PAGE.DELIVERIES,
+      title: "Deliveries",
+      component: <DeliveriesPage />,
+      rightElementText: "Biweekly"
+    },
+    {
+      page: PAGE.CART,
+      title: "Cart",
+      component: <CartPage />
+    },
+    {
+      page: PAGE.PRODUCTS,
+      title: "Products",
+      component: <ProductsPage />
+    }
+  ]
+
+  const currentPage = pages.find(p => p.page === currentView);
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-primary">
       {/* Main Content */}
       <AnimatePresence mode="wait">
-        {currentView === PAGE.HOME ?  (
+        {currentView === PAGE.HOME ? (
           <motion.div
             key={currentView}
             initial={{ x: -390 }}
@@ -48,22 +74,12 @@ const App = () => {
             }}
             className="w-full h-full"
           > 
-            {currentView === PAGE.DELIVERIES && (
+            {currentPage && (
               <PageLayout 
-                title="Deliveries"
-                rightElementText="Biweekly"
+                title={currentPage.title}
+                rightElementText={currentPage.rightElementText}
               >
-                <DeliveriesPage />
-              </PageLayout>
-            )}
-            {currentView === PAGE.CART && (
-              <PageLayout title="Cart">
-                <CartPage />  
-              </PageLayout>
-            )}
-            {currentView === PAGE.PRODUCTS && (
-              <PageLayout title="Products">
-                <ProductsPage />
+                {currentPage.component}
               </PageLayout>
             )}
           </motion.div>
