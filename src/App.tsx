@@ -4,21 +4,11 @@ import Drawer from '@/sections/Drawer';
 import useCart from '@/hooks/useCart';
 import useProducts from '@/hooks/useProducts';
 import { DrawerButton } from '@/components/DrawerButton';
-import DeliveriesPage from '@/sections/DeliveriesPage';
 import { PAGE } from '@/enums/core';
-import CartPage from '@/sections/CartPage';
 import PageLayout from '@/components/PageLayout';
-import ProductsPage from '@/sections/ProductsPage';
 import { useNavigationStore } from '@/stores/navigationStore';
-import { PageConfig } from '@/types/ui';
 import { slideAnimation } from '@/utils/animations';
-
-const PAGES: PageConfig[] = [
-  { page: PAGE.HOME, title: "Home", component: <Home /> },
-  { page: PAGE.DELIVERIES, title: "Deliveries", component: <DeliveriesPage />, rightElementText: "Biweekly" },
-  { page: PAGE.CART, title: "Cart", component: <CartPage /> },
-  { page: PAGE.PRODUCTS, title: "Products", component: <ProductsPage /> }
-];
+import { PAGES, PageConfig } from '@/constants/core';
 
 const App = () => {
 
@@ -27,7 +17,7 @@ const App = () => {
   useCart();
   useProducts();
 
-  const currentPage = PAGES.find(page => page.page === currentView);
+  const currentPage = PAGES.find((page: PageConfig) => page.page === currentView);
   const isHome = currentView === PAGE.HOME;
 
   return (
@@ -45,7 +35,7 @@ const App = () => {
               title={currentPage.title}
               rightElementText={currentPage.rightElementText}
             >
-              {currentPage.component}
+              {currentPage.component()}
             </PageLayout>
           )}
         </motion.div>
