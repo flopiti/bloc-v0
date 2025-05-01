@@ -13,14 +13,9 @@ const Home = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <motion.h1 
-          className="text-3xl font-bold text-white text-center mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-        >
+        <h1 className="text-3xl font-bold text-white text-center mb-8">
           Alpha {APP_VERSION}
-        </motion.h1>
+        </h1>
 
         <NavigationGrid />
       </motion.div>
