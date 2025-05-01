@@ -58,7 +58,7 @@ const App = () => {
                   </span>
                 }
               >
-                <DeliveriesPage openDrawer={() => setIsDrawerOpen(true)} goToPage={goToPage} />
+                <DeliveriesPage />
               </PageLayout>
             )}
             {currentView === PAGE.CART && (

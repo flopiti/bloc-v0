@@ -7,17 +7,13 @@ import CalendarDelivery from '@/components/CalendarDelivery';
 import DeliveryInfo from '@/components/DeliveryInfo';
 import { useState } from 'react';
 import { DELIVERY_DAYS } from '@/constants/core';
-import { PAGE } from '@/enums/core';
 import { FiFrown } from 'react-icons/fi';
+import { useNavigationStore } from '@/stores/navigationStore';
 
-interface DeliveriesPageProps {
-    openDrawer: () => void;
-    goToPage: (page: PAGE) => void;
-}
-
-const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
+const DeliveriesPage = () => {
     const { cart, isCartValid } = useCartStore();
     const { setDeliveryDate, confirmCart, cancelDelivery } = useCart();
+    const { goToPage, setIsDrawerOpen } = useNavigationStore();
     const [selectedDate,setSelectedDate] = useState<Date | null>(null);
     const [canEditDate, setCanEditDate] = useState(false);
     
@@ -44,7 +40,7 @@ const DeliveriesPage = ({openDrawer, goToPage}:DeliveriesPageProps) => {
         }
     };
 
-    const handleConfirmDelivery = () => isCartValid() ? confirmCart() : openDrawer();
+    const handleConfirmDelivery = () => isCartValid() ? confirmCart() : setIsDrawerOpen(true);
 
     const handleEditDate = () => {
         setCanEditDate(true);
