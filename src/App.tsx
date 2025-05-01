@@ -14,22 +14,19 @@ import ProductsPage from '@/sections/ProductsPage';
 const START_WITH_DRAWER = false
 
 const App = () => {
+
+  // App Navigation Logic
   const [isDrawerOpen, setIsDrawerOpen] = useState(START_WITH_DRAWER)
   const [currentView, setCurrentView] = useState<PAGE>(PAGE.HOME)
 
-  // Load initial data
-  useCart();
-  useProducts();
-
-  const goHome = () => {
-    setCurrentView(PAGE.HOME)
-    setIsDrawerOpen(false)
-  }
-
-  const goToPage = (page: PAGE) => {
+  const goToPage = (page: PAGE) : void => {
     setCurrentView(page)
     setIsDrawerOpen(false)
   }
+
+  // Load initial data that will be be in stores
+  useCart();
+  useProducts();
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-primary">
@@ -65,7 +62,7 @@ const App = () => {
             {currentView === PAGE.DELIVERIES && (
               <PageLayout 
                 title="Deliveries"
-                goHome={goHome}
+                goHome={() => goToPage(PAGE.HOME)}
                 rightElement={
                   <span className="px-4 py-2 bg-secondary/20 rounded-full text-secondary text-sm">
                     Biweekly
@@ -78,7 +75,7 @@ const App = () => {
             {currentView === PAGE.CART && (
               <PageLayout 
                 title="Cart"
-                goHome={goHome}
+                goHome={() => goToPage(PAGE.HOME)}
               >
                 <CartPage goToPage={goToPage}/>  
               </PageLayout>
@@ -86,7 +83,7 @@ const App = () => {
             {currentView === PAGE.PRODUCTS && (
               <PageLayout 
                 title="Products"
-                goHome={goHome}
+                goHome={() => goToPage(PAGE.HOME)}
               >
                 <ProductsPage />
               </PageLayout>
