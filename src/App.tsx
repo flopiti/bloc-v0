@@ -12,7 +12,7 @@ import ProductsPage from '@/sections/ProductsPage';
 import { useNavigationStore } from '@/stores/navigationStore';
 
 const App = () => {
-  const { isDrawerOpen, setIsDrawerOpen, goToPage, currentView } = useNavigationStore();
+  const { isDrawerOpen, goToPage, currentView } = useNavigationStore();
 
   // Load initial data that will be be in stores
   useCart();
