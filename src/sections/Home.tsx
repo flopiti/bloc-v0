@@ -41,14 +41,6 @@ const Home = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.5 }}
       >
-        <motion.h2 
-          className="text-white/80 text-sm font-medium tracking-wider mb-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.6 }}
-        >
-          Featured
-        </motion.h2>
         <FeaturedSection
           imageUrl="/featured.png"
           onAddToCart={handleAddToCart}
