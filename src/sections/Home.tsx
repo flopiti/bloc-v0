@@ -12,7 +12,7 @@ const Home = () => {
         transition={{ delay: 0.3, duration: 0.3, ease: "easeOut" }}
         className="flex flex-col p-6 pt-safe gap-8"
       >
-        <h1 className="text-3xl font-bold text-white text-center">
+        <h1 className="text-3xl font-bold text-secondary/80 text-center">
           Alpha {APP_VERSION}
         </h1>
 

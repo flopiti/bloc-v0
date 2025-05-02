@@ -1,3 +1,6 @@
+import { PAGE } from "@/enums/core";
+import { ReactElement } from "react";
+
 export type Product = {
   id: number;
   name: string;
@@ -17,4 +20,12 @@ export type Cart = {
   pendingItems: Item[];
   confirmed: boolean;
   nextDelivery?: Date;
+};
+
+export type PageConfig = {
+  page: PAGE;
+  title: string;
+  component: () => ReactElement;
+  rightElementText?: string;
+  icons?: ReactElement[] | ReactElement;
 };
