@@ -4,26 +4,28 @@ import Home from '@/sections/Home';
 import DeliveriesPage from '@/sections/DeliveriesPage';
 import CartPage from '@/sections/CartPage';
 import ProductsPage from '@/sections/ProductsPage';
-import { FiCalendar, FiShoppingCart, FiPackage } from "react-icons/fi";
+import { FiCalendar, FiShoppingCart } from "react-icons/fi";
 import { PageConfig } from "@/types/core";
 import { GiKetchup } from "react-icons/gi";
 import { IoMdNutrition } from "react-icons/io";
 import { PiCoffeeBeanBold, PiBread, PiCheese } from "react-icons/pi";
 import { TbMeat } from "react-icons/tb";
+
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+export const ICON_CLASSNAME = "w-8 h-8 text-secondary mb-2";
 
 export const DELIVERY_PAGE : PageConfig = {
   page: PAGE.DELIVERIES,
   title: "Deliveries",
   component: () => React.createElement(DeliveriesPage),
-  icons: React.createElement(FiCalendar, { className: "w-8 h-8 text-secondary mb-2" })
+  icons: React.createElement(FiCalendar, { className: ICON_CLASSNAME })
 }
 
 export const CART_PAGE : PageConfig = {
   page: PAGE.CART,
   title: "Cart",
   component: () => React.createElement(CartPage),
-  icons: React.createElement(FiShoppingCart, { className: "w-8 h-8 text-secondary mb-2" })
+  icons: React.createElement(FiShoppingCart, { className: ICON_CLASSNAME })
 }
 
 export const PRODUCTS_PAGE : PageConfig = {
@@ -31,13 +33,12 @@ export const PRODUCTS_PAGE : PageConfig = {
   title: "Products",
   component: () => React.createElement(ProductsPage),
   icons: [
-    React.createElement(FiPackage, { className: "w-8 h-8 text-secondary mb-2" }),
-    React.createElement(GiKetchup, { className: "w-8 h-8 text-secondary mb-2" }),   
-    React.createElement(PiCoffeeBeanBold, { className: "w-8 h-8 text-secondary mb-2" }),
-    React.createElement(TbMeat, { className: "w-8 h-8 text-secondary mb-2" }),
-    React.createElement(PiBread, { className: "w-8 h-8 text-secondary mb-2" }),
-    React.createElement(PiCheese, { className: "w-8 h-8 text-secondary mb-2" }),
-    React.createElement(IoMdNutrition, { className: "w-8 h-8 text-secondary mb-2" }),  
+    React.createElement(GiKetchup, { className: ICON_CLASSNAME }),   
+    React.createElement(PiCoffeeBeanBold, { className: ICON_CLASSNAME }),
+    React.createElement(TbMeat, { className: ICON_CLASSNAME }),
+    React.createElement(PiBread, { className: ICON_CLASSNAME }),
+    React.createElement(PiCheese, { className: ICON_CLASSNAME }),
+    React.createElement(IoMdNutrition, { className: ICON_CLASSNAME }),  
   ]
 }
 
