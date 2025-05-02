@@ -8,14 +8,9 @@ const NavigationGrid = () => {
 
   return (
     <div>
-      <motion.p 
-          className="text-white/60 text-center mb-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-      >
+      <p className="text-white/60 text-center mb-6" >
           Where would you like to go?
-      </motion.p>
+      </p>
 
       <motion.div 
         className="grid grid-cols-3 gap-4"
