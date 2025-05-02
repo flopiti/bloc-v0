@@ -8,14 +8,10 @@ import DrawerSection from '@/components/DrawerSection';
 import { TbShoppingCart, TbTruckDelivery } from 'react-icons/tb';
 import dayjs from 'dayjs';
 import Calendar from '@/components/Calendar';
+import { useNavigationStore } from '@/stores/navigationStore';
 
-interface DrawerProps {
-  isDrawerOpen: boolean;
-  setIsDrawerOpen: (isOpen: boolean) => void;
-  goToPage: (page: PAGE) => void;
-} 
-
-const Drawer = ({ isDrawerOpen, setIsDrawerOpen, goToPage }: DrawerProps) => {
+const Drawer = () => {
+  const { isDrawerOpen, setIsDrawerOpen, goToPage } = useNavigationStore();
   const { cart, isLoading } = useCartStore();
   const cartItems = cart ? [...cart.confirmedItems, ...cart.pendingItems] : [];
 

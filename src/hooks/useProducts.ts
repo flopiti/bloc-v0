@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useProductsStore } from "@/stores/itemsStore";
+import { useProductsStore } from "@/stores/productStore";
 import { productService } from "@/services/productService";
 
 const useProducts = () => {

@@ -28,7 +28,6 @@ const ProductImage = ({
     isInCart, 
     currentIndex 
 }: ProductImageProps) => {
-    console.log(product);
     return (
         <div className="relative">
             <motion.div

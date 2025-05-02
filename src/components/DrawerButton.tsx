@@ -1,16 +1,13 @@
 import {  DEFAULT_TRANSITION } from "@/constants/animations";
 import { useCartStore } from "@/stores/cartStore";
+import { useNavigationStore } from "@/stores/navigationStore";
 import { motion, AnimatePresence } from "framer-motion"
 import { GrBasket } from "react-icons/gr";
 
-interface DrawerButtonProps {
-    isDrawerOpen: boolean;
-    setIsDrawerOpen: (isDrawerOpen: boolean) => void;
-}
-
-export const DrawerButton = ({isDrawerOpen, setIsDrawerOpen} : DrawerButtonProps) => {
+export const DrawerButton = () => {
   const {cart} = useCartStore();
   const unconfirmedCount = cart?.pendingItems.length;
+  const { isDrawerOpen, setIsDrawerOpen } = useNavigationStore();
 
   return (
     <motion.div
