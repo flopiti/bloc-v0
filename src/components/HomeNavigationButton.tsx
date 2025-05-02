@@ -8,7 +8,6 @@ interface HomeNavigationButtonProps {
   }
   
   const HomeNavigationButton = ({ icons, label, onClick }: HomeNavigationButtonProps) => {
-    console.log(icons);
     const [currentIconIndex, setCurrentIconIndex] = useState(0);
 
     useEffect(() => {

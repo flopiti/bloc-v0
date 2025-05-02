@@ -14,21 +14,21 @@ import { TbMeat } from "react-icons/tb";
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const ICON_CLASSNAME = "w-8 h-8 text-secondary mb-2";
 
-export const DELIVERY_PAGE : PageConfig = {
+const DELIVERY_PAGE : PageConfig = {
   page: PAGE.DELIVERIES,
   title: "Deliveries",
   component: () => React.createElement(DeliveriesPage),
   icons: React.createElement(FiCalendar, { className: ICON_CLASSNAME })
 }
 
-export const CART_PAGE : PageConfig = {
+const CART_PAGE : PageConfig = {
   page: PAGE.CART,
   title: "Cart",
   component: () => React.createElement(CartPage),
   icons: React.createElement(FiShoppingCart, { className: ICON_CLASSNAME })
 }
 
-export const PRODUCTS_PAGE : PageConfig = {
+const PRODUCTS_PAGE : PageConfig = {
   page: PAGE.PRODUCTS,
   title: "Products",
   component: () => React.createElement(ProductsPage),
@@ -48,6 +48,12 @@ export const PAGES: PageConfig[] = [
     title: "Home",
     component: () => React.createElement(Home)
   },
+  DELIVERY_PAGE,
+  CART_PAGE,
+  PRODUCTS_PAGE
+];
+
+export const NAVIGATION_ITEMS = [
   DELIVERY_PAGE,
   CART_PAGE,
   PRODUCTS_PAGE
